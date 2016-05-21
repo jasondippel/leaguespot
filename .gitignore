@@ -1,1 +1,4 @@
 node_modules
+prod
+*.log
+.DS_Store
