@@ -18,6 +18,16 @@ export default class RegistrationFields extends React.Component {
     };
   }
 
+  validateEmail(email) {
+    var atpos = email.indexOf("@");
+    var dotpos = email.lastIndexOf(".");
+    if (atpos<1 || dotpos<atpos+2 || dotpos+2>=email.length) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   verifyData(data) {
     // make sure we have first/last name, email, (confirmed) password, country,
     // state, province, dob
@@ -41,7 +51,8 @@ export default class RegistrationFields extends React.Component {
   }
 
   handleEmailChange(e) {
-    let validEmail = validateEmail(e.target.value);
+    let validEmail = this.validateEmail(e.target.value);
+    console.log("valid email: " + validEmail);
 
     this.setState({
       email : e.target.value,
@@ -57,16 +68,22 @@ export default class RegistrationFields extends React.Component {
 
   handleConfirmPasswordChange(e) {
     let confirmedPassword = e.target.value;
-    if (confirmedPassword !== this.state.password) {
-      console.log("passwords don't match");
-    } else {
-      console.log("passwords match!");
-    }
+    let matching = (confirmedPassword === this.state.password);
+
+    this.setState({
+      validPassword : matching
+    });
+
   }
 
   handleBirthdayChange(e) {
+    let dateOfBirth = e.target.value;
+    let validDateOfBirth = /^\d\d\d\d-\d\d-\d\d$/.test(dateOfBirth);
+    console.log("validDOB: " + validDateOfBirth);
+
     this.setState({
-      dateOfBirth : e.target.value
+      dateOfBirth : dateOfBirth,
+      validDateOfBirth : validDateOfBirth
     });
   }
 
