@@ -12,7 +12,7 @@ export default class Footer extends React.Component {
     return (
       <footer>
         <div class="row">
-            <p>Copyright &copy; leaguespot.com</p>
+          <p>Copyright &copy; leaguespot.com</p>
         </div>
       </footer>
     );
