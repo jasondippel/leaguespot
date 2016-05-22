@@ -4,17 +4,17 @@ export default class RegistrationFields extends React.Component {
   constructor() {
     super()
     this.state = {
-      firstName         : null,
-      lastName          : null,
-      email             : null,
+      firstName         : "",
+      lastName          : "",
+      email             : "",
       validEmail        : false,
-      password          : null,
+      password          : "",
       validPassword     : false,
-      dateOfBirth       : null,
+      dateOfBirth       : "",
       validDateOfBirth  : false,
-      country           : null,
-      state             : null,
-      province          : null
+      country           : "",
+      state             : "",
+      province          : ""
     };
   }
 
@@ -28,14 +28,33 @@ export default class RegistrationFields extends React.Component {
     }
   }
 
-  verifyData(data) {
-    // make sure we have first/last name, email, (confirmed) password, country,
+  verifyData() {
+    // make sure we have first/last name, email, password, country,
     // state, province, dob
+    if ( this.state.firstName   == "" ||
+         this.state.lastName    == "" ||
+         this.state.email       == "" ||
+         this.state.password    == "" ||
+         this.state.dateOfBirth == "" ||
+         this.state.country     == "" ||
+         this.state.state       == "" ||
+         this.state.province    == ""
+       ) {
+      return false;
+    }
 
     // make sure email is valid format
+    if ( this.state.validEmail       === false ||
+         this.state.validPassword    === false ||
+         this.state.validDateOfBirth === false
+    ) {
+      return false;
+    }
 
     // NOTE: country/state validation and conversion to code should be done
     //       on the backend to eliminate need for frontend to load that data
+
+    return true;
   }
 
   handleFirstNameChange(e) {
@@ -108,10 +127,10 @@ export default class RegistrationFields extends React.Component {
   register(e) {
     e.preventDefault();
 
-    let isValidObj = verifyData(data);
+    let isValid = this.verifyData();
 
-    if (isValidObj.valid) {
-      console.log("good data");
+    if (isValid) {
+      console.log("good data", this.state);
       // make response promise
       // this.props.nextStep();
     } else {
