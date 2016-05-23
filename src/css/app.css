@@ -13,7 +13,7 @@ html, body, #app {
   margin: 0px;
 }
 
-header {
+header, footer {
   background-color: #2e2e2e;
   color: #fff;
   margin: 0px;
@@ -22,6 +22,15 @@ header {
   padding-right: 80px;
 }
 
+footer {
+  color: #707070;
+  font-size: 0.8em;
+  text-align: right;
+  border-bottom: 1px solid #26a600;
+  padding: 2px;
+  padding-left: 80px;
+  padding-right: 80px;
+}
 
 /* LOGO */
 .logoTitle {
@@ -78,6 +87,7 @@ header {
   width: 40%;
   min-width: 28em;
   margin-top: 4em;
+  margin-bottom: 4em;
   margin-left: auto;
   margin-right: auto;
   padding: 15px;
