@@ -140,29 +140,41 @@ export default class RegistrationFields extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>Create Your Account</h1>
+      <div className="formLight">
 
-        <label>Name</label>
-        <input type="text" ref="firstName" placeholder="First Name" onChange={this.handleFirstNameChange.bind(this)} />
-        <input type="text" ref="lastName" placeholder="Last Name"  onChange={this.handleLastNameChange.bind(this)} />
+        <div className="row">
+          <label>Name</label>
+          <input type="text" className="inputPair first" ref="firstName" placeholder="First Name" onChange={this.handleFirstNameChange.bind(this)} />
+          <input type="text" className="inputPair last" ref="lastName" placeholder="Last Name"  onChange={this.handleLastNameChange.bind(this)} />
+        </div>
 
-        <label>Email</label>
-        <input type="text" ref="email" placeholder="your@email.com"  onChange={this.handleEmailChange.bind(this)} />
+        <div className="row">
+          <label>Email</label>
+          <input type="text" ref="email" placeholder="your@email.com"  onChange={this.handleEmailChange.bind(this)} />
+        </div>
 
-        <label>Password</label>
-        <input type="password" ref="password" placeholder="Password"  onChange={this.handlePasswordChange.bind(this)} />
-        <input type="password" ref="confirmPassword" placeholder="Confirm Password"  onChange={this.handleConfirmPasswordChange.bind(this)}/>
+        <div className="row">
+          <label>Password</label>
+          <input type="password" className="inputPair first" ref="password" placeholder="Password"  onChange={this.handlePasswordChange.bind(this)} />
+          <input type="password" className="inputPair last" ref="confirmPassword" placeholder="Confirm Password"  onChange={this.handleConfirmPasswordChange.bind(this)}/>
+        </div>
 
-        <label>Birthday</label>
-        <input type="text" ref="birthday" placeholder="YYYY-MM-DD"  onChange={this.handleBirthdayChange.bind(this)} />
+        <div className="row">
+          <label>Birthday</label>
+          <input type="text" ref="birthday" placeholder="YYYY-MM-DD"  onChange={this.handleBirthdayChange.bind(this)} />
+        </div>
 
-        <label>Residence</label>
-        <input type="text" ref="countryCode" placeholder="Country"  onChange={this.handleCountryChange.bind(this)} />
-        <input type="text" ref="state" placeholder="Province/State"  onChange={this.handleRegionChange.bind(this)} />
-        <input type="text" ref="city" placeholder="City"  onChange={this.handleCityChange.bind(this)} />
+        <div className="row">
+          <label>Residence</label>
+          <input type="text" className="residenceCity" ref="city" placeholder="City"  onChange={this.handleCityChange.bind(this)} />
+          <input type="text" className="residenceState" ref="state" placeholder="Province/State"  onChange={this.handleRegionChange.bind(this)} />
+          <input type="text" className="residenceCountry" ref="countryCode" placeholder="Country"  onChange={this.handleCountryChange.bind(this)} />
+        </div>
 
-        <button className="btn" onClick={this.register.bind(this)}>Register</button>
+        <div className="row">
+          <button className="btn submit" onClick={this.register.bind(this)}>Register</button>
+          <p className="subtext">Clicking "Register" confirms you are 18+ years of age.</p>
+        </div>
       </div>
     );
   }

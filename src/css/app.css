@@ -20,7 +20,6 @@ header {
   padding: 15px;
   padding-left: 80px;
   padding-right: 80px;
-  width: 100%;
 }
 
 
@@ -44,7 +43,7 @@ header {
 
 /* HEADER - ACCOUNT INFORMATION */
 .accountInfo {
-  width: calc(100% - 180px - 160px);
+  width: calc(100% - 180px);
   display: inline-block;
   text-align: right;
   vertical-align: top;
@@ -72,4 +71,94 @@ header {
 }
 .whiteOutlineBtn:hover {
   background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* POPUPS */
+.popupLight {
+  width: 40%;
+  min-width: 28em;
+  margin-top: 4em;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 15px;
+  border: 1px solid #000;
+  border-radius: 4px;
+  text-align: center;
+}
+
+/* FORM */
+.formLight {
+  text-align: left;
+  padding-left: 3em;
+  padding-right: 3em;
+}
+.formLight .row {
+  display: block;
+  padding-top: 0.75em;
+}
+.formLight label {
+  display: block;
+  color: #2f2f2f;
+}
+.formLight input {
+  font-size: 0.9em;
+  line-height: 2em;
+  border-radius: 2px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #9f9f9f;
+  width: calc(100% - 5px);
+}
+.formLight input:focus {
+  outline-color: rgba(15, 184, 0, 0.25);
+  outline-width: 2px;
+}
+.formLight input.inputPair {
+  width: calc(50% - 4px);
+}
+/* TODO: use CSS selector for first/last pair */
+.formLight input.inputPair.first {
+  border-right: none;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+.formLight input.inputPair.last {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+.formLight input.residenceCity {
+  border-bottom: none;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+.formLight input.residenceState {
+  width: calc(50% - 4px);
+  border-right: none;
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+.formLight input.residenceCountry {
+  width: calc(50% - 4px);
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+.formLight .btn {
+  margin: none;
+  margin-left: 0px;
+  width: calc(50% - 4px);
+}
+.formLight .btn.submit {
+  color: #fff;
+  background-color: #26a600;
+  border: none;
+  margin-top: 1em;
+}
+.formLight .btn.submit:hover {
+  background-color: #2fbb06;
+}
+.formLight .subtext {
+  font-size: 0.75em;
+  opacity: 0.6;
 }

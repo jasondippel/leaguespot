@@ -17,11 +17,16 @@ export default class Registration extends React.Component {
   }
 
   render() {
-    switch (this.state.step) {
-			case 1:
-				return <RegistrationFields nextStep={this.nextStep.bind(this)} />
-			case 2:
-				return <FormSuccess type="Registration" />
-		}
+    return (
+      <div className="popupLight">
+        <h1>Create Your Account</h1>
+        {(() => {
+          switch (this.state.step) {
+      			case 1: return <RegistrationFields nextStep={this.nextStep.bind(this)} />
+      			case 2: return <FormSuccess type="Registration" />
+      		}
+        })()}
+      </div>
+    );
   }
 }
