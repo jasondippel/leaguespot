@@ -166,9 +166,9 @@ export default class RegistrationFields extends React.Component {
 
         <div className="row">
           <label>Residence</label>
-          <input type="text" className="residenceCity" ref="city" placeholder="City"  onChange={this.handleCityChange.bind(this)} />
-          <input type="text" className="residenceState" ref="state" placeholder="Province/State"  onChange={this.handleRegionChange.bind(this)} />
-          <input type="text" className="residenceCountry" ref="countryCode" placeholder="Country"  onChange={this.handleCountryChange.bind(this)} />
+          <input type="text" className="inputGroupTop" ref="city" placeholder="City"  onChange={this.handleCityChange.bind(this)} />
+          <input type="text" className="inputGroupBottom inputPair first" ref="state" placeholder="Province/State"  onChange={this.handleRegionChange.bind(this)} />
+          <input type="text" className="inputGroupBottom inputPair last" ref="countryCode" placeholder="Country"  onChange={this.handleCountryChange.bind(this)} />
         </div>
 
         <div className="row">

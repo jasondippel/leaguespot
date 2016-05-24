@@ -15,10 +15,12 @@ export default class Header extends React.Component {
     return (
       <header>
 
-        <div className="logoTitle">
-          LeagueSpot<br/>
-          <span className="logoSubtext">Fantasy sports, real athletes.</span>
-        </div>
+        <Link to="/">
+          <div className="logoTitle">
+            LeagueSpot<br/>
+            <span className="logoSubtext">Fantasy sports, real athletes.</span>
+          </div>
+        </Link>
 
         <div className="accountInfo">
           <Link to="register"><button className="btn whiteOutlineBtn">Register</button></Link>
