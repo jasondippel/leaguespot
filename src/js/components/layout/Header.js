@@ -1,7 +1,6 @@
 /**
  * General page header. Appears on all pages as part of the Layout
  *
- * TODO: add link around logo to take "home"
  * TODO: move the account info stuff into it's own component
  */
 
@@ -23,8 +22,8 @@ export default class Header extends React.Component {
         </Link>
 
         <div className="accountInfo">
-          <Link to="register"><button className="btn whiteOutlineBtn">Register</button></Link>
-          <Link to="signIn"><button className="btn whiteOutlineBtn">Sign In</button></Link>
+          <Link to="/register"><button className="btn whiteOutlineBtn">Register</button></Link>
+          <Link to="/login"><button className="btn whiteOutlineBtn">Sign In</button></Link>
         </div>
 
       </header>

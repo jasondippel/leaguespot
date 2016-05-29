@@ -1,4 +1,6 @@
 import React from "react";
+import APIRequestClass from "../../scripts/APIRequest";
+const APIRequest = new APIRequestClass();
 
 export default class RegistrationFields extends React.Component {
   constructor() {
@@ -14,7 +16,7 @@ export default class RegistrationFields extends React.Component {
       validDateOfBirth  : false,
       country           : "",
       state             : "",
-      province          : ""
+      city              : ""
     };
   }
 
@@ -38,8 +40,9 @@ export default class RegistrationFields extends React.Component {
          this.state.dateOfBirth == "" ||
          this.state.country     == "" ||
          this.state.state       == "" ||
-         this.state.province    == ""
+         this.state.city    == ""
        ) {
+      console.log("missing a value");
       return false;
     }
 
@@ -126,15 +129,34 @@ export default class RegistrationFields extends React.Component {
 
   register(e) {
     e.preventDefault();
-
+    let that = this;
     let isValid = this.verifyData();
 
     if (isValid) {
       console.log("good data", this.state);
       // make response promise
-      // this.props.nextStep();
+      APIRequest.post({
+        api: "LeagueSpot",
+        apiExt: "/register",
+        data: {
+          first_name   : this.state.firstName,
+          last_name    : this.state.lastName,
+          email        : this.state.email,
+          password     : this.state.password,
+          dob          : this.state.dateOfBirth,
+          country      : this.state.country,
+          state        : this.state.state,
+          city         : this.state.city
+        }
+      }).then((resp) => {
+        that.props.nextStep();
+      }).catch((error) => {
+        console.log("Error making request: ", error);
+        alert("Please make sure all fields have valid information and the correct formatting.");
+      });
     } else {
       console.log("bad/missing data");
+      alert("Please fill in all fields.");
     }
   }
 
@@ -165,7 +187,7 @@ export default class RegistrationFields extends React.Component {
         </div>
 
         <div className="row">
-          <label>Residence</label>
+          <label>Hometown</label>
           <input type="text" className="inputGroupTop" ref="city" placeholder="City"  onChange={this.handleCityChange.bind(this)} />
           <input type="text" className="inputGroupBottom inputPair first" ref="state" placeholder="Province/State"  onChange={this.handleRegionChange.bind(this)} />
           <input type="text" className="inputGroupBottom inputPair last" ref="countryCode" placeholder="Country"  onChange={this.handleCountryChange.bind(this)} />

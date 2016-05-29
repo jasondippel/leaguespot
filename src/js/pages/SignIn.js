@@ -1,4 +1,5 @@
 import React from "react";
+import APIRequest from "../scripts/APIRequest";
 
 export default class SignIn extends React.Component {
   constructor() {
@@ -22,11 +23,26 @@ export default class SignIn extends React.Component {
   }
 
   signIn() {
-    console.log("signIn not hooked up");
+    APIRequest.post({
+      api: "LeagueSpot",
+      apiExt: "/login",
+      data: {
+        email     : this.state.email,
+        password  : this.state.password
+      }
+    }).then((resp) => {
+      if (resp.success) {
+        localStorage.setItem("LeagueSpot-activeUser", resp.username);
+      }
+      else {
+        alert("Email and/or password is incorrect.");
+      }
+    }).catch((error) => {
+      console.log("Error making request: ", error);
+    });
   }
 
   render() {
-    console.log("sign in");
     return (
       <div className="popupLight">
         <h1>Sign In</h1>
