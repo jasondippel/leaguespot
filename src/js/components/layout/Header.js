@@ -11,6 +11,8 @@ import AccountInfo from "../header/AccountInfo"
 export default class Header extends React.Component {
 
   render() {
+    const { location } = this.props;
+    
     return (
       <header>
         <Link to="/">
@@ -21,7 +23,7 @@ export default class Header extends React.Component {
         </Link>
 
         <div className="headerOptions">
-          <HeaderMenu />
+          <HeaderMenu location={location}/>
           <AccountInfo logout={this.props.logout}/>
         </div>
 

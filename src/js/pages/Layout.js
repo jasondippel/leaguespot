@@ -41,7 +41,7 @@ export default class Layout extends React.Component {
 
     return (
       <div>
-        <Header logout={this.logout.bind(this)} login={this.login.bind(this)}/>
+        <Header logout={this.logout.bind(this)} login={this.login.bind(this)} location={location}/>
 
         <div className="container">
           {React.cloneElement(this.props.children, {

@@ -14,7 +14,7 @@ html, body, #app {
 }
 
 header, footer {
-  background-color: #2e2e2e;
+  background-color: rgb(47, 50, 56);
   color: #fff;
   margin: 0px;
   padding-left: 80px;
@@ -84,6 +84,30 @@ Link:focus {
   height: 47px;
 }
 
+/* HEADER NAV */
+header nav.mainNav {
+  height: 62px;
+  vertical-align: middle;
+}
+.mainNav .navLink {
+  color: #fff;
+  font-size: 1em;
+  text-decoration: none;
+  padding: 15px;
+  padding-top: 20px;
+  padding-bottom: calc(62px - 24px - 1em);
+  vertical-align: middle;
+  display: inline-block;
+  -webkit-transition: background-color 0.2s; /* For Safari 3.1 to 6.0 */
+  transition: background-color 0.2s;
+}
+.mainNav .navLink.active {
+  background-color: #444;
+}
+.mainNav .navLink:hover {
+  background-color: #444;
+}
+
 /* BUTTONS */
 .btn {
   font-family: 'Lato', sans-serif;
@@ -105,7 +129,7 @@ Link:focus {
   background-color: transparent;
 }
 .whiteOutlineBtn:hover {
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: #444;
 }
 
 /* POPUPS */
@@ -184,6 +208,8 @@ Link:focus {
   background-color: #26a600;
   border: none;
   margin-top: 1em;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 .formLight .btn.full {
   width: calc(100% - 4px);

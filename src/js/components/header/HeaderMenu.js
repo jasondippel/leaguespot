@@ -8,10 +8,11 @@ export default class HeaderMenu extends React.Component {
 
     if (auth.loggedIn()) {
       buttonGroup = (
-        <span>
-          <Link to="/lobby"><button className="btn whiteOutlineBtn">Lobby</button></Link>
-          <Link to="/notifications"><button className="btn whiteOutlineBtn">Upcoming</button></Link>
-        </span>
+        <nav className="mainNav">
+          <Link to="/lobby" className={this.props.location.pathname == "/lobby" ? "navLink active" : "navLink"}>Lobby</Link>
+          <Link to="/upcoming" className={this.props.location.pathname == "/upcoming" ? "navLink active" : "navLink"}>Upcoming</Link>
+          <Link to="/inbox" className={this.props.location.pathname == "/inbox" ? "navLink active" : "navLink"}>Inbox</Link>
+        </nav>
       );
     }
 
