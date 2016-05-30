@@ -1,5 +1,8 @@
 import React from "react";
-import APIRequest from "../scripts/APIRequest";
+import APIRequestClass from "../scripts/APIRequest";
+import * as auth from "../scripts/PersistentUser";
+
+const APIRequest = new APIRequestClass();
 
 export default class SignIn extends React.Component {
   constructor() {
@@ -23,6 +26,7 @@ export default class SignIn extends React.Component {
   }
 
   signIn() {
+    let that = this;
     APIRequest.post({
       api: "LeagueSpot",
       apiExt: "/login",
@@ -32,13 +36,15 @@ export default class SignIn extends React.Component {
       }
     }).then((resp) => {
       if (resp.success) {
-        localStorage.setItem("LeagueSpot-activeUser", resp.username);
+        auth.setLoggedInUser(resp.username);
       }
       else {
         alert("Email and/or password is incorrect.");
       }
     }).catch((error) => {
       console.log("Error making request: ", error);
+      // TODO: need to remove this, purely for testing purposes
+      auth.setLoggedInUser("Jason");
     });
   }
 

@@ -1,19 +1,32 @@
 /**
  * General page header. Appears on all pages as part of the Layout
  *
- * TODO: move the account info stuff into it's own component
  */
 
 import React from "react";
 import { Link } from "react-router";
+import HeaderMenu from "../header/HeaderMenu";
+import AccountInfo from "../header/AccountInfo"
+import * as auth from "../../scripts/PersistentUser";
 
 
 export default class Header extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      loggedIn: auth.loggedIn()
+    };
+  }
+
+  logout() {
+    this.setState({
+      loggedIn: false
+    });
+  }
 
   render() {
     return (
       <header>
-
         <Link to="/">
           <div className="logoTitle">
             LeagueSpot<br/>
@@ -21,9 +34,9 @@ export default class Header extends React.Component {
           </div>
         </Link>
 
-        <div className="accountInfo">
-          <Link to="/register"><button className="btn whiteOutlineBtn">Register</button></Link>
-          <Link to="/login"><button className="btn whiteOutlineBtn">Sign In</button></Link>
+        <div className="headerOptions">
+          <HeaderMenu />
+          <AccountInfo logoutHeader={this.logout.bind(this)}/>
         </div>
 
       </header>

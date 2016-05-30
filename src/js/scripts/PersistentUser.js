@@ -17,6 +17,6 @@
    localStorage.setItem(LeagueSpotUsernameKey, username);
  }
 
- export function removeLoggedInUser (username) {
+ export function removeLoggedInUser () {
    localStorage.removeItem(LeagueSpotUsernameKey);
  }
