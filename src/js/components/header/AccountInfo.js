@@ -14,13 +14,11 @@ export default class HeaderMenu extends React.Component {
       apiExt: "/logout",
       data: null
     }).then((resp) => {
-      auth.removeLoggedInUser();
-      that.props.logoutHeader();
+      that.props.logout();
     }).catch((error) => {
       console.log("Error making request: ", error);
       // TODO: currently all APIRequest calls fail. Added the below code for testing only, needs to be removed
-      auth.removeLoggedInUser();
-      that.props.logoutHeader();
+      that.props.logout();
     });
   }
 
@@ -31,7 +29,7 @@ export default class HeaderMenu extends React.Component {
       buttonGroup = (
         <span>
           <label>{auth.getLoggedInUser()}</label>
-          <Link to="/"><button className="btn whiteOutlineBtn" onClick={this.logout.bind(this)}>Logout</button></Link>
+          <button className="btn whiteOutlineBtn" onClick={this.logout.bind(this)}>Logout</button>
         </span>
       );
     }

@@ -44,7 +44,8 @@ export default class SignIn extends React.Component {
     }).catch((error) => {
       console.log("Error making request: ", error);
       // TODO: need to remove this, purely for testing purposes
-      auth.setLoggedInUser("Jason");
+      // auth.setLoggedInUser("Jason");
+      that.props.login("Jason");
     });
   }
 
