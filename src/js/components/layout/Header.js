@@ -12,13 +12,12 @@ export default class Header extends React.Component {
 
   render() {
     const { location } = this.props;
-    
+
     return (
       <header>
         <Link to="/">
           <div className="logoTitle">
-            LeagueSpot<br/>
-            <span className="logoSubtext">Fantasy sports, real athletes.</span>
+            LeagueSpot
           </div>
         </Link>
 

@@ -14,11 +14,14 @@ export default class HeaderMenu extends React.Component {
       apiExt: "/logout",
       data: null
     }).then((resp) => {
-      that.props.logout();
+      if(resp.success) {
+        that.props.logout();
+      }
+      else {
+        alert("Failed to loggout: " + resp.responseText);
+      }
     }).catch((error) => {
       console.log("Error making request: ", error);
-      // TODO: currently all APIRequest calls fail. Added the below code for testing only, needs to be removed
-      that.props.logout();
     });
   }
 

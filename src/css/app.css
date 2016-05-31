@@ -19,6 +19,7 @@ header, footer {
   margin: 0px;
   padding-left: 80px;
   padding-right: 80px;
+  font-weight: lighter;
 }
 
 footer {
@@ -49,7 +50,7 @@ Link:focus {
   text-decoration: none;
   font-size: 2em;
   line-height: 0.5em;
-  padding-top: 15px;
+  padding-top: 20px;
   padding-bottom: 15px;
   width: 180px;
   display: inline-block;
@@ -69,6 +70,7 @@ Link:focus {
   height: 62px;
   display: inline-block;
   vertical-align: top;
+  font-size: 0.9em;
 }
 .headerMenu {
   width: 70%;
@@ -80,7 +82,7 @@ Link:focus {
   text-align: right;
   display: inline-block;
   vertical-align: top;
-  padding-top: 15px;
+  padding-top: 18px;
   height: 47px;
 }
 
@@ -94,8 +96,8 @@ header nav.mainNav {
   font-size: 1em;
   text-decoration: none;
   padding: 15px;
-  padding-top: 20px;
-  padding-bottom: calc(62px - 24px - 1em);
+  padding-top: 23px;
+  padding-bottom: calc(62px - 27px - 1em);
   vertical-align: middle;
   display: inline-block;
   -webkit-transition: background-color 0.2s; /* For Safari 3.1 to 6.0 */
@@ -144,6 +146,11 @@ header nav.mainNav {
   border: 1px solid #000;
   border-radius: 4px;
   text-align: center;
+  t-webkit-transition: height 0.2s; /* For Safari 3.1 to 6.0 */
+  transition: height 0.2s;
+}
+.popupLight .success {
+  color: #26a600;
 }
 
 /* FORM */
@@ -208,8 +215,8 @@ header nav.mainNav {
   background-color: #26a600;
   border: none;
   margin-top: 1em;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 .formLight .btn.full {
   width: calc(100% - 4px);

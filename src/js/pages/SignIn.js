@@ -13,6 +13,16 @@ export default class SignIn extends React.Component {
     };
   }
 
+  validEmail(email) {
+    var atpos = email.indexOf("@");
+    var dotpos = email.lastIndexOf(".");
+    if (atpos<1 || dotpos<atpos+2 || dotpos+2>=email.length) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   handleEmailChange(e) {
     this.setState({
       email : e.target.value
@@ -26,6 +36,18 @@ export default class SignIn extends React.Component {
   }
 
   signIn() {
+    // make sure email is valid
+    if(!this.validEmail(this.state.email)) {
+      alert("Please enter a valid email.");
+      return;
+    }
+
+    // make sure they've entered a password
+    if(this.state.password === "") {
+      alert("Please enter a password.");
+      return;
+    }
+
     let that = this;
     APIRequest.post({
       api: "LeagueSpot",
@@ -36,16 +58,13 @@ export default class SignIn extends React.Component {
       }
     }).then((resp) => {
       if (resp.success) {
-        auth.setLoggedInUser(resp.username);
+        that.props.login(resp.user.first_name);
       }
       else {
-        alert("Email and/or password is incorrect.");
+        alert(resp.responseText);
       }
     }).catch((error) => {
       console.log("Error making request: ", error);
-      // TODO: need to remove this, purely for testing purposes
-      // auth.setLoggedInUser("Jason");
-      that.props.login("Jason");
     });
   }
 

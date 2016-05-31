@@ -3,6 +3,15 @@
  *
  */
 
+ // $.post('http://localhost:3000/login', {
+ //   email: "leaguespot.team@gmail.com",
+ //   password: "asdf"
+ // }, function(res) {
+ //   console.log(res);
+ // })
+
+ import $ from "jquery";
+
 
 export default class APIRequest {
   constructor() {
@@ -48,34 +57,19 @@ export default class APIRequest {
   post(options) {
     let that = this;
     return new Promise(function(resolve, reject) {
-      // create request, determine url for desired API
-      let req = new XMLHttpRequest();
+      //determine url for desired API
       let url = that._constructUrl(options.api, options.apiExt);
 
-      // open request
-      req.open('POST', url, true);
+      $.post(url, options.data)
+      .success( (data) => {
+        console.log("post success");
+        resolve(data);
+      })
+      .fail( (err) => {
+        console.log("post fail");
+        reject(err);
+      });
 
-      // construct data
-      let params = JSON.stringify(options.data);
-
-      req.onload = function() {
-        if (req.status == 200) {
-          // resolve promise with response
-          resolve(req.response);
-        }
-        else {
-          // reject with error
-          reject(Error(req.statusText));
-        }
-      };
-
-      // handle network errors
-      req.onerror = function() {
-        reject(Error("Network Error"));
-      };
-
-      // make the request
-      req.send(params);
     });
   }
 

@@ -12,8 +12,6 @@ export default class RegistrationFields extends React.Component {
       validEmail        : false,
       password          : "",
       validPassword     : false,
-      dateOfBirth       : "",
-      validDateOfBirth  : false,
       country           : "",
       state             : "",
       city              : ""
@@ -32,24 +30,21 @@ export default class RegistrationFields extends React.Component {
 
   verifyData() {
     // make sure we have first/last name, email, password, country,
-    // state, province, dob
+    // state, province
     if ( this.state.firstName   == "" ||
          this.state.lastName    == "" ||
          this.state.email       == "" ||
          this.state.password    == "" ||
-         this.state.dateOfBirth == "" ||
          this.state.country     == "" ||
          this.state.state       == "" ||
          this.state.city    == ""
        ) {
-      console.log("missing a value");
       return false;
     }
 
     // make sure email is valid format
     if ( this.state.validEmail       === false ||
-         this.state.validPassword    === false ||
-         this.state.validDateOfBirth === false
+         this.state.validPassword    === false
     ) {
       return false;
     }
@@ -74,7 +69,6 @@ export default class RegistrationFields extends React.Component {
 
   handleEmailChange(e) {
     let validEmail = this.validateEmail(e.target.value);
-    console.log("valid email: " + validEmail);
 
     this.setState({
       email : e.target.value,
@@ -94,18 +88,6 @@ export default class RegistrationFields extends React.Component {
 
     this.setState({
       validPassword : matching
-    });
-
-  }
-
-  handleBirthdayChange(e) {
-    let dateOfBirth = e.target.value;
-    let validDateOfBirth = /^\d\d\d\d-\d\d-\d\d$/.test(dateOfBirth);
-    console.log("validDOB: " + validDateOfBirth);
-
-    this.setState({
-      dateOfBirth : dateOfBirth,
-      validDateOfBirth : validDateOfBirth
     });
   }
 
@@ -133,7 +115,6 @@ export default class RegistrationFields extends React.Component {
     let isValid = this.verifyData();
 
     if (isValid) {
-      console.log("good data", this.state);
       // make response promise
       APIRequest.post({
         api: "LeagueSpot",
@@ -143,19 +124,18 @@ export default class RegistrationFields extends React.Component {
           last_name    : this.state.lastName,
           email        : this.state.email,
           password     : this.state.password,
-          dob          : this.state.dateOfBirth,
           country      : this.state.country,
           state        : this.state.state,
-          city         : this.state.city
+          city         : this.state.city,
+          dob          : "1994-03-22"
         }
       }).then((resp) => {
         that.props.nextStep();
       }).catch((error) => {
         console.log("Error making request: ", error);
-        alert("Please make sure all fields have valid information and the correct formatting.");
+        alert(error.responseText);
       });
     } else {
-      console.log("bad/missing data");
       alert("Please fill in all fields.");
     }
   }
@@ -179,11 +159,6 @@ export default class RegistrationFields extends React.Component {
           <label>Password</label>
           <input type="password" className="inputPair first" ref="password" placeholder="Password"  onChange={this.handlePasswordChange.bind(this)} />
           <input type="password" className="inputPair last" ref="confirmPassword" placeholder="Confirm Password"  onChange={this.handleConfirmPasswordChange.bind(this)}/>
-        </div>
-
-        <div className="row">
-          <label>Birthday</label>
-          <input type="text" ref="birthday" placeholder="YYYY-MM-DD"  onChange={this.handleBirthdayChange.bind(this)} />
         </div>
 
         <div className="row">
