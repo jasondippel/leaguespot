@@ -29,6 +29,8 @@ footer {
   text-align: right;
   border-bottom: 1px solid #26a600;
   padding: 2px;
+  padding-left: 80px;
+  padding-right: 80px;
 }
 
 Link,
@@ -40,7 +42,7 @@ Link:focus {
 }
 
 .container {
-  min-height: calc(100vh - 65px - 45px);
+  min-height: calc(100vh - 62px - 45px);
 }
 
 /* LOGO */
@@ -132,6 +134,34 @@ header nav.mainNav {
 }
 .whiteOutlineBtn:hover {
   background-color: #444;
+}
+.greenOutlineBtn {
+  color: #fff;
+  border: 1px solid #26a600;
+  background-color: transparent;
+}
+.greenOutlineBtn:hover {
+  background-color: #222;
+}
+.greenOutlineBtn.active {
+  background-color: #2fbb06;
+  border: none;
+}
+.greenSolidBtn {
+  color: #fff;
+  background-color: #26a600;
+  border: none;
+}
+.greenSolidBtn:hover {
+  background-color: #2fbb06;
+}
+.greenOutlineBtn.disabled {
+  color: #bbb;
+  background-color: #444;
+}
+.greenOutlineBtn.disabled:hover {
+  background-color: #444;
+  cursor: default;
 }
 
 /* POPUPS */
@@ -227,4 +257,68 @@ header nav.mainNav {
 .formLight .subtext {
   font-size: 0.75em;
   opacity: 0.6;
+}
+
+/* LOBBY */
+.darkContainer {
+  background-color: #141414;
+  min-height: calc(100vh - 62px - 45px);
+}
+.lobbyBanner {
+  color: #fff;
+  padding-top: 20px;
+  padding-left: 60px;
+  padding-right: 60px;
+}
+.lobbyBanner .title {
+  font-size: 1.3em;
+  width: 50%;
+  display: inline-block;
+}
+.lobbyBanner .buttons {
+  width: 50%;
+  display: inline-block;
+  text-align: right;
+}
+
+.leagueFilters,
+.leagueList {
+  margin-left: 60px;
+  margin-right: 60px;
+  background-color: rgb(47, 49, 55);
+  color: #fff;
+  padding: 5px;
+  margin-top: 1.5em;
+  border-radius: 2px;
+}
+
+.filterContainer {
+  width: calc(33% - 36px);
+  border-right: 1px solid #555;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: inline-block;
+  padding: 10px;
+  padding-left: 18px;
+  padding-right: 18px;
+}
+.filterContainer:last-of-type {
+  border-right: none;
+}
+
+.filterLabel {
+  display: inline-block;
+  min-width: 40px;
+  width: 30%;
+  text-align: center;
+  vertical-align: top;
+}
+.filterObject {
+  width: 70%;
+  display: inline-block;
+}
+
+.buttonGroup .btn,
+.buttonPair .btn {
+  width: 8em;
 }
