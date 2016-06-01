@@ -3,7 +3,7 @@ The web application for Team 13's FYDP project for the Software Engineering clas
 
 ## Setup
 1. Clone this repository
-2. Run `npm install`
+2. Run `npm install` and `npm install -s jquery`
 3. Run `webpack`. If you see a message saying `command not found: webpack`, you must first run `npm install -g webpack`.
 4. Open up the `index.html` file in your browser
 5. In order for any calls to the backend to work, you must have the [server](https://github.com/xKTSE/leaguespot-server) running.
