@@ -400,9 +400,15 @@ input:focus {
 .tableRow:last-of-type {
   margin-bottom: 0px;
 }
+.tableRow:hover {
+  background-color: #202020;
+}
 .noData {
   color: #999;
   text-align: center;
+}
+.tableRow.noData:hover {
+  background: #222;
 }
 .tableCell {
   box-sizing: border-box;
@@ -425,4 +431,7 @@ input:focus {
 }
 .tag:last-of-type {
   margin-right: 0px;
+}
+.tag:hover {
+  background-color: #2fbb06;
 }

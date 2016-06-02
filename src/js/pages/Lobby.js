@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router";
 import LeagueList from "../components/lobby/LeagueList";
 import LeagueFilters from "../components/lobby/LeagueFilters";
 
@@ -11,7 +12,7 @@ export default class Lobby extends React.Component {
           <div className="title">Lobby</div>
 
           <div className="buttons">
-            <button className="btn greenSolidBtn">Create League</button>
+            <Link to="/createLeague"><button className="btn greenSolidBtn">Create League</button></Link>
           </div>
         </div>
 

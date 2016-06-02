@@ -18,17 +18,6 @@ export default class LeagueFilters extends React.Component {
         </div>
 
         <div className="filterContainer">
-          <input className="searchBar" placeholder="Enter League Name"></input>
-          <div className="filterLabel">
-            <label>Privacy</label>
-          </div>
-          <div className="filterObject buttonGroup">
-            <button className="btn pair greenOutlineBtn active">Public</button>
-            <button className="btn pair greenOutlineBtn">Private</button>
-          </div>
-        </div>
-
-        <div className="filterContainer">
           <div className="filterLabel">
             <label>Size</label>
           </div>
@@ -38,6 +27,10 @@ export default class LeagueFilters extends React.Component {
             <button className="btn pair greenOutlineBtn">11-25</button>
             <button className="btn pair greenOutlineBtn">Over 25</button>
           </div>
+        </div>
+
+        <div className="filterContainer">
+          <input className="searchBar" placeholder="Search for League"></input>
         </div>
 
       </div>

@@ -15,7 +15,8 @@ import About from "./pages/About";
 import Registration from "./pages/Registration";
 import SignIn from "./pages/SignIn";
 import Lobby from "./pages/Lobby";
-import Upcoming from "./pages/Upcoming";
+import CreateLeague from "./pages/CreateLeague";
+import Dashboard from "./pages/Dashboard";
 import Inbox from "./pages/Inbox";
 
 const app = document.getElementById('app');
@@ -42,7 +43,8 @@ ReactDOM.render(
       <Route path="/login" name="login" component={SignIn} onEnter={requireNotAuth}></Route>
 
       <Route path="/lobby" name="lobby" component={Lobby}  onEnter={requireAuth}></Route>
-      <Route path="/upcoming" name="upcoming" component={Upcoming}  onEnter={requireAuth}></Route>
+      <Route path="/createLeague" name="createLeague" component={CreateLeague}  onEnter={requireAuth}></Route>
+      <Route path="/dashboard" name="dashboard" component={Dashboard}  onEnter={requireAuth}></Route>
       <Route path="/inbox" name="inbox" component={Inbox}  onEnter={requireAuth}></Route>
     </Route>
   </Router>,
