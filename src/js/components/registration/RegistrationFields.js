@@ -157,8 +157,8 @@ export default class RegistrationFields extends React.Component {
 
         <div className="row">
           <label>Password</label>
-          <input type="password" className="inputPair first" ref="password" placeholder="Password"  onChange={this.handlePasswordChange.bind(this)} />
-          <input type="password" className="inputPair last" ref="confirmPassword" placeholder="Confirm Password"  onChange={this.handleConfirmPasswordChange.bind(this)}/>
+          <input type="password" className="inputGroupTop" ref="password" placeholder="Password"  onChange={this.handlePasswordChange.bind(this)} />
+          <input type="password" className="inputGroupBottom" ref="confirmPassword" placeholder="Confirm Password"  onChange={this.handleConfirmPasswordChange.bind(this)}/>
         </div>
 
         <div className="row">
@@ -169,7 +169,7 @@ export default class RegistrationFields extends React.Component {
         </div>
 
         <div className="row">
-          <button className="btn submit" onClick={this.register.bind(this)}>Register</button>
+          <button className="btn submit full" onClick={this.register.bind(this)}>Register</button>
           <p className="subtext">Clicking "Register" confirms you are 18+ years of age.</p>
         </div>
       </div>
