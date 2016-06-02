@@ -1,4 +1,6 @@
 import React from "react";
+import LeagueList from "../components/lobby/LeagueList";
+import LeagueFilters from "../components/lobby/LeagueFilters";
 
 export default class Lobby extends React.Component {
   render() {
@@ -13,52 +15,9 @@ export default class Lobby extends React.Component {
           </div>
         </div>
 
-        <div className="leagueFilters">
+        <LeagueFilters />
 
-          <div className="filterContainer">
-            <div className="filterLabel">
-              <label>Sport</label>
-            </div>
-            <div className="filterObject buttonGroup">
-              <button className="btn greenOutlineBtn active">All</button>
-              <button className="btn greenOutlineBtn">Basketball</button>
-              <button className="btn greenOutlineBtn disabled" disabled>Hockey</button>
-              <button className="btn greenOutlineBtn disabled" disabled>Soccer</button>
-            </div>
-          </div>
-
-          <div className="filterContainer">
-            <div className="filterPair">
-              <label>Privacy</label>
-              <div className="buttonPair">
-                <button className="btn greenOutlineBtn active">Public</button>
-                <button className="btn greenOutlineBtn">Private</button>
-              </div>
-            </div>
-            <div className="filterPair buttonPair">
-              <button className="btn greenOutlineBtn active">All</button>
-              <button className="btn greenOutlineBtn">My Leagues</button>
-            </div>
-          </div>
-
-          <div className="filterContainer">
-            <div className="filterLabel">
-              <label>Size</label>
-            </div>
-            <div className="filterObject buttonGroup">
-              <button className="btn greenOutlineBtn active">All</button>
-              <button className="btn greenOutlineBtn">10 & Under</button>
-              <button className="btn greenOutlineBtn">11-25</button>
-              <button className="btn greenOutlineBtn">Over 25</button>
-            </div>
-          </div>
-
-        </div>
-
-        <div className="leagueList">
-          League List
-        </div>
-
+        <LeagueList />
 
       </div>
     );

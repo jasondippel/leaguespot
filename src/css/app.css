@@ -127,6 +127,36 @@ header nav.mainNav {
   outline: 0;
   box-shadow: 0;
 }
+.buttonGroup .btn {
+  margin: 1px;
+  border-radius: 0px;
+  border: 0px;
+}
+.buttonGroup .btn.pair {
+  width: calc(50% - 2px);
+  min-width: 6em;
+  display: inline-block;
+}
+/*.buttonGroup .btn {
+  width: 8em;
+}*/
+/*.btnGroup .btn.top {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+.btnGroup .btn.bottom {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+.btnGroup .btn.left {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px
+}
+.btnGroup .btn.right {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px
+}*/
+
 .whiteOutlineBtn {
   color: #fff;
   border: 1px solid #f2f2f2;
@@ -138,10 +168,10 @@ header nav.mainNav {
 .greenOutlineBtn {
   color: #fff;
   border: 1px solid #26a600;
-  background-color: transparent;
+  background-color: #222;
 }
 .greenOutlineBtn:hover {
-  background-color: #222;
+  background-color: #1c1c1c;
 }
 .greenOutlineBtn.active {
   background-color: #2fbb06;
@@ -207,7 +237,7 @@ header nav.mainNav {
   padding: 6px;
   width: calc(100% - 5px - 12px);
 }
-.formLight input:focus {
+input:focus {
   outline-color: rgba(15, 184, 0, 0.25);
   outline-width: 2px;
 }
@@ -261,7 +291,7 @@ header nav.mainNav {
 
 /* LOBBY */
 .darkContainer {
-  background-color: #141414;
+  background-color: #171717;
   min-height: calc(100vh - 62px - 45px);
 }
 .lobbyBanner {
@@ -301,6 +331,8 @@ header nav.mainNav {
   padding: 10px;
   padding-left: 18px;
   padding-right: 18px;
+  vertical-align: top;
+  height: 75px;
 }
 .filterContainer:last-of-type {
   border-right: none;
@@ -317,8 +349,80 @@ header nav.mainNav {
   width: 70%;
   display: inline-block;
 }
+.searchBar {
+  text-align: center;
+  width: 95%;
+  color: #fff;
+  display: block;
+  padding: 6px;
+  margin: auto;
+  margin-bottom: 10px;
+  font-size: 1em;
+  border: 1px solid rgba(38, 166, 0, 0.6);
+  border-radius: 2px;
+  background-color: #222;
+}
 
-.buttonGroup .btn,
-.buttonPair .btn {
-  width: 8em;
+
+/* TABLE */
+.table {
+  width: 95%;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 2px;
+  background-color: #181818;
+}
+.tableHeader {
+  box-sizing: border-box;
+  font-size: 0.9em;
+  vertical-align: middle;
+  width: 100%;
+  margin: 0px;
+  background-color: #1c1c1c;
+}
+.headerTitle {
+  box-sizing: border-box;
+  display: inline-block;
+  padding: 15px;
+  text-align: center;
+}
+.tableRow {
+  box-sizing: border-box;
+  font-size: 0.9em;
+  vertical-align: middle;
+  width: 100%;
+  margin: 0px;
+  background-color: #222;
+  padding: 15px;
+  margin-bottom: 2px;
+}
+.tableRow:last-of-type {
+  margin-bottom: 0px;
+}
+.noData {
+  color: #999;
+  text-align: center;
+}
+.tableCell {
+  box-sizing: border-box;
+  display: inline-block;
+  text-align: center;
+}
+
+/* TAGS */
+.tagGroup {
+  font-size: 0.7em;
+}
+.tag {
+  border-radius: 2px;
+  display: inline-block;
+  box-sizing: border-box;
+  margin: 3px;
+  background-color: #444;
+  padding: 5px;
+  color: #fff;
+}
+.tag:last-of-type {
+  margin-right: 0px;
 }
