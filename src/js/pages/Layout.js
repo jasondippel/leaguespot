@@ -26,8 +26,8 @@ export default class Layout extends React.Component {
     this.props.history.push("/login");
   }
 
-  login(username) {
-    auth.setLoggedInUser(username);
+  login(username, email) {
+    auth.setLoggedInUser(username, email);
     this.setState({
       loggedIn: true
     });

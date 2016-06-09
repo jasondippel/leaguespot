@@ -58,7 +58,7 @@ export default class SignIn extends React.Component {
       }
     }).then((resp) => {
       if (resp.success) {
-        that.props.login(resp.user.first_name);
+        that.props.login(resp.user.first_name, that.state.email);
       }
       else {
         alert(resp.responseText);
@@ -70,20 +70,22 @@ export default class SignIn extends React.Component {
 
   render() {
     return (
-      <div className="popupLight">
-        <h1>Sign In</h1>
+      <div className="container padTop padBottom">
+        <div className="popupLight">
+          <h1>Sign In</h1>
 
-          <div className="formLight">
-            <div className="row">
-              <input type="text" className="inputGroupTop" ref="email" placeholder="your@email.com"  onChange={this.handleEmailChange.bind(this)} />
-              <input type="password" className="inputGroupBottom" ref="password" placeholder="Password"  onChange={this.handlePasswordChange.bind(this)} />
+            <div className="form formLight">
+              <div className="row">
+                <input type="text" className="inputGroupTop" ref="email" placeholder="your@email.com"  onChange={this.handleEmailChange.bind(this)} />
+                <input type="password" className="inputGroupBottom" ref="password" placeholder="Password"  onChange={this.handlePasswordChange.bind(this)} />
+              </div>
+
+              <div className="row">
+                <button className="btn submit full" onClick={this.signIn.bind(this)}>Sign In</button>
+              </div>
             </div>
 
-            <div className="row">
-              <button className="btn submit full" onClick={this.signIn.bind(this)}>Sign In</button>
-            </div>
-          </div>
-
+        </div>
       </div>
     );
   }

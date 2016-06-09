@@ -8,7 +8,7 @@ export default class Lobby extends React.Component {
     return (
       <div className="darkContainer">
 
-        <div className="lobbyBanner">
+        <div className="containerBanner">
           <div className="title">Lobby</div>
 
           <div className="buttons">

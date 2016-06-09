@@ -17,3 +17,11 @@ When committing, please make sure you only commit necessary files. If you add ga
 
 ## Resources
 https://github.com/reactjs/react-router-tutorial/tree/master/lessons/01-setting-up
+
+## Modules
+
+### React DatePicker
+https://hacker0x01.github.io/react-datepicker/
+
+### React TimePicker
+http://react-component.github.io/time-picker/

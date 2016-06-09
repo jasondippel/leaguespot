@@ -10,7 +10,7 @@
  //   console.log(res);
  // })
 
- import $ from "jquery";
+import $ from "jquery";
 
 
 export default class APIRequest {

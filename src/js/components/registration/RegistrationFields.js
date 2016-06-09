@@ -142,7 +142,7 @@ export default class RegistrationFields extends React.Component {
 
   render() {
     return (
-      <div className="formLight">
+      <div className="form formLight">
 
         <div className="row">
           <label>Name</label>
