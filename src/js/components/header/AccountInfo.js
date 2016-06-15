@@ -31,7 +31,7 @@ export default class HeaderMenu extends React.Component {
     if (auth.loggedIn()) {
       buttonGroup = (
         <span>
-          <label>{auth.getLoggedInUser()}</label>
+          <label>{auth.getLoggedInUserFirstName()}</label>
           <button className="btn whiteOutlineBtn" onClick={this.logout.bind(this)}>Logout</button>
         </span>
       );

@@ -9,7 +9,11 @@ export default class Table extends React.Component {
     return (
       <div className="table">
 
-        <TableHeader titles={this.props.titles} widths={this.props.widths} dataOrder={this.props.dataOrder} />
+        <TableHeader
+            titles={this.props.titles}
+            coloredHeader={this.props.coloredHeader}
+            widths={this.props.widths}
+            dataOrder={this.props.dataOrder} />
 
         {this.props.data.map(function(rowData) {
           return <TableRow

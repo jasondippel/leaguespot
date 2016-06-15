@@ -1,9 +1,42 @@
 import React from "react";
+import * as auth from "../scripts/PersistentUser";
 
 export default class Upcoming extends React.Component {
   render() {
     return (
-      <h2>Users Dashboard</h2>
+      <div className="darkContainer">
+
+        <div className="containerBanner">
+          <div className="title">User Dashboard</div>
+        </div>
+
+        <div className="dashboardContainer">
+          <div className="column3">
+
+            <div className="userInfo">
+              <div>
+                <img className="profileImage square" src="./img/no-profile-image.jpg"></img>
+              </div>
+              <label className="column12">{auth.getLoggedInUserFullName()}</label>
+            </div>
+
+          </div>
+
+          <div className="column9">
+            league stuffs
+          </div>
+
+          <div className="column3">
+            Upcoming
+          </div>
+
+          <div className="column9">
+            Sub inbox
+          </div>
+        </div>
+
+
+      </div>
     );
   }
 }

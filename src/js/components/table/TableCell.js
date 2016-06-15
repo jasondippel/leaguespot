@@ -37,6 +37,23 @@ export default class TableCell extends React.Component {
     );
   }
 
+  _createChangeLabel(number) {
+    let numberOnly = Math.abs(number);
+    let sign = number < 0 ? "-" : "+";
+
+    // zero case
+    if(number === 0) {
+      return "-";
+    }
+
+    return (
+      <span className={ sign === "-" ? "change negative" : "change positive"}>
+        <span className="sign">{sign}</span>
+        <span className="number">{numberOnly}</span>
+      </span>
+    );
+  }
+
   render() {
     let that = this;
     let contents;
@@ -52,6 +69,9 @@ export default class TableCell extends React.Component {
         break;
       case "tags":
         contents = this._createTags(this.props.value);
+        break;
+      case "numerical_change":
+        contents = this._createChangeLabel(this.props.value);
         break;
       default: /* text */
         contents = this.props.value;

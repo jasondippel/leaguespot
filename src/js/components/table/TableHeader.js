@@ -13,9 +13,17 @@ export default class TableHeader extends React.Component {
     let that = this;
 
     return (
-      <div className="tableHeader">
+      <div className={that.props.coloredHeader ? "tableHeader colored" : "tableHeader" }>
         {this.props.dataOrder.map(function(key) {
-          return <div className="headerTitle" style={ {width: that.props.widths[key]+"%"} }>{that.props.titles[key]}</div>
+          return (
+            <div
+                className="headerTitle"
+                style={ {width: that.props.widths[key]+"%"} }>
+
+                {that.props.titles[key]}
+
+            </div>
+          );
         })}
       </div>
     );

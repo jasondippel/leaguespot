@@ -58,7 +58,7 @@ export default class SignIn extends React.Component {
       }
     }).then((resp) => {
       if (resp.success) {
-        that.props.login(resp.user.first_name, that.state.email);
+        that.props.login(resp.user.first_name, resp.user.last_name, that.state.email);
       }
       else {
         alert(resp.responseText);
@@ -70,7 +70,7 @@ export default class SignIn extends React.Component {
 
   render() {
     return (
-      <div className="container padTop padBottom">
+      <div className="container padTop">
         <div className="popupLight">
           <h1>Sign In</h1>
 
