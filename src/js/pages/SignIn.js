@@ -78,7 +78,7 @@ export default class SignIn extends React.Component {
       that.setState({
         failedAttempt: true,
         failureMessage: "Unable to handle request, please try again later"
-      })
+      });
     });
   }
 

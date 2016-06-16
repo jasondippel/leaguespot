@@ -14,7 +14,9 @@ export default class RegistrationFields extends React.Component {
       validPassword     : false,
       country           : "",
       state             : "",
-      city              : ""
+      city              : "",
+      failedAttempt     : false,
+      failureMessage    : ""
     };
   }
 
@@ -130,19 +132,39 @@ export default class RegistrationFields extends React.Component {
           dob          : "1994-03-22"
         }
       }).then((resp) => {
-        that.props.nextStep();
+        if(resp.success) {
+          that.props.nextStep();
+        } else {
+          that.setState({
+            failedAttempt: true,
+            failureMessage: resp.message
+          });
+        }
       }).catch((error) => {
-        console.log("Error making request: ", error);
-        alert(error.responseText);
+        that.setState({
+          failedAttempt: true,
+          failureMessage: "Unable to handle request, please try again later"
+        });
       });
     } else {
-      alert("Please fill in all fields.");
+      this.setState({
+        failedAttempt: true,
+        failureMessage: "Please fill in all fields correctly"
+      });
     }
   }
 
   render() {
+    let that = this;
+
     return (
       <div className="form formLight">
+
+        <div className="row">
+          { that.state.failedAttempt ?
+              (<span className="failureMessage">{that.state.failureMessage}</span>) : ""
+          }
+        </div>
 
         <div className="row">
           <label>Name</label>
