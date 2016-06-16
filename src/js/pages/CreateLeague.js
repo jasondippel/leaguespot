@@ -12,18 +12,18 @@ export default class CreateLeague extends React.Component {
     let adminEmail = auth.getLoggedInUserEmail();
 
     this.state = {
-      step            : 1,
-      inviteEmails    : [""],
-      fleague_name    : null,
-      fleague_admins  : [adminEmail],
-      sport           : "Basketball",
-      pro_leagues     : [],
-      contest_type    : "League",
-      privacy_mode    : "public",
-      league_size     : 3,
-      draft_date      : moment(),
-      draft_time      : null,
-      settings        : { draft_mode : "auto" }
+      step                : 1,
+      inviteEmails        : [""],
+      fleague_name        : null,
+      fleague_admins      : { adminEmail: "admin" },
+      sport               : "Basketball",
+      pro_leagues         : [],
+      contest_type        : "League",
+      privacy_mode        : "public",
+      league_size_limit   : 3,
+      draft_date          : moment(),
+      draft_time          : null,
+      settings            : { draft_mode : "auto" }
     };
   }
 
@@ -70,7 +70,7 @@ export default class CreateLeague extends React.Component {
 
   handleLeagueSizeChange(e) {
     this.setState({
-      league_size: e.target.value
+      league_size_limit: e.target.value
     })
   }
 
