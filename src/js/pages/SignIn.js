@@ -9,7 +9,9 @@ export default class SignIn extends React.Component {
     super()
     this.state = {
       email    : "",
-      password : ""
+      password : "",
+      failedAttempt: false,
+      failureMessage: ""
     };
   }
 
@@ -38,13 +40,19 @@ export default class SignIn extends React.Component {
   signIn() {
     // make sure email is valid
     if(!this.validEmail(this.state.email)) {
-      alert("Please enter a valid email.");
+      this.setState({
+        failedAttempt: true,
+        failureMessage: "Please enter a valid email"
+      });
       return;
     }
 
     // make sure they've entered a password
     if(this.state.password === "") {
-      alert("Please enter a password.");
+      this.setState({
+        failedAttempt: true,
+        failureMessage: "Please enter a password"
+      });
       return;
     }
 
@@ -61,20 +69,33 @@ export default class SignIn extends React.Component {
         that.props.login(resp.user.first_name, resp.user.last_name, that.state.email);
       }
       else {
-        alert(resp.responseText);
+        that.setState({
+          failedAttempt: true,
+          failureMessage: "Invalid email or password"
+        });
       }
     }).catch((error) => {
-      console.log("Error making request: ", error);
+      that.setState({
+        failedAttempt: true,
+        failureMessage: "Unable to handle request, please try again later"
+      })
     });
   }
 
   render() {
+    let that = this;
+
     return (
       <div className="container padTop">
         <div className="popupLight">
           <h1>Sign In</h1>
 
             <div className="form formLight">
+              <div className="row">
+                { that.state.failedAttempt ?
+                    (<span className="failureMessage">{that.state.failureMessage}</span>) : ""
+                }
+              </div>
               <div className="row">
                 <input type="text" className="inputGroupTop" ref="email" placeholder="your@email.com"  onChange={this.handleEmailChange.bind(this)} />
                 <input type="password" className="inputGroupBottom" ref="password" placeholder="Password"  onChange={this.handlePasswordChange.bind(this)} />

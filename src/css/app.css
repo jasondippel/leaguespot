@@ -59,6 +59,11 @@ Link:focus {
   padding-bottom: 1em;
 }
 
+.failureMessage {
+  color: rgb(210, 0, 13);
+  font-size: 0.8em;
+}
+
 /* LOGO */
 .logoTitle {
   font-family: 'Lobster', cursive;
