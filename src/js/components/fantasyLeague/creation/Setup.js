@@ -3,10 +3,7 @@ import DatePicker from "react-datepicker";
 import TimePicker from 'rc-time-picker';
 import TimePickerLocale from 'rc-time-picker/lib/locale/en_US';
 import moment from "moment";
-
-import APIRequestClass from "../../../scripts/APIRequest";
-
-const APIRequest = new APIRequestClass();
+import APIRequest from "../../../scripts/APIRequest";
 
 export default class Setup extends React.Component {
   constructor() {

@@ -3,17 +3,10 @@
  *
  */
 
- // $.post('http://localhost:3000/login', {
- //   email: "leaguespot.team@gmail.com",
- //   password: "asdf"
- // }, function(res) {
- //   console.log(res);
- // })
-
 import $ from "jquery";
 
 
-export default class APIRequest {
+class APIRequest {
   constructor() {
     this.sportRadarAPI = "Sports Radar API";
     this.sportRadarKey = "1234abc";
@@ -62,11 +55,9 @@ export default class APIRequest {
 
       $.post(url, options.data)
       .success( (data) => {
-        console.log("post success");
         resolve(data);
       })
       .fail( (err) => {
-        console.log("post fail");
         reject(err);
       });
 
@@ -74,3 +65,6 @@ export default class APIRequest {
   }
 
 }
+
+const apiRequest = new APIRequest;
+export default apiRequest;

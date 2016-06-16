@@ -1,8 +1,7 @@
 import React from "react";
 
 import * as view from "../../scripts/ActiveView";
-import APIRequestClass from "../../scripts/APIRequest";
-const APIRequest = new APIRequestClass();
+import APIRequest from "../../scripts/APIRequest";
 
 export default class AddUsers extends React.Component {
   constructor() {

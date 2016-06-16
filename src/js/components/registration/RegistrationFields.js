@@ -1,6 +1,5 @@
 import React from "react";
-import APIRequestClass from "../../scripts/APIRequest";
-const APIRequest = new APIRequestClass();
+import APIRequest from "../../scripts/APIRequest";
 
 export default class RegistrationFields extends React.Component {
   constructor() {

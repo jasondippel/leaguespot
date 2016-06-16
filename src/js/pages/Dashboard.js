@@ -1,5 +1,5 @@
 import React from "react";
-import * as auth from "../scripts/PersistentUser";
+import UserStore from "../stores/UserStore";
 
 export default class Upcoming extends React.Component {
   render() {
@@ -17,7 +17,7 @@ export default class Upcoming extends React.Component {
               <div>
                 <img className="profileImage square" src="./img/no-profile-image.jpg"></img>
               </div>
-              <label className="column12">{auth.getLoggedInUserFullName()}</label>
+              <label className="column12">{UserStore.getFullName()}</label>
             </div>
 
           </div>
