@@ -1,7 +1,7 @@
 import React from "react";
+import UserStore from "../stores/UserStore";
 import Setup from "../components/fantasyLeague/creation/Setup";
 import AddUsers from "../components/fantasyLeague/AddUsers";
-import * as auth from "../scripts/PersistentUser";
 import * as activeView from "../scripts/ActiveView";
 import moment from "moment";
 
@@ -9,13 +9,11 @@ export default class CreateLeague extends React.Component {
   constructor() {
     super()
 
-    let adminEmail = auth.getLoggedInUserEmail();
-
     this.state = {
       step                : 1,
       inviteEmails        : [""],
       fleague_name        : null,
-      fleague_admins      : { adminEmail: "admin" },
+      fleague_admins      : {},
       sport               : "Basketball",
       pro_leagues         : [],
       contest_type        : "League",
@@ -25,6 +23,21 @@ export default class CreateLeague extends React.Component {
       draft_time          : null,
       settings            : { draft_mode : "auto" }
     };
+  }
+
+  componentWillMount() {
+    UserStore.on("change", this.setLeagueAdmin);
+  }
+
+  componentWillUnmount() {
+    UserStore.removeListener("change", this.setLeagueAdmin);
+  }
+
+  setLeagueAdmin() {
+    let adminEmail = UserStore.getEmail();
+    this.setState({
+      fleague_admins: { adminEmail: "admin"}
+    });
   }
 
   nextStep() {

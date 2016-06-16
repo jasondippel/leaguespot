@@ -4,6 +4,7 @@
  */
 
 import React from "react";
+import UserStore from "../stores/UserStore";
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
 import * as auth from "../scripts/PersistentUser";
@@ -12,12 +13,12 @@ export default class Layout extends React.Component {
   constructor() {
     super()
     this.state = {
-      loggedIn: auth.loggedIn()
+      loggedIn: UserStore.getLoggedIn()
     };
   }
 
   logout() {
-    auth.removeLoggedInUser();
+    auth.removeSessionId();
     this.setState({
       loggedIn: false
     });
@@ -26,8 +27,8 @@ export default class Layout extends React.Component {
     this.props.history.push("/login");
   }
 
-  login(username, email) {
-    auth.setLoggedInUser(username, email);
+  login(sessionId, user) {
+    auth.setSessionId(sessionId, user);
     this.setState({
       loggedIn: true
     });

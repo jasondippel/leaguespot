@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router";
+import UserStore from "../../stores/UserStore";
 import APIRequest from "../../scripts/APIRequest";
 import * as auth from "../../scripts/PersistentUser";
 
@@ -29,7 +30,7 @@ export default class HeaderMenu extends React.Component {
     if (auth.loggedIn()) {
       buttonGroup = (
         <span>
-          <label>{auth.getLoggedInUserFirstName()}</label>
+          <label>{UserStore.getFirstName()}</label>
           <button className="btn whiteOutlineBtn" onClick={this.logout.bind(this)}>Logout</button>
         </span>
       );

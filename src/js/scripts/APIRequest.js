@@ -3,13 +3,6 @@
  *
  */
 
- // $.post('http://localhost:3000/login', {
- //   email: "leaguespot.team@gmail.com",
- //   password: "asdf"
- // }, function(res) {
- //   console.log(res);
- // })
-
 import $ from "jquery";
 
 
@@ -62,11 +55,9 @@ class APIRequest {
 
       $.post(url, options.data)
       .success( (data) => {
-        console.log("post success");
         resolve(data);
       })
       .fail( (err) => {
-        console.log("post fail");
         reject(err);
       });
 
