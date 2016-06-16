@@ -1,8 +1,6 @@
 import React from "react";
-import APIRequestClass from "../../scripts/APIRequest";
+import APIRequest from "../../scripts/APIRequest";
 import Table from "../table/Table";
-
-const APIRequest = new APIRequestClass();
 
 export default class Roster extends React.Component {
   constructor() {

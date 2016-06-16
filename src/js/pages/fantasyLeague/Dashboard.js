@@ -1,11 +1,9 @@
 import React from "react";
-import APIRequestClass from "../../scripts/APIRequest";
+import APIRequest from "../../scripts/APIRequest";
 import Standings from "../../components/fantasyLeague/Standings";
 import Roster from "../../components/fantasyLeague/Roster";
 import * as auth from "../../scripts/PersistentUser";
 import * as activeView from "../../scripts/ActiveView";
-
-const APIRequest = new APIRequestClass();
 
 export default class Dashboard extends React.Component {
   constructor() {

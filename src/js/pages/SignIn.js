@@ -1,8 +1,6 @@
 import React from "react";
-import APIRequestClass from "../scripts/APIRequest";
+import APIRequest from "../scripts/APIRequest";
 import * as auth from "../scripts/PersistentUser";
-
-const APIRequest = new APIRequestClass();
 
 export default class SignIn extends React.Component {
   constructor() {

@@ -13,7 +13,7 @@
 import $ from "jquery";
 
 
-export default class APIRequest {
+class APIRequest {
   constructor() {
     this.sportRadarAPI = "Sports Radar API";
     this.sportRadarKey = "1234abc";
@@ -74,3 +74,6 @@ export default class APIRequest {
   }
 
 }
+
+const apiRequest = new APIRequest;
+export default apiRequest;
