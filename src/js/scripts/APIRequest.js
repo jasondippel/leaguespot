@@ -5,6 +5,8 @@
 
 import $ from "jquery";
 
+import axios from "axios";
+var axiosInstance = axios.create();
 
 class APIRequest {
   constructor() {
@@ -53,11 +55,96 @@ class APIRequest {
       //determine url for desired API
       let url = that._constructUrl(options.api, options.apiExt);
 
-      $.post(url, options.data)
-      .success( (data) => {
+      // $.post(url, options.data)
+      // .success( (data) => {
+      //   resolve(data);
+      // })
+      // .fail( (err) => {
+      //   reject(err);
+      // });
+
+      axiosInstance.post(url, options.data)
+      .then( (response) => {
         resolve(data);
       })
-      .fail( (err) => {
+      .catch( (err) => {
+        console.log(err);
+        reject(err);
+      });
+
+    });
+  }
+
+
+  /**
+   * A function that makes a GET request to the specified API
+   *
+   * @param {object} options
+   *        {string} options.api - which API to make request to ("LeagueSpot", "SportRadar")
+   * @return {promise} - promise that will be resolved when request completed
+   */
+  get(options) {
+    let that = this;
+    return new Promise(function(resolve, reject) {
+      //determine url for desired API
+      let url = that._constructUrl(options.api, options.apiExt);
+
+      axiosInstance.get(url)
+      .then( (response) => {
+        resolve(data);
+      })
+      .catch( (err) => {
+        reject(err);
+      });
+
+    });
+  }
+
+
+  /**
+   * A function that makes a PUT request to the specified API
+   *
+   * @param {object} options
+   *        {string} options.api - which API to make request to ("LeagueSpot", "SportRadar")
+   *        {object} options.data - the data to be passed in the request
+   * @return {promise} - promise that will be resolved when request completed
+   */
+  put(options) {
+    let that = this;
+    return new Promise(function(resolve, reject) {
+      //determine url for desired API
+      let url = that._constructUrl(options.api, options.apiExt);
+
+      axiosInstance.put(url, options.data)
+      .then( (response) => {
+        resolve(data);
+      })
+      .catch( (err) => {
+        reject(err);
+      });
+
+    });
+  }
+
+
+  /**
+   * A function that makes a POST request to the specified API
+   *
+   * @param {object} options
+   *        {string} options.api - which API to make request to ("LeagueSpot", "SportRadar")
+   * @return {promise} - ajax request promise that will be resolved when request completed
+   */
+  delete(options) {
+    let that = this;
+    return new Promise(function(resolve, reject) {
+      //determine url for desired API
+      let url = that._constructUrl(options.api, options.apiExt);
+
+      axiosInstance.delete(url)
+      .then( (response) => {
+        resolve(data);
+      })
+      .catch( (err) => {
         reject(err);
       });
 
