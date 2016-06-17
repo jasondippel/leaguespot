@@ -45,7 +45,7 @@ class APIRequest {
    * @param {object} options
    *        {string} options.api - which API to make request to ("LeagueSpot", "SportRadar")
    *        {object} options.data - the data to be passed in the request
-   * @return {promise} - ajax request promise that will be resolved when request completed
+   * @return {promise} - promise that will be resolved when request completed
    */
   post(options) {
     let that = this;
@@ -61,6 +61,88 @@ class APIRequest {
         reject(err);
       });
 
+    });
+  }
+
+
+  /**
+   * A function that makes a GET request to the specified API
+   *
+   * @param {object} options
+   *        {string} options.api - which API to make request to ("LeagueSpot", "SportRadar")
+   * @return {promise} - promise that will be resolved when request completed
+   */
+  get(options) {
+    let that = this;
+    return new Promise(function(resolve, reject) {
+      //determine url for desired API
+      let url = that._constructUrl(options.api, options.apiExt);
+
+      $.get(url)
+      .success( (data) => {
+        resolve(data);
+      })
+      .fail( (err) => {
+        reject(err);
+      });
+
+    });
+  }
+
+
+  /**
+   * A function that makes a PUT request to the specified API
+   *
+   * @param {object} options
+   *        {string} options.api - which API to make request to ("LeagueSpot", "SportRadar")
+   *        {object} options.data - the data to be passed in the request
+   * @return {promise} - promise that will be resolved when request completed
+   */
+  put(options) {
+    let that = this;
+    return new Promise(function(resolve, reject) {
+      //determine url for desired API
+      let url = that._constructUrl(options.api, options.apiExt);
+
+      $.ajax({
+        url: url,
+        type: "PUT",
+        data: options.data,
+        success: (data) => {
+          resolve(data);
+        },
+        error: (err) => {
+          reject(err);
+        }
+      });
+
+    });
+  }
+
+
+  /**
+   * A function that makes a POST request to the specified API
+   *
+   * @param {object} options
+   *        {string} options.api - which API to make request to ("LeagueSpot", "SportRadar")
+   * @return {promise} - ajax request promise that will be resolved when request completed
+   */
+  delete(options) {
+    let that = this;
+    return new Promise(function(resolve, reject) {
+      //determine url for desired API
+      let url = that._constructUrl(options.api, options.apiExt);
+
+      $.ajax({
+        url: url,
+        type: "DELETE",
+        success: (data) => {
+          resolve(data);
+        },
+        error: (err) => {
+          reject(err);
+        }
+      });
     });
   }
 
