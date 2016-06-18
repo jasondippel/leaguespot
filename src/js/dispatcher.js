@@ -1,3 +1,5 @@
 import { Dispatcher } from "flux";
 
-export default new Dispatcher;
+let dispatcher = new Dispatcher;
+
+export default dispatcher;

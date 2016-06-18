@@ -6,6 +6,7 @@
 
 import UserStore from "../stores/UserStore";
 import * as UserActions from "../actions/UserActions";
+import jwtDecode from "jwt-decode";
 import APIRequest from "./APIRequest";
 let LeagueSpotSessionIdKey = "LeagueSpot-active-user-session-id"
 
@@ -34,35 +35,13 @@ export function loggedIn() {
     return true;
   }
   else {
+    // If we have the token, we're logged in still (don't have expiry set). The
+    // decoded JWT has all the user info in it, so can just pass that to the
+    // UserStore.
+    let decodedJWT = jwtDecode(sessionId);
+    setSessionId(sessionId, decodedJWT);
 
-    APIRequest.post({
-      api: "LeagueSpot",
-      apiExt: "/users/reauth",
-      data: {
-        session_id: sessionId
-      }
-    }).then((resp) => {
-      if (resp.success) {
-        setSessionId(resp.sessionId, resp.user);
-        return true;
-      }
-      else {
-        removeSessionId();
-        return false;
-      }
-    }).catch((msg) => {
-      if(msg.success === false) {
-        console.log("User session no longer valid");
-      } else {
-        console.log("Error: server failed to check if user is currently logged in");
-        console.log(msg);
-      }
-
-      // Just act like user not logged in
-      removeSessionId();
-      return false;
-    });
-
+    return true;
   }
 
 }
