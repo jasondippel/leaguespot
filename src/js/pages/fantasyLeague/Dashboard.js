@@ -4,17 +4,38 @@ import Standings from "../../components/fantasyLeague/Standings";
 import Roster from "../../components/fantasyLeague/Roster";
 import * as auth from "../../scripts/PersistentUser";
 import * as activeView from "../../scripts/ActiveView";
+import FantasyLeagueStore from "../../stores/FantasyLeagueStore";
 
 export default class Dashboard extends React.Component {
   constructor() {
     super()
+
+    this.state = {
+      fantasyLeague: null
+    }
+  }
+
+  componentWillMount() {
+    FantasyLeagueStore.on("change", this.setActiveFantasyLeague.bind(this));
+  }
+
+  componentWillUnmount() {
+    FantasyLeagueStore.removeListener("change", this.setActiveFantasyLeague.bind(this));
+  }
+
+  setActiveFantasyLeague() {
+    this.setState({
+      fantasyLeague: FantasyLeagueStore.getActiveFantasyLeague()
+    });
   }
 
   render() {
+    let that = this;
+
     return (
       <div className="darkContainer padBottom">
         <div className="containerBanner">
-          <div className="title">Dashboard - { activeView.getActiveViewingLeague() }</div>
+          <div className="title">Dashboard - { that.state.fantasyLeague.fleague_name }</div>
         </div>
 
         <div className="column6">
@@ -23,7 +44,7 @@ export default class Dashboard extends React.Component {
               <div className="title">League Standings</div>
             </div>
 
-            <Standings leagueId="12345" wide={true}/>
+            <Standings leagueId={that.state.fantasyLeague.fleague_id} wide={true}/>
           </div>
         </div>
 

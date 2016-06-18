@@ -89,6 +89,16 @@ export default class Setup extends React.Component {
             </div>
           </div>
 
+        </div>
+
+        <div className="column column3">
+          <div className="row">
+            <label>League Size</label>
+            <input type="text" className="noPadding column12" ref="city"
+              value={this.props.state.league_size_limit}
+              onChange={this.props.handleLeagueSizeChange} />
+          </div>
+
           <div className="row">
             <label>Privacy</label>
             <div className="formObject buttonGroup">
@@ -112,17 +122,8 @@ export default class Setup extends React.Component {
               </button>
             </div>
           </div>
-        </div>
 
-        <div className="column column3">
-          <div className="row">
-            <label>League Size</label>
-            <input type="text" className="noPadding column12" ref="city"
-              value={this.props.state.league_size}
-              onChange={this.props.handleLeagueSizeChange} />
-          </div>
-
-          <div className="row">
+          { /*<div className="row">
             <label>Draft Date</label>
             <DatePicker
               selected={this.props.state.draft_date}
@@ -141,7 +142,7 @@ export default class Setup extends React.Component {
              className="noPadding column12"
              onChange={this.props.handleDraftTimeChange}
               />
-          </div>
+          </div> */}
         </div>
 
         <div className="row right">

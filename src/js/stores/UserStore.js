@@ -1,6 +1,5 @@
 import { EventEmitter } from "events";
 import * as auth from "../scripts/PersistentUser";
-import APIRequest from "../scripts/APIRequest";
 import dispatcher from "../dispatcher";
 
 class UserStore extends EventEmitter {
@@ -33,14 +32,23 @@ class UserStore extends EventEmitter {
   }
 
   getFirstName() {
+    if(!this.user) {
+      return "";
+    }
     return this.user.first_name;
   }
 
   getEmail() {
+    if(!this.user) {
+      return "";
+    }
     return this.user.email;
   }
 
   getFullName() {
+    if(!this.user) {
+      return "";
+    }
     return this.user.first_name + " " + this.user.last_name;
   }
 

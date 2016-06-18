@@ -17,6 +17,20 @@ export default class Layout extends React.Component {
     };
   }
 
+  componentWillMount() {
+    UserStore.on("change", this.setLoggedIn.bind(this));
+  }
+
+  componentWillUnmount() {
+    UserStore.removeListener("change", this.setLoggedIn.bind(this));
+  }
+
+  setLoggedIn() {
+    this.setState({
+      loggedIn: UserStore.getLoggedIn()
+    });
+  }
+
   logout() {
     auth.removeSessionId();
     this.setState({

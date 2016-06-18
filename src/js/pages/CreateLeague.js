@@ -1,42 +1,46 @@
 import React from "react";
 import UserStore from "../stores/UserStore";
+import FantasyLeagueActions from "../actions/FantasyLeagueActions";
 import Setup from "../components/fantasyLeague/creation/Setup";
 import AddUsers from "../components/fantasyLeague/AddUsers";
 import * as activeView from "../scripts/ActiveView";
+import APIRequest from "../scripts/APIRequest";
 import moment from "moment";
 
 export default class CreateLeague extends React.Component {
   constructor() {
-    super()
+    super();
+    let admin = UserStore.getEmail();
 
     this.state = {
       step                : 1,
       inviteEmails        : [""],
       fleague_name        : null,
-      fleague_admins      : {},
+      fleague_admins      : { admin : "admin"},
       sport               : "Basketball",
       pro_leagues         : [],
       contest_type        : "League",
       privacy_mode        : "public",
       league_size_limit   : 3,
-      draft_date          : moment(),
+      draft_date          : null,
       draft_time          : null,
+      status              : "in progress",
       settings            : { draft_mode : "auto" }
     };
   }
 
   componentWillMount() {
-    UserStore.on("change", this.setLeagueAdmin);
+    UserStore.on("change", this.setAdminUser.bind(this));
   }
 
   componentWillUnmount() {
-    UserStore.removeListener("change", this.setLeagueAdmin);
+    UserStore.removeListener("change", this.setAdminUser.bind(this));
   }
 
-  setLeagueAdmin() {
-    let adminEmail = UserStore.getEmail();
+  setAdminUser() {
+    let admin = UserStore.getEmail();
     this.setState({
-      fleague_admins: { adminEmail: "admin"}
+      fleague_admins: { admin : "admin"}
     });
   }
 
@@ -134,10 +138,39 @@ export default class CreateLeague extends React.Component {
 
   createLeague() {
     // TODO: actually make call
-    let leagueId = 1234; // temp value for testing
-    console.log("create league call goes here");
-    activeView.setActiveViewingLeague(this.state.fleague_name);
-    this.props.history.push("/fantasyLeague/dashboard");
+
+    APIRequest.post({
+      api: "LeagueSpot",
+      apiExt: "/fantasy_leagues/create",
+      data: {
+        fleague_name        : this.state.fleague_name,
+        fleague_admins      : this.state.fleague_admins,
+        sport               : this.state.sport,
+        pro_leagues         : this.state.pro_leagues,
+        contest_type        : this.state.contest_type,
+        privacy_mode        : this.state.privacy_mode,
+        league_size_limit   : this.state.league_size_limit,
+        // draft_date          : this.state.draft_date,
+        // draft_time          : this.state.draft_time,
+        status              : this.state.status,
+        settings            : this.state.settings
+      }
+    }).then((resp) => {
+      console.log("Response", resp);
+
+      if (resp.success) {
+        FantasyLeagueActions.setActiveFantasyLeague(resp.league);
+        activeView.setActiveViewingLeague(this.state.fleague_name);
+        this.props.history.push("/fantasyLeague/dashboard");
+      }
+      else {
+        alert("creation failed");
+        console.log("creation failed", resp);
+      }
+    }).catch((error) => {
+      alert("creation errored ");
+      console.log("creation errored", error);
+    });
   }
 
   render() {

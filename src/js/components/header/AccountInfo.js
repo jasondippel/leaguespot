@@ -5,6 +5,28 @@ import APIRequest from "../../scripts/APIRequest";
 import * as auth from "../../scripts/PersistentUser";
 
 export default class HeaderMenu extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      userFirstName: ""
+    }
+  }
+
+  componentWillMount() {
+    UserStore.on("change", this.setUserFirstName.bind(this));
+  }
+
+  componentWillUnmount() {
+    UserStore.removeListener("change", this.setUserFirstName.bind(this));
+  }
+
+  setUserFirstName() {
+    this.setState({
+      userFirstName: UserStore.getFirstName()
+    });
+  }
+
   logout() {
     let that = this;
 
@@ -30,7 +52,7 @@ export default class HeaderMenu extends React.Component {
     if (auth.loggedIn()) {
       buttonGroup = (
         <span>
-          <label>{UserStore.getFirstName()}</label>
+          <label>{this.state.userFirstName}</label>
           <button className="btn whiteOutlineBtn" onClick={this.logout.bind(this)}>Logout</button>
         </span>
       );

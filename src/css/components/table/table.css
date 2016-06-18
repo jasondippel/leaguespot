@@ -75,6 +75,9 @@
   text-align: center;
   font-size: bold;
 }
+.headerTitle.sortable {
+  cursor: pointer;
+}
 .tableRow {
   box-sizing: border-box;
   font-size: 0.9em;

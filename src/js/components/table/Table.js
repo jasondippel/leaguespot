@@ -13,7 +13,8 @@ export default class Table extends React.Component {
             titles={this.props.titles}
             coloredHeader={this.props.coloredHeader}
             widths={this.props.widths}
-            dataOrder={this.props.dataOrder} />
+            dataOrder={this.props.dataOrder}
+            sortColumn={this.props.sortColumn} />
 
         {this.props.data.map(function(rowData) {
           return <TableRow
