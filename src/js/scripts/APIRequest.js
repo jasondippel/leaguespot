@@ -4,6 +4,7 @@
  */
 
 import $ from "jquery";
+import * as auth from "./PersistentUser";
 
 
 class APIRequest {
@@ -52,6 +53,10 @@ class APIRequest {
     return new Promise(function(resolve, reject) {
       //determine url for desired API
       let url = that._constructUrl(options.api, options.apiExt);
+      if(!options.data) {
+        options.data = {};
+      }
+      options.data.token = auth.getSessionId();
 
       $.post(url, options.data)
       .success( (data) => {
@@ -70,6 +75,7 @@ class APIRequest {
    *
    * @param {object} options
    *        {string} options.api - which API to make request to ("LeagueSpot", "SportRadar")
+   *        {object} options.data - the data to be passed in the request
    * @return {promise} - promise that will be resolved when request completed
    */
   get(options) {
@@ -77,8 +83,12 @@ class APIRequest {
     return new Promise(function(resolve, reject) {
       //determine url for desired API
       let url = that._constructUrl(options.api, options.apiExt);
+      if(!options.data) {
+        options.data = {};
+      }
+      options.data.token = auth.getSessionId();
 
-      $.get(url)
+      $.get(url, options.data)
       .success( (data) => {
         resolve(data);
       })
@@ -103,6 +113,10 @@ class APIRequest {
     return new Promise(function(resolve, reject) {
       //determine url for desired API
       let url = that._constructUrl(options.api, options.apiExt);
+      if(!options.data) {
+        options.data = {};
+      }
+      options.data.token = auth.getSessionId();
 
       $.ajax({
         url: url,
@@ -125,6 +139,7 @@ class APIRequest {
    *
    * @param {object} options
    *        {string} options.api - which API to make request to ("LeagueSpot", "SportRadar")
+   *        {object} options.data - the data to be passed in the request
    * @return {promise} - ajax request promise that will be resolved when request completed
    */
   delete(options) {
@@ -132,10 +147,15 @@ class APIRequest {
     return new Promise(function(resolve, reject) {
       //determine url for desired API
       let url = that._constructUrl(options.api, options.apiExt);
+      if(!options.data) {
+        options.data = {};
+      }
+      options.data.token = auth.getSessionId();
 
       $.ajax({
         url: url,
         type: "DELETE",
+        data: options.data,
         success: (data) => {
           resolve(data);
         },

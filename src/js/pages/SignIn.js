@@ -64,7 +64,7 @@ export default class SignIn extends React.Component {
       }
     }).then((resp) => {
       if (resp.success) {
-        that.props.login(resp.sessionID, resp.user);
+        that.props.login(resp.token, resp.user);
       }
       else {
         that.setState({

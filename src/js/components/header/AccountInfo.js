@@ -9,7 +9,7 @@ export default class HeaderMenu extends React.Component {
     super();
 
     this.state = {
-      userFirstName: ""
+      userFirstName: UserStore.getFirstName()
     }
   }
 
