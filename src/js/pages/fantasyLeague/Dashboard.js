@@ -5,18 +5,26 @@ import Roster from "../../components/fantasyLeague/Roster";
 import * as auth from "../../scripts/PersistentUser";
 import * as activeView from "../../scripts/ActiveView";
 import FantasyLeagueStore from "../../stores/FantasyLeagueStore";
+import * as FantasyLeagueActions from "../../actions/FantasyLeagueActions";
+import LoadingScreen from "../LoadingScreen";
 
 export default class Dashboard extends React.Component {
   constructor() {
-    super()
+    super();
 
     this.state = {
-      fantasyLeague: null
+      fantasyLeague: FantasyLeagueStore.getActiveFantasyLeague()
     }
   }
 
   componentWillMount() {
     FantasyLeagueStore.on("change", this.setActiveFantasyLeague.bind(this));
+  }
+
+  componentDidMount() {
+    if(!this.state.fantasyLeague) {
+      FantasyLeagueActions.loadActiveFantasyLeague(this.props.params.fleagueId );
+    }
   }
 
   componentWillUnmount() {
@@ -31,6 +39,13 @@ export default class Dashboard extends React.Component {
 
   render() {
     let that = this;
+
+    // if fantasyLeague info isn't loaded yet, display loading page until it is
+    if(!this.state.fantasyLeague) {
+      return (
+        <LoadingScreen />
+      )
+    }
 
     return (
       <div className="darkContainer padBottom">

@@ -64,6 +64,17 @@ Link:focus {
   font-size: 0.8em;
 }
 
+.center {
+  text-align: center;
+}
+.spinner {
+  height: 1em;
+  margin: auto;
+}
+.spinner.fullPage {
+  padding-top: 30vh;
+}
+
 /* LOGO */
 .logoTitle {
   font-family: 'Lobster', cursive;
