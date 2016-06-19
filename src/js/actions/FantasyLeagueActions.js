@@ -11,3 +11,10 @@ export function setActiveFantasyLeague(league) {
     league: league
   });
 }
+
+export function loadActiveFantasyLeague(fleagueId) {
+  dispatcher.dispatch({
+    type: "FANTASY_LEAGUE_STORE_LOAD_ACTIVE_FANTASY_LEAGUE",
+    fleagueId: fleagueId
+  });
+}

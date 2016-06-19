@@ -23,7 +23,7 @@ class UserStore extends EventEmitter {
         break;
 
       default:
-        console.log("ERROR: UserStore: Unknown action type", action.type);
+        // console.log("ERROR: UserStore: Unknown action type", action.type);
     }
   }
 

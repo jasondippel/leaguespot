@@ -1,6 +1,6 @@
 import React from "react";
 import UserStore from "../stores/UserStore";
-import FantasyLeagueActions from "../actions/FantasyLeagueActions";
+import * as FantasyLeagueActions from "../actions/FantasyLeagueActions";
 import Setup from "../components/fantasyLeague/creation/Setup";
 import AddUsers from "../components/fantasyLeague/AddUsers";
 import * as activeView from "../scripts/ActiveView";
@@ -156,12 +156,9 @@ export default class CreateLeague extends React.Component {
         settings            : this.state.settings
       }
     }).then((resp) => {
-      console.log("Response", resp);
-
       if (resp.success) {
         FantasyLeagueActions.setActiveFantasyLeague(resp.league);
-        activeView.setActiveViewingLeague(this.state.fleague_name);
-        this.props.history.push("/fantasyLeague/dashboard");
+        this.props.history.push("/fantasyLeague/dashboard/" + resp.league.fleague_id);
       }
       else {
         alert("creation failed");
