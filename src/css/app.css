@@ -371,3 +371,20 @@ img.profileImage.square {
 .change.negative {
   color: #d91a1a;
 }
+
+.standardContainer {
+  top: 0;
+  vertical-align: top;
+  display: inline-block;
+  box-sizing: border-box;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.standardContainer.left {
+  padding-left: 30px;
+  padding-right: 15px;
+}
+.standardContainer.right {
+  padding-left: 15px;
+  padding-right: 30px;
+}

@@ -3,24 +3,32 @@ import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {cyanA400, green500} from 'material-ui/styles/colors';
-import Avatar from 'material-ui/Avatar';
-import AccountCircle from 'material-ui/svg-icons/action/account-circle';
-import AddCircle from 'material-ui/svg-icons/content/add-circle';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import {List, ListItem} from 'material-ui/List';
-import IconButton from 'material-ui/IconButton';
+import {Tabs, Tab} from 'material-ui/Tabs';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
+
+import PlayerList from '../components/player/playerList';
 
 export default class Inbox extends React.Component {
   constructor() {
     super();
+
+    this.state = {
+      open: false
+    };
   }
 
-  _test() {
-    alert("_test");
-  }
+  _handleOpenDialog = () => {
+    this.setState({open: true});
+  };
+
+  _handleCloseDialog = () => {
+    this.setState({open: false});
+  };
 
   _showPlayerInfo(event) {
-    alert("player info");
+    this._handleOpenDialog();
   }
 
   _addPlayer(event) {
@@ -32,33 +40,72 @@ export default class Inbox extends React.Component {
   render() {
     let that = this;
 
+    const actions = [
+      <FlatButton
+        label="Close"
+        primary={true}
+        onTouchTap={this._handleCloseDialog}
+      />
+    ];
+
     return (
       <div className="darkContainer">
         <div className="containerBanner">
+          <div className="title">Team Selection</div>
+        </div>
 
-          <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+        <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+          <div>
+            <div className="column7 standardContainer left">
 
-            <div className="column5">
+              <h3>Player Pool</h3>
 
-              <List>
-                <ListItem
-                  leftAvatar={<Avatar icon={ <AccountCircle /> } onTouchTap={that._showPlayerInfo} />}
-                  rightIcon={
-                    <AddCircle onTouchTap={that._addPlayer}
-                      hoverColor={green500}
-                      iconStyle={{width: '24px', height: '24px'}}
-                      style={{width: '32px', height: '32px', top: '0px'}}
-                      />
-                  }
-                  primaryText="Jon Doe"
-                  onTouchTap={that._showPlayerInfo}
-                />
-              </List>
+              <Tabs style={{backgroundColor: 'rgb(47, 49, 55)', selectedTextColor: cyanA400}}>
+                <Tab label="NBA" style={{backgroundColor: green500}} >
+                  <div>
+                    <PlayerList addPlayerOption={true} showPlayerInfo={that._showPlayerInfo.bind(this)} />
+                  </div>
+                </Tab>
+                <Tab label="WNBA" style={{backgroundColor: green500}} >
+                  <div>
+                    <PlayerList addPlayerOption={true} showPlayerInfo={that._showPlayerInfo.bind(this)} />
+                  </div>
+                </Tab>
+                <Tab label="NCAA Men's" style={{backgroundColor: green500}} >
+                  <div>
+                    <PlayerList addPlayerOption={true} showPlayerInfo={that._showPlayerInfo.bind(this)} />
+                  </div>
+                </Tab>
+              </Tabs>
 
             </div>
-          </MuiThemeProvider>
 
-        </div>
+            <div className="column5 standardContainer right">
+
+              <h3>Selected Team</h3>
+
+                <Tabs style={{backgroundColor: 'rgb(47, 49, 55)'}}>
+                  <Tab label="Roster" style={{backgroundColor: green500}} >
+                    <div>
+                      <PlayerList removePlayerOption={true} showPlayerInfo={that._showPlayerInfo.bind(that)} />
+                    </div>
+                  </Tab>
+                </Tabs>
+
+            </div>
+
+            <Dialog
+              actions={actions}
+              modal={false}
+              open={this.state.open}
+              onRequestClose={this._handleCloseDialog}
+            >
+              Player Info
+            </Dialog>
+
+          </div>
+        </MuiThemeProvider>
+
       </div>
     );
   }
