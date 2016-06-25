@@ -8,6 +8,8 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 
+import Scrollbars from 'react-custom-scrollbars';
+
 import PlayerList from '../components/player/playerList';
 
 export default class Inbox extends React.Component {
@@ -62,19 +64,19 @@ export default class Inbox extends React.Component {
 
               <Tabs style={{backgroundColor: 'rgb(47, 49, 55)', selectedTextColor: cyanA400}}>
                 <Tab label="NBA" style={{backgroundColor: green500}} >
-                  <div>
+                  <Scrollbars style={{ height: 300 }}>
                     <PlayerList addPlayerOption={true} showPlayerInfo={that._showPlayerInfo.bind(this)} />
-                  </div>
+                  </Scrollbars>
                 </Tab>
                 <Tab label="WNBA" style={{backgroundColor: green500}} >
-                  <div>
+                  <Scrollbars style={{ height: 300 }}>
                     <PlayerList addPlayerOption={true} showPlayerInfo={that._showPlayerInfo.bind(this)} />
-                  </div>
+                  </Scrollbars>
                 </Tab>
                 <Tab label="NCAA Men's" style={{backgroundColor: green500}} >
-                  <div>
+                  <Scrollbars style={{ height: 300 }}>
                     <PlayerList addPlayerOption={true} showPlayerInfo={that._showPlayerInfo.bind(this)} />
-                  </div>
+                  </Scrollbars>
                 </Tab>
               </Tabs>
 
@@ -86,9 +88,9 @@ export default class Inbox extends React.Component {
 
                 <Tabs style={{backgroundColor: 'rgb(47, 49, 55)'}}>
                   <Tab label="Roster" style={{backgroundColor: green500}} >
-                    <div>
+                    <Scrollbars style={{ height: 300 }}>
                       <PlayerList removePlayerOption={true} showPlayerInfo={that._showPlayerInfo.bind(that)} />
-                    </div>
+                    </Scrollbars>
                   </Tab>
                 </Tabs>
 

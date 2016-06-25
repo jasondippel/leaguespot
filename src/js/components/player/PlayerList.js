@@ -73,6 +73,34 @@ export default class PlayerListItem extends React.Component {
             primaryText="Jon Doe"
             onTouchTap={that._showPlayerInfo.bind(that)}
           />
+          <Divider />
+          <ListItem
+            leftAvatar={<Avatar icon={ <AccountCircle /> } onTouchTap={that._showPlayerInfo.bind(that)} />}
+            rightIcon={ rightIcon }
+            primaryText="Jon Doe"
+            onTouchTap={that._showPlayerInfo.bind(that)}
+          />
+          <Divider />
+          <ListItem
+            leftAvatar={<Avatar icon={ <AccountCircle /> } onTouchTap={that._showPlayerInfo.bind(that)} />}
+            rightIcon={ rightIcon }
+            primaryText="Jon Doe"
+            onTouchTap={that._showPlayerInfo.bind(that)}
+          />
+          <Divider />
+          <ListItem
+            leftAvatar={<Avatar icon={ <AccountCircle /> } onTouchTap={that._showPlayerInfo.bind(that)} />}
+            rightIcon={ rightIcon }
+            primaryText="Jon Doe"
+            onTouchTap={that._showPlayerInfo.bind(that)}
+          />
+          <Divider />
+          <ListItem
+            leftAvatar={<Avatar icon={ <AccountCircle /> } onTouchTap={that._showPlayerInfo.bind(that)} />}
+            rightIcon={ rightIcon }
+            primaryText="Jon Doe"
+            onTouchTap={that._showPlayerInfo.bind(that)}
+          />
         </List>
       </MuiThemeProvider>
     );
