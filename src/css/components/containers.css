@@ -1,0 +1,142 @@
+/*
+ *
+ * TODO: clean up the use of these containers and the naming patterns
+ */
+
+.popupLight,
+.popupDark {
+  width: 40%;
+  min-width: 28em;
+  margin: auto;
+  margin-top: 1em;
+  padding: 15px;
+  border-radius: 4px;
+  text-align: center;
+  t-webkit-transition: height 0.2s; /* For Safari 3.1 to 6.0 */
+  transition: height 0.2s;
+}
+.popupLight .success,
+.popupDark .success {
+  color: #26a600;
+}
+.popupLight {
+  border: 1px solid #000;
+}
+.popupDark {
+  border: 1px solid rgb(45, 47, 52);
+  background-color: rgb(47, 49, 55);
+}
+
+.popupDark.wide,
+.popupLight.wide {
+  width: 60%;
+}
+
+
+
+.darkContainer {
+  background-color: #171717;
+  min-height: calc(100vh - 62px - 45px);
+  color: #fff;
+  padding: 0px;
+  margin: 0px;
+}
+.containerBanner {
+  color: #fff;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 60px;
+  padding-right: 60px;
+}
+.containerBanner .title {
+  font-size: 1.5em;
+  width: 50%;
+  display: inline-block;
+}
+.containerBanner .buttons {
+  width: 50%;
+  display: inline-block;
+  text-align: right;
+}
+
+.leagueFilters,
+.leagueList {
+  margin-left: 60px;
+  margin-right: 60px;
+  background-color: rgb(47, 49, 55);
+  color: #fff;
+  padding: 5px;
+  border-radius: 2px;
+  margin-top: 1.5em;
+}
+
+.componentContainer.dark {
+  margin-left: 60px;
+  margin-right: 60px;
+  background-color: rgb(47, 49, 55);
+  color: #fff;
+  padding: 5px;
+  border-radius: 2px;
+  margin-top: 60px;
+}
+.componentContainer.dark.left {
+  margin-right: 30px !important;
+}
+.componentContainer.dark.right {
+  margin-left: 30px !important;
+}
+.componentContainer.dark.top {
+  margin-top: 1.5em;
+}
+
+.componentContainer .banner {
+  width: 95%;
+  height: 2em;
+  margin: auto;
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
+.componentContainer .banner .title {
+  width: 50% !important;
+  box-sizing: border-box;
+  display: inline-block;
+  font-size: 1.3em;
+
+}
+.componentContainer .banner .buttons {
+  width: 50% !important;
+  box-sizing: border-box;
+  text-align: right;
+  display: inline-block;
+}
+
+
+
+.standardContainer {
+  top: 0;
+  vertical-align: top;
+  display: inline-block;
+  box-sizing: border-box;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.standardContainer.left {
+  padding-left: 30px;
+  padding-right: 15px;
+}
+.standardContainer.right {
+  padding-left: 15px;
+  padding-right: 30px;
+  text-align: left;
+}
+
+.thickContainer {
+  top: 0;
+  vertical-align: top;
+  display: inline-block;
+  box-sizing: border-box;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 3em;
+  padding-bottom: 3em;
+}

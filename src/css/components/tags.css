@@ -1,0 +1,24 @@
+/*
+ *
+ *
+ */
+
+/* TAGS */
+.tagGroup {
+  font-size: 0.7em;
+}
+.tag {
+  border-radius: 2px;
+  display: inline-block;
+  box-sizing: border-box;
+  margin: 1px;
+  background-color: #444;
+  padding: 5px;
+  color: #fff;
+}
+.tag:last-of-type {
+  margin-right: 0px;
+}
+.tag:hover {
+  background-color: #2fbb06;
+}

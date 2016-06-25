@@ -1,5 +1,4 @@
 import React from "react";
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import customTheme from '../../materialUiTheme/CustomTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -64,17 +63,17 @@ export default class Inbox extends React.Component {
 
               <Tabs style={{backgroundColor: 'rgb(47, 49, 55)'}} >
                 <Tab label="NBA" >
-                  <Scrollbars style={{ height: 300 }}>
+                  <Scrollbars style={{ height: "50vh" }}>
                     <PlayerList addPlayerOption={true} showPlayerInfo={that._showPlayerInfo.bind(this)} />
                   </Scrollbars>
                 </Tab>
                 <Tab label="WNBA" >
-                  <Scrollbars style={{ height: 300 }}>
+                  <Scrollbars style={{ height: "50vh" }}>
                     <PlayerList addPlayerOption={true} showPlayerInfo={that._showPlayerInfo.bind(this)} />
                   </Scrollbars>
                 </Tab>
                 <Tab label="NCAA Men's" >
-                  <Scrollbars style={{ height: 300 }}>
+                  <Scrollbars style={{ height: "50vh" }}>
                     <PlayerList addPlayerOption={true} showPlayerInfo={that._showPlayerInfo.bind(this)} />
                   </Scrollbars>
                 </Tab>
@@ -82,7 +81,7 @@ export default class Inbox extends React.Component {
 
             </div>
 
-            <div className="column5 standardContainer">
+            <div className="column5 standardContainer right">
 
               <div className="column6">
                 <h3>Selected Team</h3>
@@ -100,7 +99,7 @@ export default class Inbox extends React.Component {
 
               <Tabs style={{backgroundColor: 'rgb(47, 49, 55)'}}>
                 <Tab label="Roster" >
-                  <Scrollbars style={{ height: 300 }}>
+                  <Scrollbars style={{ height: "50vh" }}>
                     <PlayerList removePlayerOption={true} showPlayerInfo={that._showPlayerInfo.bind(that)} />
                   </Scrollbars>
                 </Tab>
