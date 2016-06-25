@@ -5,6 +5,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Router, Route, IndexRoute, HashHistory } from "react-router";
+import injectTapEventPlugin from "react-tap-event-plugin";
+injectTapEventPlugin();
 
 // Helper Scripts
 import * as auth from "./scripts/PersistentUser";
