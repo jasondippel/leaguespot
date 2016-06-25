@@ -1,8 +1,8 @@
 import React from "react";
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import customTheme from '../../materialUiTheme/CustomTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import {cyanA400, green500} from 'material-ui/styles/colors';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
@@ -56,24 +56,24 @@ export default class Inbox extends React.Component {
           <div className="title">Team Selection</div>
         </div>
 
-        <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+        <MuiThemeProvider muiTheme={getMuiTheme(customTheme)}>
           <div>
             <div className="column7 standardContainer left">
 
               <h3>Player Pool</h3>
 
-              <Tabs style={{backgroundColor: 'rgb(47, 49, 55)', selectedTextColor: cyanA400}}>
-                <Tab label="NBA" style={{backgroundColor: green500}} >
+              <Tabs style={{backgroundColor: 'rgb(47, 49, 55)'}} >
+                <Tab label="NBA" >
                   <Scrollbars style={{ height: 300 }}>
                     <PlayerList addPlayerOption={true} showPlayerInfo={that._showPlayerInfo.bind(this)} />
                   </Scrollbars>
                 </Tab>
-                <Tab label="WNBA" style={{backgroundColor: green500}} >
+                <Tab label="WNBA" >
                   <Scrollbars style={{ height: 300 }}>
                     <PlayerList addPlayerOption={true} showPlayerInfo={that._showPlayerInfo.bind(this)} />
                   </Scrollbars>
                 </Tab>
-                <Tab label="NCAA Men's" style={{backgroundColor: green500}} >
+                <Tab label="NCAA Men's" >
                   <Scrollbars style={{ height: 300 }}>
                     <PlayerList addPlayerOption={true} showPlayerInfo={that._showPlayerInfo.bind(this)} />
                   </Scrollbars>
@@ -87,12 +87,16 @@ export default class Inbox extends React.Component {
               <h3>Selected Team</h3>
 
                 <Tabs style={{backgroundColor: 'rgb(47, 49, 55)'}}>
-                  <Tab label="Roster" style={{backgroundColor: green500}} >
+                  <Tab label="Roster" >
                     <Scrollbars style={{ height: 300 }}>
                       <PlayerList removePlayerOption={true} showPlayerInfo={that._showPlayerInfo.bind(that)} />
                     </Scrollbars>
                   </Tab>
                 </Tabs>
+
+            </div>
+
+            <div className="column12 standardContainer">
 
             </div>
 
