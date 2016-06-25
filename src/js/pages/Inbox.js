@@ -82,21 +82,34 @@ export default class Inbox extends React.Component {
 
             </div>
 
-            <div className="column5 standardContainer right">
+            <div className="column5 standardContainer">
 
-              <h3>Selected Team</h3>
+              <div className="column6">
+                <h3>Selected Team</h3>
+              </div>
+              <div className="column3">
+                <label>$50,000<br/>
+                <span className="subtext below">Salary Remaining</span>
+                </label>
+              </div>
+              <div className="column3">
+                <label>$50,000<br/>
+                <span className="subtext below">Payroll</span>
+                </label>
+              </div>
 
-                <Tabs style={{backgroundColor: 'rgb(47, 49, 55)'}}>
-                  <Tab label="Roster" >
-                    <Scrollbars style={{ height: 300 }}>
-                      <PlayerList removePlayerOption={true} showPlayerInfo={that._showPlayerInfo.bind(that)} />
-                    </Scrollbars>
-                  </Tab>
-                </Tabs>
+              <Tabs style={{backgroundColor: 'rgb(47, 49, 55)'}}>
+                <Tab label="Roster" >
+                  <Scrollbars style={{ height: 300 }}>
+                    <PlayerList removePlayerOption={true} showPlayerInfo={that._showPlayerInfo.bind(that)} />
+                  </Scrollbars>
+                </Tab>
+              </Tabs>
+              <br/>
 
-            </div>
-
-            <div className="column12 standardContainer">
+              <div className="column12 right">
+                <RaisedButton label="Finalize Selection" primary={true} />
+              </div>
 
             </div>
 

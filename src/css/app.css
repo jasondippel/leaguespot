@@ -67,6 +67,9 @@ Link:focus {
 .center {
   text-align: center;
 }
+.right {
+  text-align: right;
+}
 .spinner {
   height: 1em;
   margin: auto;
@@ -253,6 +256,7 @@ header nav.mainNav {
   background-color: #171717;
   min-height: calc(100vh - 62px - 45px);
   color: #fff;
+  padding-bottom: 1em !important;
 }
 .containerBanner {
   color: #fff;
@@ -387,4 +391,16 @@ img.profileImage.square {
 .standardContainer.right {
   padding-left: 15px;
   padding-right: 30px;
+}
+
+.brightSecondaryText {
+  color: #aaa !important;
+}
+
+.subtext {
+  color: #aaa !important;
+  font-size: 0.8em;
+}
+.subtext.below {
+  line-height: 0.5em;
 }

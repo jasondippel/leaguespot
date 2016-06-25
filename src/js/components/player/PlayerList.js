@@ -39,16 +39,30 @@ export default class PlayerListItem extends React.Component {
       rightIcon = (<RemoveCircle onTouchTap={that._removePlayer}
         hoverColor={red700}
         iconStyle={{width: '24px', height: '24px'}}
-        style={{width: '32px', height: '32px', top: '0px'}}
+        style={{width: '32px', height: '32px', top: '10px'}}
         />);
     }
     else if (this.props.addPlayerOption) {
       rightIcon = (<AddCircle onTouchTap={that._addPlayer}
         hoverColor={green500}
         iconStyle={{width: '24px', height: '24px'}}
-        style={{width: '32px', height: '32px', top: '0px'}}
+        style={{width: '32px', height: '32px', top: '10px'}}
         />);
     }
+
+    let playerInfo=(
+      <div className="column12 brightSecondaryText">
+        <div className="column4">
+          <span>PG</span>
+        </div>
+        <div className="column4">
+          <span>23 FPPG</span>
+        </div>
+        <div className="column4">
+          <span>$3000</span>
+        </div>
+      </div>
+    )
 
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
@@ -57,6 +71,7 @@ export default class PlayerListItem extends React.Component {
             leftAvatar={<Avatar icon={ <AccountCircle /> } onTouchTap={that._showPlayerInfo.bind(that)} />}
             rightIcon={ rightIcon }
             primaryText="Jon Doe"
+            secondaryText={playerInfo}
             onTouchTap={that._showPlayerInfo.bind(that)}
           />
           <Divider />
@@ -64,6 +79,7 @@ export default class PlayerListItem extends React.Component {
             leftAvatar={<Avatar icon={ <AccountCircle /> } onTouchTap={that._showPlayerInfo.bind(that)} />}
             rightIcon={ rightIcon }
             primaryText="Jon Doe"
+            secondaryText={playerInfo}
             onTouchTap={that._showPlayerInfo.bind(that)}
           />
           <Divider />
@@ -71,6 +87,7 @@ export default class PlayerListItem extends React.Component {
             leftAvatar={<Avatar icon={ <AccountCircle /> } onTouchTap={that._showPlayerInfo.bind(that)} />}
             rightIcon={ rightIcon }
             primaryText="Jon Doe"
+            secondaryText={playerInfo}
             onTouchTap={that._showPlayerInfo.bind(that)}
           />
           <Divider />
@@ -78,6 +95,7 @@ export default class PlayerListItem extends React.Component {
             leftAvatar={<Avatar icon={ <AccountCircle /> } onTouchTap={that._showPlayerInfo.bind(that)} />}
             rightIcon={ rightIcon }
             primaryText="Jon Doe"
+            secondaryText={playerInfo}
             onTouchTap={that._showPlayerInfo.bind(that)}
           />
           <Divider />
@@ -85,6 +103,7 @@ export default class PlayerListItem extends React.Component {
             leftAvatar={<Avatar icon={ <AccountCircle /> } onTouchTap={that._showPlayerInfo.bind(that)} />}
             rightIcon={ rightIcon }
             primaryText="Jon Doe"
+            secondaryText={playerInfo}
             onTouchTap={that._showPlayerInfo.bind(that)}
           />
           <Divider />
@@ -92,6 +111,7 @@ export default class PlayerListItem extends React.Component {
             leftAvatar={<Avatar icon={ <AccountCircle /> } onTouchTap={that._showPlayerInfo.bind(that)} />}
             rightIcon={ rightIcon }
             primaryText="Jon Doe"
+            secondaryText={playerInfo}
             onTouchTap={that._showPlayerInfo.bind(that)}
           />
           <Divider />
@@ -99,6 +119,7 @@ export default class PlayerListItem extends React.Component {
             leftAvatar={<Avatar icon={ <AccountCircle /> } onTouchTap={that._showPlayerInfo.bind(that)} />}
             rightIcon={ rightIcon }
             primaryText="Jon Doe"
+            secondaryText={playerInfo}
             onTouchTap={that._showPlayerInfo.bind(that)}
           />
         </List>
