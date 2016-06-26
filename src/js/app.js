@@ -21,6 +21,7 @@ import CreateLeague from "./pages/CreateLeague";
 import Dashboard from "./pages/Dashboard";
 import Inbox from "./pages/Inbox";
 import FantasyLeagueDashboard from "./pages/fantasyLeague/Dashboard";
+import Draft from "./pages/fantasyLeague/Draft";
 
 const app = document.getElementById('app');
 
@@ -47,9 +48,11 @@ ReactDOM.render(
 
       <Route path="/lobby" name="lobby" component={Lobby}  onEnter={requireAuth}></Route>
       <Route path="/createLeague" name="createLeague" component={CreateLeague}  onEnter={requireAuth}></Route>
-      <Route path="/fantasyLeague/dashboard/:fleagueId" name="dashboard" component={FantasyLeagueDashboard} onEnter={requireAuth}></Route>
       <Route path="/dashboard" name="dashboard" component={Dashboard}  onEnter={requireAuth}></Route>
       <Route path="/inbox" name="inbox" component={Inbox}  onEnter={requireAuth}></Route>
+
+      <Route path="/fantasyLeague/dashboard/:fleagueId" name="dashboard" component={FantasyLeagueDashboard} onEnter={requireAuth}></Route>
+      <Route path="/fantasyLeague/draft" name="draft" component={Draft} onEnter={requireAuth}></Route>
     </Route>
   </Router>,
 app);

@@ -10,7 +10,7 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import Dialog from 'material-ui/Dialog';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
-import {List, ListItem, MakeSelectable} from 'material-ui/List';
+import {List, ListItem} from 'material-ui/List';
 import FlatButton from 'material-ui/FlatButton';
 
 import Spinner from "../components/loading/Spinner";
@@ -52,12 +52,10 @@ export default class Upcoming extends React.Component {
   }
 
   _goToLeagueDashboard(event) {
-    let leagueId;
+    let leagueId = event.target.dataset.leagueid;
 
-    console.log(event.target.dataset.leagueId);
-
-    // FantasyLeagueActions.loadMyFantasyLeagues(leagueId);
-    // this.props.history.push("/fantasyLeague/dashboard/" + resp.league.fleague_id);
+    FantasyLeagueActions.setActiveFantasyLeagueById(leagueId);
+    this.props.history.push("/fantasyLeague/dashboard/" + leagueId);
   }
 
   getMyFantasyLeagues() {
@@ -72,7 +70,6 @@ export default class Upcoming extends React.Component {
         <div className='column12 center brightSecondaryText'>You haven't entered any fantasy leagues!</div>
       );
     } else {
-      console.log("have leagues, ", this.state.myFantasyLeagues);
       return (
         <List>
         {this.state.myFantasyLeagues.map(function(leagueData, index) {
@@ -80,18 +77,38 @@ export default class Upcoming extends React.Component {
             return (
               <ListItem
                 leftAvatar={<Avatar icon={ <Group /> } onTouchTap={that._goToLeagueDashboard.bind(that)} />}
-                primaryText={leagueData.fleague_name}
-                onTouchTap={that._goToLeagueDashboard.bind(that)}
-                data-leagueId={leagueData.fleague_id}
+                primaryText={(
+                  <span>
+                    <div className='column10'>
+                      {leagueData.fleague_name}
+                    </div>
+                    <div className='column2'>
+                      <button className="btn whiteOutlineBtn" data-leagueId={leagueData.fleague_id} onClick={that._goToLeagueDashboard.bind(that)}>View</button>
+                    </div>
+                  </span>
+                )}
               />
             );
           } else {
             return (
               <span>
                 <ListItem
-                  leftAvatar={<Avatar icon={ <Group /> } onTouchTap={that._goToLeagueDashboard.bind(that)} />}
-                  primaryText={leagueData.fleague_name}
-                  onTouchTap={that._goToLeagueDashboard.bind(that)}
+                  leftAvatar={<Avatar icon={ <Group /> } />}
+                  primaryText={(
+                    <span>
+                      <div className='column10'>
+                        {leagueData.fleague_name}
+                      </div>
+                      <div className='column2'>
+                        <button
+                          className="btn whiteOutlineBtn"
+                          data-leagueId={leagueData.fleague_id}
+                          onClick={that._goToLeagueDashboard.bind(that)} >
+                          View
+                        </button>
+                      </div>
+                    </span>
+                  )}
                 />
               <Divider />
             </span>
