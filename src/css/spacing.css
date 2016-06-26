@@ -17,6 +17,7 @@
 .column12 {
  box-sizing: border-box;
  display: inline-block;
+ vertical-align: top;
 }
 
 .column1 {

@@ -13,6 +13,7 @@ class FantasyLeagueStore extends EventEmitter {
     super();
 
     this.fantasyLeagues = {};
+    this.myFantasyLeagues = null;
   }
 
 
@@ -25,6 +26,14 @@ class FantasyLeagueStore extends EventEmitter {
     switch(action.type) {
       case "FANTASY_LEAGUE_STORE_SET_ACTIVE_FANTASY_LEAGUE":
         this._setActiveFantasyLeague(action.league);
+        break;
+
+        case "FANTASY_LEAGUE_STORE_SET_ACTIVE_FANTASY_LEAGUE_BY_ID":
+          this._setActiveFantasyLeagueById(action.leagueId);
+          break;
+
+      case "FANTASY_LEAGUE_STORE_LOAD_MY_FANTASY_LEAGUES":
+        this._loadMyFantasyLeagues();
         break;
 
       case "FANTASY_LEAGUE_STORE_LOAD_ACTIVE_FANTASY_LEAGUE":
@@ -58,6 +67,28 @@ class FantasyLeagueStore extends EventEmitter {
   _setActiveFantasyLeague(league) {
     this.activeFantasyLeague = league;
     this.fantasyLeagues[league.fleague_id] = league;
+    this.emit("change");
+  }
+
+  /**
+   * Given a league ID, the function sets it as the active league
+   *
+   * @param {int} leagueId - the ID of the league to set as active leauge
+   */
+  _setActiveFantasyLeagueById(leagueId) {
+    this.activeFantasyLeague = this.fantasyLeagues[leagueId];
+    this.emit("change");
+  }
+
+
+  /**
+   * Given an array of fantasy leagues, the function sets them to the list of
+   * fantasy leagues for the user
+   *
+   * @param {array} myFantasyLeagues - array of fantasy leagues the user belongs to
+   */
+  _setMyFantasyLeagues(myFantasyLeagues) {
+    this.myFantasyLeagues = myFantasyLeagues;
     this.emit("change");
   }
 
@@ -100,16 +131,52 @@ class FantasyLeagueStore extends EventEmitter {
 
 
   /**
+   * Loads the fantasy leagues a user belongs to and sets this.myFantasyLeagues
+   * equal to an array of those leagues
+   *
+   */
+  _loadMyFantasyLeagues(fleagueId) {
+    let that = this;
+
+    APIRequest.get({
+      api: "LeagueSpot",
+      apiExt: "/fantasy_leagues/my_leagues"
+    }).then((resp) => {
+      if (resp.success) {
+        that._addLeaguesToList(resp.leagues);
+        that._setMyFantasyLeagues(resp.leagues);
+      }
+      else {
+        // TODO: handle better
+        console.log("Response", resp);
+        alert("Bad Response");
+      }
+    }).catch((error) => {
+      // TODO: handle better
+      console.log("Error", error);
+      alert("Error", error);
+    });
+  }
+
+
+  /**
    * Returns the active fantasy league object
    *
    * @return {object} activeFantasyLeague - active fantasy league object
    */
   getActiveFantasyLeague() {
-    if(!this.activeFantasyLeague) {
-      console.log("FantasyLeagueStore::Warning: No fantasy league in store for get request");
-    }
-
     return this.activeFantasyLeague;
+  }
+
+
+  /**
+   * Returns the active fantasy league object
+   *
+   * @return {array} myFantasyLeagues - array of fantasy leagues the active user
+   *                                    belongs to
+   */
+  getMyFantasyLeagues() {
+    return this.myFantasyLeagues;
   }
 
 }

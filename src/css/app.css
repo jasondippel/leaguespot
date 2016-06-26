@@ -3,7 +3,6 @@
  * should be placed in their own unique file/folder so they can be located easier
  * later on.
  *
- * TODO: clean up this file, move out specific CSS
  */
 
 html, body, #app {
@@ -33,14 +32,6 @@ footer {
   padding-right: 80px;
 }
 
-Link,
-Link:hover,
-Link:active,
-Link:focus {
-  color: #fff;
-  text-decoration: inherit;
-}
-
 .container {
   min-height: calc(100vh - 62px - 45px);
 }
@@ -67,6 +58,9 @@ Link:focus {
 .center {
   text-align: center;
 }
+.right {
+  text-align: right;
+}
 .spinner {
   height: 1em;
   margin: auto;
@@ -74,295 +68,10 @@ Link:focus {
 .spinner.fullPage {
   padding-top: 30vh;
 }
-
-/* LOGO */
-.logoTitle {
-  font-family: 'Lobster', cursive;
-  color: #fff;
-  text-decoration: none;
-  font-size: 2em;
-  line-height: 0.5em;
-  padding-top: 20px;
-  padding-bottom: 15px;
-  width: 180px;
-  display: inline-block;
-}
-.logoSubtext {
-  font-family: 'Lato', sans-serif;
-  font-size: 0.3em;
-  line-height: 0.3em;
-  font-weight: normal;
-  font-style: italic;
-  opacity: 0.9;
-}
-
-/* HEADER - ACCOUNT INFORMATION */
-.headerOptions {
-  width: calc(100% - 180px);
-  height: 62px;
-  display: inline-block;
-  vertical-align: top;
-  font-size: 0.9em;
-}
-.headerMenu {
-  width: 70%;
-  height: 62px;
-  display: inline-block;
-}
-.accountInfo {
-  width: 30%;
-  text-align: right;
-  display: inline-block;
-  vertical-align: top;
-  padding-top: 18px;
-  height: 47px;
-}
-
-/* HEADER NAV */
-header nav.mainNav {
-  height: 62px;
-  vertical-align: middle;
-}
-.mainNav .navLink {
-  color: #fff;
-  font-size: 1em;
-  text-decoration: none;
-  padding: 15px;
-  padding-top: 23px;
-  padding-bottom: calc(62px - 27px - 1em);
-  vertical-align: middle;
-  display: inline-block;
-  -webkit-transition: background-color 0.2s; /* For Safari 3.1 to 6.0 */
-  transition: background-color 0.2s;
-}
-.mainNav .navLink.active {
-  background-color: #444;
-}
-.mainNav .navLink:hover {
-  background-color: #444;
-}
-
-/* BUTTONS */
-.btn {
-  font-family: 'Lato', sans-serif;
-  font-size: 0.8em;
-  border-radius: 4px;
-  padding: 7px;
-  margin-left: 7px;
-  box-sizing: border-box;
-}
-.btn:hover {
-  cursor: pointer;
-}
-.btn:active, .btn:focus {
-  outline: 0;
-  box-shadow: 0;
-}
-.btn.small {
-  padding: 5px;
-}
-.buttonGroup .btn {
-  margin: 1px;
-  border-radius: 0px;
-  border: 0px;
-}
-.buttonGroup .btn.pair {
-  width: calc(50% - 2px);
-  min-width: 6em;
-  display: inline-block;
-}
-.btn.secondary {
-  background-color: #444;
-  color: #fff;
-  border: none;
-}
-.btn.secondary:hover {
-  background-color: #555;
-}
-.whiteOutlineBtn {
-  color: #fff;
-  border: 1px solid #f2f2f2;
-  background-color: transparent;
-}
-.whiteOutlineBtn:hover {
-  background-color: #444;
-}
-.greenOutlineBtn {
-  color: #fff;
-  border: 1px solid #26a600;
-  background-color: #222;
-}
-.greenOutlineBtn:hover {
-  background-color: #1c1c1c;
-}
-.greenOutlineBtn.active {
-  background-color: #2fbb06;
-  border: none;
-}
-.greenSolidBtn {
-  color: #fff;
-  background-color: #26a600;
-  border: none;
-}
-.greenSolidBtn:hover {
-  background-color: #2fbb06;
-}
-.greenOutlineBtn.disabled {
-  color: #bbb;
-  background-color: #444;
-}
-.greenOutlineBtn.disabled:hover {
-  background-color: #444;
-  cursor: default;
-}
-
-/* POPUPS */
-.popupLight,
-.popupDark {
-  width: 40%;
-  min-width: 28em;
-  margin: auto;
-  margin-top: 1em;
-  padding: 15px;
-  border-radius: 4px;
-  text-align: center;
-  t-webkit-transition: height 0.2s; /* For Safari 3.1 to 6.0 */
-  transition: height 0.2s;
-}
-.popupLight .success,
-.popupDark .success {
-  color: #26a600;
-}
-
-.popupLight {
-  border: 1px solid #000;
-}
-.popupDark {
-  border: 1px solid rgb(45, 47, 52);
-  background-color: rgb(47, 49, 55);
-}
-
-.popupDark.wide,
-.popupLight.wide {
-  width: 60%;
-}
-
-
-/* LOBBY */
-.darkContainer {
-  background-color: #171717;
-  min-height: calc(100vh - 62px - 45px);
-  color: #fff;
-}
-.containerBanner {
-  color: #fff;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-left: 60px;
-  padding-right: 60px;
-}
-.containerBanner .title {
-  font-size: 1.5em;
-  width: 50%;
-  display: inline-block;
-}
-.containerBanner .buttons {
-  width: 50%;
-  display: inline-block;
-  text-align: right;
-}
-
-.leagueFilters,
-.leagueList {
-  margin-left: 60px;
-  margin-right: 60px;
-  background-color: rgb(47, 49, 55);
-  color: #fff;
-  padding: 5px;
-  border-radius: 2px;
-  margin-top: 1.5em;
-}
-
-/* TAGS */
-.tagGroup {
-  font-size: 0.7em;
-}
-.tag {
-  border-radius: 2px;
-  display: inline-block;
-  box-sizing: border-box;
-  margin: 1px;
-  background-color: #444;
-  padding: 5px;
-  color: #fff;
-}
-.tag:last-of-type {
-  margin-right: 0px;
-}
-.tag:hover {
-  background-color: #2fbb06;
-}
-
-/* DASHBOARD */
-.dashboardContainer {
-  padding-left: 60px;
-  padding-right: 60px;
-}
-
-.componentContainer.dark {
-  margin-left: 60px;
-  margin-right: 60px;
-  background-color: rgb(47, 49, 55);
-  color: #fff;
-  padding: 5px;
-  border-radius: 2px;
-  margin-top: 60px;
-}
-.componentContainer.dark.left {
-  margin-right: 30px !important;
-}
-.componentContainer.dark.right {
-  margin-left: 30px !important;
-}
-.componentContainer.dark.top {
-  margin-top: 1.5em;
-}
-
-.componentContainer .banner {
-  width: 95%;
-  height: 2em;
-  margin: auto;
-  padding-top: 10px;
-  padding-bottom: 5px;
-}
-.componentContainer .banner .title {
-  width: 50% !important;
-  box-sizing: border-box;
-  display: inline-block;
-  font-size: 1.3em;
-
-}
-.componentContainer .banner .buttons {
-  width: 50% !important;
-  box-sizing: border-box;
-  text-align: right;
-  display: inline-block;
-}
-
-.userInfo {
-  background-color: #444;
-  border-radius: 2px;
-  text-align: center;
-  margin: 1em;
-  margin-left: 0;
-  padding: 10px;
-}
-img.profileImage.square {
-  width: 150px;
-  height: 150px;
-  display: inline-block;
-  margin: auto;
-  padding: 1em;
+.spinner.component {
+  height: 0.8em;
+  padding-top: 1em;
+  padding-bottom: 1em;
 }
 
 .change.positive {
@@ -370,4 +79,15 @@ img.profileImage.square {
 }
 .change.negative {
   color: #d91a1a;
+}
+.brightSecondaryText {
+  color: #aaa !important;
+}
+
+.subtext {
+  color: #aaa !important;
+  font-size: 0.8em;
+}
+.subtext.below {
+  line-height: 0.5em;
 }

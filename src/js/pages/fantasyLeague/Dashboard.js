@@ -1,9 +1,9 @@
 import React from "react";
+import { Link } from "react-router";
 import APIRequest from "../../scripts/APIRequest";
 import Standings from "../../components/fantasyLeague/Standings";
 import Roster from "../../components/fantasyLeague/Roster";
 import * as auth from "../../scripts/PersistentUser";
-import * as activeView from "../../scripts/ActiveView";
 import FantasyLeagueStore from "../../stores/FantasyLeagueStore";
 import * as FantasyLeagueActions from "../../actions/FantasyLeagueActions";
 import LoadingScreen from "../LoadingScreen";
@@ -32,6 +32,7 @@ export default class Dashboard extends React.Component {
   }
 
   setActiveFantasyLeague() {
+    console.log("updating active fantasy league");
     this.setState({
       fantasyLeague: FantasyLeagueStore.getActiveFantasyLeague()
     });
@@ -50,7 +51,12 @@ export default class Dashboard extends React.Component {
     return (
       <div className="darkContainer padBottom">
         <div className="containerBanner">
-          <div className="title">Dashboard - { that.state.fantasyLeague.fleague_name }</div>
+          <div className="title column9">Dashboard - { that.state.fantasyLeague.fleague_name }</div>
+          <div className="column3 right">
+            <Link to="/fantasyLeague/draft">
+              <button className="btn whiteOutlineBtn">Draft</button>
+            </Link>
+          </div>
         </div>
 
         <div className="column6">

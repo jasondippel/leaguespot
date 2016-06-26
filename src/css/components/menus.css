@@ -1,0 +1,22 @@
+/*
+ *
+ *
+ */
+
+ /*
+  * COLORS
+  *
+  * - submenu: #212121
+  *
+  */
+
+/* SIDE MENU */
+.sideMenu {
+  color: #fff;
+  background-color: #212121;
+  min-height: calc(100vh - 62px - 45px);
+  height: 100% !important;
+  text-align: center;
+  padding: 8px;
+  padding-top: 1.5em;
+}
