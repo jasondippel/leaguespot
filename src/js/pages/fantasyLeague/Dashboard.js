@@ -3,7 +3,6 @@ import APIRequest from "../../scripts/APIRequest";
 import Standings from "../../components/fantasyLeague/Standings";
 import Roster from "../../components/fantasyLeague/Roster";
 import * as auth from "../../scripts/PersistentUser";
-import * as activeView from "../../scripts/ActiveView";
 import FantasyLeagueStore from "../../stores/FantasyLeagueStore";
 import * as FantasyLeagueActions from "../../actions/FantasyLeagueActions";
 import LoadingScreen from "../LoadingScreen";

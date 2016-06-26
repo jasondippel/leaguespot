@@ -1,36 +1,111 @@
 import React from "react";
-import UserStore from "../stores/UserStore";
 import customTheme from '../../materialUiTheme/CustomTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import Avatar from 'material-ui/Avatar';
+import Divider from 'material-ui/Divider';
 import AccountBox from 'material-ui/svg-icons/action/account-box';
+import Group from 'material-ui/svg-icons/social/group';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import Dialog from 'material-ui/Dialog';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
+import {List, ListItem, MakeSelectable} from 'material-ui/List';
 import FlatButton from 'material-ui/FlatButton';
 
-import APIRequest from "../scripts/APIRequest";
 import Spinner from "../components/loading/Spinner";
+
+import APIRequest from "../scripts/APIRequest";
+import UserStore from "../stores/UserStore";
+import FantasyLeagueStore from "../stores/FantasyLeagueStore";
+import * as FantasyLeagueActions from "../actions/FantasyLeagueActions";
+
 
 export default class Upcoming extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      myFantasyLeagues: null
+      myFantasyLeagues: FantasyLeagueStore.getMyFantasyLeagues()
     };
   }
 
-  _getFantasyLeagues() {
+  componentWillMount() {
+    FantasyLeagueStore.on("change", this.setMyFantasyLeagues.bind(this));
+  }
+
+  componentDidMount() {
+    if(!this.state.myFantasyLeagues) {
+      FantasyLeagueActions.loadMyFantasyLeagues();
+    }
+  }
+
+  componentWillUnmount() {
+    FantasyLeagueStore.removeListener("change", this.setMyFantasyLeagues.bind(this));
+  }
+
+  setMyFantasyLeagues() {
+    let myFantasyLeagues = FantasyLeagueStore.getMyFantasyLeagues();
+    this.setState({
+      myFantasyLeagues: myFantasyLeagues
+    });
+  }
+
+  _goToLeagueDashboard(event) {
+    let leagueId;
+
+    console.log(event.target.dataset.leagueId);
+
+    // FantasyLeagueActions.loadMyFantasyLeagues(leagueId);
+    // this.props.history.push("/fantasyLeague/dashboard/" + resp.league.fleague_id);
+  }
+
+  getMyFantasyLeagues() {
+    let that = this;
+
     if(!this.state.myFantasyLeagues) {
       return (
-        <LoadingScreen />
+        <Spinner />
       )
+    } else if (this.state.myFantasyLeagues == {}) {
+      return (
+        <div className='column12 center brightSecondaryText'>You haven't entered any fantasy leagues!</div>
+      );
+    } else {
+      console.log("have leagues, ", this.state.myFantasyLeagues);
+      return (
+        <List>
+        {this.state.myFantasyLeagues.map(function(leagueData, index) {
+          if(index === that.state.myFantasyLeagues.length - 1) {
+            return (
+              <ListItem
+                leftAvatar={<Avatar icon={ <Group /> } onTouchTap={that._goToLeagueDashboard.bind(that)} />}
+                primaryText={leagueData.fleague_name}
+                onTouchTap={that._goToLeagueDashboard.bind(that)}
+                data-leagueId={leagueData.fleague_id}
+              />
+            );
+          } else {
+            return (
+              <span>
+                <ListItem
+                  leftAvatar={<Avatar icon={ <Group /> } onTouchTap={that._goToLeagueDashboard.bind(that)} />}
+                  primaryText={leagueData.fleague_name}
+                  onTouchTap={that._goToLeagueDashboard.bind(that)}
+                />
+              <Divider />
+            </span>
+            );
+          }
+        })}
+        </List>
+      );
     }
   }
 
   render() {
+
+    let myFantasyLeaguesComponent = this.getMyFantasyLeagues();
 
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(customTheme)}>
@@ -60,7 +135,7 @@ export default class Upcoming extends React.Component {
               <div className='column6 standardContainer left'>
                 <Tabs style={{backgroundColor: 'rgb(47, 49, 55)'}}>
                   <Tab label="My Fantasy Leagues" >
-                    <Spinner />
+                    {myFantasyLeaguesComponent}
                   </Tab>
                 </Tabs>
               </div>
