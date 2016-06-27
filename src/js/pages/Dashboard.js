@@ -76,16 +76,17 @@ export default class Upcoming extends React.Component {
           if(index === that.state.myFantasyLeagues.length - 1) {
             return (
               <ListItem
-                leftAvatar={<Avatar icon={ <Group /> } onTouchTap={that._goToLeagueDashboard.bind(that)} />}
-                primaryText={(
-                  <span>
-                    <div className='column10'>
-                      {leagueData.fleague_name}
-                    </div>
-                    <div className='column2'>
-                      <button className="btn whiteOutlineBtn" data-leagueId={leagueData.fleague_id} onClick={that._goToLeagueDashboard.bind(that)}>View</button>
-                    </div>
-                  </span>
+                leftAvatar={<Avatar icon={ <Group /> } />}
+                primaryText={
+                  leagueData.fleague_name
+                }
+                rightIcon={(
+                  <button
+                    className="btn listButton"
+                    data-leagueId={leagueData.fleague_id}
+                    onClick={that._goToLeagueDashboard.bind(that)} >
+                    View
+                  </button>
                 )}
               />
             );
@@ -94,20 +95,16 @@ export default class Upcoming extends React.Component {
               <span>
                 <ListItem
                   leftAvatar={<Avatar icon={ <Group /> } />}
-                  primaryText={(
-                    <span>
-                      <div className='column10'>
-                        {leagueData.fleague_name}
-                      </div>
-                      <div className='column2'>
-                        <button
-                          className="btn whiteOutlineBtn"
-                          data-leagueId={leagueData.fleague_id}
-                          onClick={that._goToLeagueDashboard.bind(that)} >
-                          View
-                        </button>
-                      </div>
-                    </span>
+                  primaryText={
+                    leagueData.fleague_name
+                  }
+                  rightIcon={(
+                    <button
+                      className="btn listButton"
+                      data-leagueId={leagueData.fleague_id}
+                      onClick={that._goToLeagueDashboard.bind(that)} >
+                      View
+                    </button>
                   )}
                 />
               <Divider />

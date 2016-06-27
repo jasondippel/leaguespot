@@ -36,18 +36,24 @@ export default class PlayerListItem extends React.Component {
 
     let rightIcon = "";
     if (this.props.removePlayerOption) {
-      rightIcon = (<RemoveCircle onTouchTap={that._removePlayer}
-        hoverColor={red700}
-        iconStyle={{width: '24px', height: '24px'}}
-        style={{width: '32px', height: '32px', top: '10px'}}
-        />);
+      rightIcon= (
+        <button
+          className="btn listButton removal"
+          data-leagueId={123}
+          onClick={that._removePlayer.bind(that)} >
+          Remove
+        </button>
+      );
     }
     else if (this.props.addPlayerOption) {
-      rightIcon = (<AddCircle onTouchTap={that._addPlayer}
-        hoverColor={green500}
-        iconStyle={{width: '24px', height: '24px'}}
-        style={{width: '32px', height: '32px', top: '10px'}}
-        />);
+      rightIcon= (
+        <button
+          className="btn listButton addition"
+          data-leagueId={123}
+          onClick={that._addPlayer.bind(that)} >
+          Add
+        </button>
+      );
     }
 
     let playerInfo=(
@@ -68,59 +74,52 @@ export default class PlayerListItem extends React.Component {
       <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
         <List>
           <ListItem
-            leftAvatar={<Avatar icon={ <AccountCircle /> } onTouchTap={that._showPlayerInfo.bind(that)} />}
+            leftAvatar={<Avatar icon={ <AccountCircle /> } />}
             rightIcon={ rightIcon }
             primaryText="Jon Doe"
             secondaryText={playerInfo}
-            onTouchTap={that._showPlayerInfo.bind(that)}
           />
           <Divider />
           <ListItem
-            leftAvatar={<Avatar icon={ <AccountCircle /> } onTouchTap={that._showPlayerInfo.bind(that)} />}
+            leftAvatar={<Avatar icon={ <AccountCircle /> } />}
             rightIcon={ rightIcon }
             primaryText="Jon Doe"
             secondaryText={playerInfo}
-            onTouchTap={that._showPlayerInfo.bind(that)}
           />
           <Divider />
           <ListItem
-            leftAvatar={<Avatar icon={ <AccountCircle /> } onTouchTap={that._showPlayerInfo.bind(that)} />}
+            leftAvatar={<Avatar icon={ <AccountCircle /> } />}
             rightIcon={ rightIcon }
             primaryText="Jon Doe"
             secondaryText={playerInfo}
-            onTouchTap={that._showPlayerInfo.bind(that)}
           />
           <Divider />
           <ListItem
-            leftAvatar={<Avatar icon={ <AccountCircle /> } onTouchTap={that._showPlayerInfo.bind(that)} />}
+            leftAvatar={<Avatar icon={ <AccountCircle /> } />}
             rightIcon={ rightIcon }
             primaryText="Jon Doe"
             secondaryText={playerInfo}
-            onTouchTap={that._showPlayerInfo.bind(that)}
           />
           <Divider />
           <ListItem
-            leftAvatar={<Avatar icon={ <AccountCircle /> } onTouchTap={that._showPlayerInfo.bind(that)} />}
+            leftAvatar={<Avatar icon={ <AccountCircle /> } />}
             rightIcon={ rightIcon }
             primaryText="Jon Doe"
             secondaryText={playerInfo}
-            onTouchTap={that._showPlayerInfo.bind(that)}
           />
           <Divider />
           <ListItem
-            leftAvatar={<Avatar icon={ <AccountCircle /> } onTouchTap={that._showPlayerInfo.bind(that)} />}
+            leftAvatar={<Avatar icon={ <AccountCircle /> } />}
             rightIcon={ rightIcon }
             primaryText="Jon Doe"
             secondaryText={playerInfo}
-            onTouchTap={that._showPlayerInfo.bind(that)}
           />
           <Divider />
           <ListItem
-            leftAvatar={<Avatar icon={ <AccountCircle /> } onTouchTap={that._showPlayerInfo.bind(that)} />}
+            leftAvatar={<Avatar icon={ <AccountCircle /> } />}
             rightIcon={ rightIcon }
             primaryText="Jon Doe"
             secondaryText={playerInfo}
-            onTouchTap={that._showPlayerInfo.bind(that)}
           />
         </List>
       </MuiThemeProvider>

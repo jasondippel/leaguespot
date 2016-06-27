@@ -109,6 +109,7 @@ export default class Draft extends React.Component {
               <div className="column12 right">
                 <RaisedButton label="Finalize Selection" primary={true} />
               </div>
+              <br/>
 
             </div>
 
