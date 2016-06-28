@@ -58,7 +58,7 @@ export default class Dashboard extends React.Component {
 
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(customTheme)}>
-        <div className="darkContainer">
+        <div className="greyContainer">
 
             <div className="column2 sideMenu">
 
@@ -78,7 +78,7 @@ export default class Dashboard extends React.Component {
 
             </div>
 
-            <div className="column10">
+            <div className="column10 darkContainer">
               <div className="column12 leagueBanner">
                 <span className="title">{that.state.fantasyLeague.fleague_name}</span><br/>
                 <span className="subtext below small">Fantasy League</span>

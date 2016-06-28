@@ -21,6 +21,7 @@ export default class Draft extends React.Component {
 
     this.state = {
       dialogOpen: false,
+      dialogMessage: "",
       snackbarOpen: false,
       snackbarMessage: "",
       fantasyLeague: FantasyLeagueStore.getActiveFantasyLeague()
@@ -93,6 +94,13 @@ export default class Draft extends React.Component {
     this._handleSnackbarOpen();
 
     event.stopPropagation();
+  }
+
+  _finalizeTeam() {
+    this.setState({
+      dialogMessage: "Sorry, not yet implemented"
+    });
+    this._handleDialogOpen();
   }
 
   _goToLeagueDashboard() {
@@ -207,7 +215,12 @@ export default class Draft extends React.Component {
               <br/>
 
               <div className="column12 right">
-                <RaisedButton label="Finalize Selection" primary={true} />
+                <button
+                  className="btn greenSolidBtn"
+                  onClick={that._finalizeTeam.bind(that)}
+                  >
+                  Lock in Your Team
+                </button>
               </div>
               <br/>
 
@@ -219,7 +232,7 @@ export default class Draft extends React.Component {
               open={this.state.dialogOpen}
               onRequestClose={this._handleDialogClose}
             >
-              Player Info
+              {this.state.dialogMessage}
             </Dialog>
 
             <Snackbar

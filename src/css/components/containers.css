@@ -40,6 +40,7 @@
   color: #fff;
   padding: 0px;
   margin: 0px;
+  padding-bottom: 1em;
 }
 .containerBanner {
   color: #fff;
@@ -111,6 +112,22 @@
 }
 
 
+.darkContainer {
+  background-color: #171717;
+  min-height: calc(100vh - 62px - 45px);
+  color: #fff;
+  padding: 0px;
+  margin: 0px;
+  padding-bottom: 1em;
+}
+
+.greyContainer {
+  background-color: #212121;
+  min-height: calc(100vh - 62px - 45px);
+  color: #fff;
+  padding: 0px;
+  margin: 0px;
+}
 
 .standardContainer {
   top: 0;

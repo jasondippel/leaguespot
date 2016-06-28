@@ -148,7 +148,7 @@ export default class Upcoming extends React.Component {
 
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(customTheme)}>
-        <div className="darkContainer">
+        <div className="greyContainer">
 
             <div className="column2 sideMenu">
               <div className="accountImage">
@@ -163,7 +163,7 @@ export default class Upcoming extends React.Component {
 
             </div>
 
-            <div className="column10">
+            <div className="column10 darkContainer">
 
               <div className="column12 leagueBanner">
                   <div className="column8">
