@@ -17,6 +17,12 @@
   min-height: calc(100vh - 62px - 45px);
   height: 100% !important;
   text-align: center;
-  padding: 8px;
+  padding: 5px;
   padding-top: 1.5em;
+}
+
+.sideMenu .mainTitle {
+  font-size: 1.2em;
+  text-align: center;
+  padding-bottom: 30px;
 }

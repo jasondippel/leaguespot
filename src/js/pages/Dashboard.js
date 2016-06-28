@@ -7,11 +7,11 @@ import Divider from 'material-ui/Divider';
 import AccountBox from 'material-ui/svg-icons/action/account-box';
 import Group from 'material-ui/svg-icons/social/group';
 import {Tabs, Tab} from 'material-ui/Tabs';
-import Dialog from 'material-ui/Dialog';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import {List, ListItem} from 'material-ui/List';
 import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
 
 import Spinner from "../components/loading/Spinner";
 
@@ -26,6 +26,7 @@ export default class Upcoming extends React.Component {
     super();
 
     this.state = {
+      dialogOpen: false,
       myFantasyLeagues: FantasyLeagueStore.getMyFantasyLeagues()
     };
   }
@@ -51,11 +52,27 @@ export default class Upcoming extends React.Component {
     });
   }
 
+  _handleDialogOpen = () => {
+    this.setState({
+      dialogOpen: true
+    });
+  };
+
+  _handleDialogClose = () => {
+    this.setState({
+      dialogOpen: false
+    });
+  };
+
   _goToLeagueDashboard(event) {
     let leagueId = event.target.dataset.leagueid;
 
     FantasyLeagueActions.setActiveFantasyLeagueById(leagueId);
-    this.props.history.push("/fantasyLeague/dashboard/" + leagueId);
+    this.props.history.push("/fantasyLeague/" + leagueId + "/dashboard");
+  }
+
+  _editAccount() {
+    this._handleDialogOpen();
   }
 
   getMyFantasyLeagues() {
@@ -121,6 +138,14 @@ export default class Upcoming extends React.Component {
 
     let myFantasyLeaguesComponent = this.getMyFantasyLeagues();
 
+    const actions = [
+      <FlatButton
+        label="Close"
+        primary={true}
+        onTouchTap={this._handleDialogClose}
+      />
+    ];
+
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(customTheme)}>
         <div className="darkContainer">
@@ -139,11 +164,20 @@ export default class Upcoming extends React.Component {
             </div>
 
             <div className="column10">
-              <div className="column12 thickContainer">
-                <div className="column6"></div>
-                <div className="column6 right">
-                  <FlatButton label="Edit Account" secondary={true} />
-                </div>
+
+              <div className="column12 leagueBanner">
+                  <div className="column8">
+                    <span className="title">{UserStore.getFullName()}</span><br/>
+                    <span className="subtext below small">User Dashboard</span>
+                  </div>
+                  <div className="column4 right" style={{paddingTop: "1.5em"}}>
+                    <button
+                      className="btn simpleDarkBtn"
+                      onClick={this._editAccount.bind(this)}
+                      >
+                      Edit Account
+                    </button>
+                  </div>
               </div>
 
               <div className='column6 standardContainer left'>
@@ -162,6 +196,15 @@ export default class Upcoming extends React.Component {
                 </Tabs>
               </div>
             </div>
+
+            <Dialog
+              actions={actions}
+              modal={false}
+              open={this.state.dialogOpen}
+              onRequestClose={this._handleDialogClose}
+            >
+              Account Settings
+            </Dialog>
 
         </div>
       </MuiThemeProvider>

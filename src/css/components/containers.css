@@ -140,3 +140,15 @@
   padding-top: 3em;
   padding-bottom: 2em;
 }
+
+.leagueBanner {
+  padding: 30px;
+}
+.leagueBanner .title {
+  font-size: 2em;
+}
+.leagueBanner .subtext {
+  font-size: 1em;
+  font-style: italic;
+  font-weight: lighter;
+}

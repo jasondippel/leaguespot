@@ -91,3 +91,6 @@ footer {
 .subtext.below {
   line-height: 0.5em;
 }
+.subtext.small {
+  font-size: 0.4em;
+}

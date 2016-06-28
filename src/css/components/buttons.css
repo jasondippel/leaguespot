@@ -8,11 +8,11 @@
    font-family: 'Lato', sans-serif;
    font-size: 0.8em;
    border-radius: 2px;
-   padding: 7px;
+   padding: 10px;
    margin-left: 7px;
    box-sizing: border-box;
-   -webkit-transition: background-color 0.1s; /* For Safari 3.1 to 6.0 */
-   transition: background-color 0.1s;
+   -webkit-transition: background-color 0.2s; /* For Safari 3.1 to 6.0 */
+   transition: background-color 0.2s;
  }
  .btn:hover {
    cursor: pointer;
@@ -64,11 +64,11 @@
  }
  .greenSolidBtn {
    color: #fff;
-   background-color: #26a600;
+   background-color: #4CAF50;
    border: none;
  }
  .greenSolidBtn:hover {
-   background-color: #2fbb06;
+   background-color: #2E7D32;
  }
  .greenOutlineBtn.disabled {
    color: #bbb;
@@ -108,4 +108,13 @@
  }
  .listButton.removal:hover {
    background-color: #D32F2F;
+ }
+
+ .simpleDarkBtn {
+   color: #fff;
+   background-color: transparent;
+   border: none;
+ }
+ .simpleDarkBtn:hover {
+   background-color: #303030;
  }

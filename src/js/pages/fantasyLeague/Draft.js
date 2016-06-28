@@ -3,14 +3,17 @@ import customTheme from '../../../materialUiTheme/CustomTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {Tabs, Tab} from 'material-ui/Tabs';
-import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import Dialog from 'material-ui/Dialog';
 import Snackbar from 'material-ui/Snackbar';
 
 import Scrollbars from 'react-custom-scrollbars';
 
 import PlayerList from '../../components/player/playerList';
+import FantasyLeagueStore from "../../stores/FantasyLeagueStore";
+import * as FantasyLeagueActions from "../../actions/FantasyLeagueActions";
+import LoadingScreen from "../LoadingScreen";
 
 export default class Draft extends React.Component {
   constructor() {
@@ -19,8 +22,29 @@ export default class Draft extends React.Component {
     this.state = {
       dialogOpen: false,
       snackbarOpen: false,
-      snackbarMessage: ""
+      snackbarMessage: "",
+      fantasyLeague: FantasyLeagueStore.getActiveFantasyLeague()
     };
+  }
+
+  componentWillMount() {
+    FantasyLeagueStore.on("change", this.setActiveFantasyLeague.bind(this));
+  }
+
+  componentDidMount() {
+    if(!this.state.fantasyLeague) {
+      FantasyLeagueActions.loadActiveFantasyLeague(this.props.params.fleagueId );
+    }
+  }
+
+  componentWillUnmount() {
+    FantasyLeagueStore.removeListener("change", this.setActiveFantasyLeague.bind(this));
+  }
+
+  setActiveFantasyLeague() {
+    this.setState({
+      fantasyLeague: FantasyLeagueStore.getActiveFantasyLeague()
+    });
   }
 
   _handleDialogOpen = () => {
@@ -71,21 +95,44 @@ export default class Draft extends React.Component {
     event.stopPropagation();
   }
 
+  _goToLeagueDashboard() {
+    let leagueId = this.state.fantasyLeague.fleague_id;
+    this.props.history.push("/fantasyLeague/" + leagueId + "/dashboard");
+  }
+
   render() {
     let that = this;
+
+    // if fantasyLeague info isn't loaded yet, display loading page until it is
+    if(!this.state.fantasyLeague) {
+      return (
+        <LoadingScreen />
+      )
+    }
 
     const actions = [
       <FlatButton
         label="Close"
         primary={true}
-        onTouchTap={this._handleCloseDialog}
+        onTouchTap={this._handleDialogClose}
       />
     ];
 
     return (
       <div className="darkContainer">
-        <div className="containerBanner">
-          <div className="title">Team Selection</div>
+        <div className="column12 leagueBanner">
+            <div className="column8">
+              <span className="title">Team Selection</span><br/>
+              <span className="subtext below small">{this.state.fantasyLeague.fleague_name}</span>
+            </div>
+            <div className="column4 right" style={{paddingTop: "1.5em"}}>
+              <button
+                className="btn simpleDarkBtn"
+                onClick={that._goToLeagueDashboard.bind(that)}
+                >
+                Back to Dashboard
+              </button>
+            </div>
         </div>
 
         <MuiThemeProvider muiTheme={getMuiTheme(customTheme)}>
