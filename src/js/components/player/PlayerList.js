@@ -22,12 +22,12 @@ export default class PlayerListItem extends React.Component {
   }
 
   _addPlayer(event) {
-    console.log("player added", event);
+    this.props.addPlayer(event);
     event.stopPropagation();
   }
 
   _removePlayer(event) {
-    console.log("player removed", event);
+    this.props.removePlayer(event);
     event.stopPropagation();
   }
 

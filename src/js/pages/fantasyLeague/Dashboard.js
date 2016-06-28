@@ -32,7 +32,6 @@ export default class Dashboard extends React.Component {
   }
 
   setActiveFantasyLeague() {
-    console.log("updating active fantasy league");
     this.setState({
       fantasyLeague: FantasyLeagueStore.getActiveFantasyLeague()
     });

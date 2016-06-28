@@ -6,6 +6,7 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import Snackbar from 'material-ui/Snackbar';
 
 import Scrollbars from 'react-custom-scrollbars';
 
@@ -16,16 +17,34 @@ export default class Draft extends React.Component {
     super();
 
     this.state = {
-      open: false
+      dialogOpen: false,
+      snackbarOpen: false,
+      snackbarMessage: ""
     };
   }
 
-  _handleOpenDialog = () => {
-    this.setState({open: true});
+  _handleDialogOpen = () => {
+    this.setState({
+      dialogOpen: true
+    });
   };
 
-  _handleCloseDialog = () => {
-    this.setState({open: false});
+  _handleDialogClose = () => {
+    this.setState({
+      dialogOpen: false
+    });
+  };
+
+  _handleSnackbarOpen = () => {
+    this.setState({
+      snackbarOpen: true
+    });
+  };
+
+  _handleSnackbarClose = () => {
+    this.setState({
+      snackbarOpen: false
+    });
   };
 
   _showPlayerInfo(event) {
@@ -33,9 +52,23 @@ export default class Draft extends React.Component {
   }
 
   _addPlayer(event) {
-    console.log("player added", event);
-    event.stopPropagation();
+    this.setState({
+      snackbarOpen: true,
+      snackbarMessage: "Player added to active roster"
+    });
+    this._handleSnackbarOpen();
 
+    event.stopPropagation();
+  }
+
+  _removePlayer(event) {
+    this.setState({
+      snackbarOpen: true,
+      snackbarMessage: "Player removed from active roster"
+    });
+    this._handleSnackbarOpen();
+
+    event.stopPropagation();
   }
 
   render() {
@@ -64,17 +97,32 @@ export default class Draft extends React.Component {
               <Tabs style={{backgroundColor: 'rgb(47, 49, 55)'}} >
                 <Tab label="NBA" >
                   <Scrollbars style={{ height: "50vh" }}>
-                    <PlayerList addPlayerOption={true} showPlayerInfo={that._showPlayerInfo.bind(this)} />
+                    <PlayerList
+                      addPlayerOption={true}
+                      showPlayerInfo={that._showPlayerInfo.bind(this)}
+                      addPlayer={that._addPlayer.bind(this)}
+                      removePlayer={that._removePlayer.bind(this)}
+                      />
                   </Scrollbars>
                 </Tab>
                 <Tab label="WNBA" >
                   <Scrollbars style={{ height: "50vh" }}>
-                    <PlayerList addPlayerOption={true} showPlayerInfo={that._showPlayerInfo.bind(this)} />
+                    <PlayerList
+                      addPlayerOption={true}
+                      showPlayerInfo={that._showPlayerInfo.bind(this)}
+                      addPlayer={that._addPlayer.bind(this)}
+                      removePlayer={that._removePlayer.bind(this)}
+                      />
                   </Scrollbars>
                 </Tab>
                 <Tab label="NCAA Men's" >
                   <Scrollbars style={{ height: "50vh" }}>
-                    <PlayerList addPlayerOption={true} showPlayerInfo={that._showPlayerInfo.bind(this)} />
+                    <PlayerList
+                      addPlayerOption={true}
+                      showPlayerInfo={that._showPlayerInfo.bind(this)}
+                      addPlayer={that._addPlayer.bind(this)}
+                      removePlayer={that._removePlayer.bind(this)}
+                      />
                   </Scrollbars>
                 </Tab>
               </Tabs>
@@ -100,7 +148,12 @@ export default class Draft extends React.Component {
               <Tabs style={{backgroundColor: 'rgb(47, 49, 55)'}}>
                 <Tab label="Roster" >
                   <Scrollbars style={{ height: "50vh" }}>
-                    <PlayerList removePlayerOption={true} showPlayerInfo={that._showPlayerInfo.bind(that)} />
+                    <PlayerList
+                      removePlayerOption={true}
+                      showPlayerInfo={that._showPlayerInfo.bind(this)}
+                      addPlayer={that._addPlayer.bind(this)}
+                      removePlayer={that._removePlayer.bind(this)}
+                      />
                   </Scrollbars>
                 </Tab>
               </Tabs>
@@ -116,11 +169,19 @@ export default class Draft extends React.Component {
             <Dialog
               actions={actions}
               modal={false}
-              open={this.state.open}
-              onRequestClose={this._handleCloseDialog}
+              open={this.state.dialogOpen}
+              onRequestClose={this._handleDialogClose}
             >
               Player Info
             </Dialog>
+
+            <Snackbar
+              open={this.state.snackbarOpen}
+              message={this.state.snackbarMessage}
+              autoHideDuration={3000}
+              onRequestClose={this._handleSnackbarClose}
+              bodyStyle={{textAlign: 'center'}}
+            />
 
           </div>
         </MuiThemeProvider>
