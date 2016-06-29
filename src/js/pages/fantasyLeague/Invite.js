@@ -3,19 +3,23 @@ import { Link } from "react-router";
 import customTheme from '../../../materialUiTheme/CustomTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import Dialog from 'material-ui/Dialog';
 
 import APIRequest from "../../scripts/APIRequest";
 import FantasyLeagueStore from "../../stores/FantasyLeagueStore";
 import * as FantasyLeagueActions from "../../actions/FantasyLeagueActions";
 import LoadingScreen from "../LoadingScreen";
-import AddUsers from "../../components/fantasyLeague/AddUsers";
+import UserInviteList from "../../components/fantasyLeague/UserInviteList";
 
 export default class Invite extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      fantasyLeague: FantasyLeagueStore.getActiveFantasyLeague()
+      dialogOpen: false,
+      dialogMessage: "",
+      fantasyLeague: FantasyLeagueStore.getActiveFantasyLeague(),
+      emailList: []
     }
   }
 
@@ -44,8 +48,29 @@ export default class Invite extends React.Component {
     this.props.history.push("/fantasyLeague/" + leagueId + "/dashboard");
   }
 
+  handleUserEmailChange(newEmailList) {
+    this.setState({
+      emailList: newEmailList
+    });
+  }
+
+  _handleDialogOpen = () => {
+    this.setState({
+      dialogOpen: true
+    });
+  };
+
+  _handleDialogClose = () => {
+    this.setState({
+      dialogOpen: false
+    });
+  };
+
   inviteUsers() {
-    console.log('invite users');
+    this.setState({
+      dialogMessage: "Successfully invited users"
+    });
+    this._handleDialogOpen();
   }
 
   render() {
@@ -57,6 +82,19 @@ export default class Invite extends React.Component {
         <LoadingScreen />
       )
     }
+
+    const actions = [
+      <button
+        className="btn simpleGreenBtn brightBackground"
+        onClick={this._handleDialogClose.bind(that)} >
+        Close
+      </button>,
+      <button
+        className="btn simpleDarkBtn brightBackground"
+        onClick={this._goToLeagueDashboard.bind(that)} >
+        To Dashboard
+      </button>
+    ];
 
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(customTheme)}>
@@ -81,12 +119,15 @@ export default class Invite extends React.Component {
 
             <div className="column6">
               <div className="column12 standardContainer grey">
-                <AddUsers inviteUsersFunction={that.inviteUsers.bind(that)} />
+                <UserInviteList
+                  inviteUsersFunction={that.inviteUsers.bind(that)}
+                  handleUserEmailChange={that.handleUserEmailChange.bind(that)} />
               </div>
 
               <div className="column12 padTopSmall right">
                 <button
                   className="btn greenSolidBtn"
+                  onClick={that.inviteUsers.bind(that)}
                   >
                   Send Invites
                 </button>
@@ -94,6 +135,16 @@ export default class Invite extends React.Component {
             </div>
 
             <div className="column3"></div>
+
+
+            <Dialog
+              actions={actions}
+              modal={false}
+              open={this.state.dialogOpen}
+              onRequestClose={this._handleDialogClose}
+            >
+              {this.state.dialogMessage}
+            </Dialog>
 
         </div>
       </MuiThemeProvider>

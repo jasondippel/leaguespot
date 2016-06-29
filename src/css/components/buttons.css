@@ -136,3 +136,7 @@
  .simpleGreyBtn:hover {
    background-color: #303030;
  }
+
+ .btn.brightBackground:hover {
+   background-color: #404040;
+ }

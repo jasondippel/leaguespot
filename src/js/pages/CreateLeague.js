@@ -2,7 +2,7 @@ import React from "react";
 import UserStore from "../stores/UserStore";
 import * as FantasyLeagueActions from "../actions/FantasyLeagueActions";
 import Setup from "../components/fantasyLeague/creation/Setup";
-import AddUsers from "../components/fantasyLeague/AddUsers";
+import UserInviteList from "../components/fantasyLeague/UserInviteList";
 import * as activeView from "../scripts/ActiveView";
 import APIRequest from "../scripts/APIRequest";
 import moment from "moment";

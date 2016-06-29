@@ -1,10 +1,15 @@
+/*
+ * User email list
+ *
+ */
+
 import React from "react";
 import TextField from 'material-ui/TextField';
 
 import * as view from "../../scripts/ActiveView";
 import APIRequest from "../../scripts/APIRequest";
 
-export default class AddUsers extends React.Component {
+export default class UserInviteList extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -22,20 +27,14 @@ export default class AddUsers extends React.Component {
     }
   }
 
-  inviteUsers() {
-    if(this.props.inviteUsersFunction) {
-      this.props.inviteUsersFunction(this.state.userEmails);
-    }
-    else {
-      console.log("missing function for inviting users");
-    }
-  }
-
   _handleUserEmailChange(event) {
     let emailList = this.state.userEmails;
 
     if(event.target.dataset.index) {
       emailList[event.target.dataset.index] = event.target.value;
+
+      // let parent know of change
+      this.props.handleUserEmailChange(emailList);
 
       this.setState({
         userEmails: emailList
@@ -56,7 +55,8 @@ export default class AddUsers extends React.Component {
     let emailList = this.state.userEmails;
 
     if(event.target.dataset.index && this.state.userEmails.length > 1) {
-      emailList.splice(event.target.dataset.index, 1);
+      let index = event.target.dataset.index;
+      emailList.splice(index, 1);
 
       this.setState({
         userEmails: emailList
@@ -79,7 +79,7 @@ export default class AddUsers extends React.Component {
                   hintText="user@email.com"
                   data-index={index}
                   onChange={that._handleUserEmailChange.bind(that)}
-                  defaultValue={email} /> :
+                  value={email} /> :
                 <TextField
                   hintText="user@email.com"
                   data-index={index}
