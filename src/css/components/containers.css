@@ -136,6 +136,8 @@
   box-sizing: border-box;
   padding-left: 30px;
   padding-right: 30px;
+  padding-bottom: 10px;
+  padding-top: 10px;
 }
 .standardContainer.left {
   padding-left: 30px;
@@ -145,6 +147,9 @@
   padding-left: 15px;
   padding-right: 30px;
   text-align: left;
+}
+.standardContainer.grey {
+  background-color: #212121;
 }
 
 .thickContainer {

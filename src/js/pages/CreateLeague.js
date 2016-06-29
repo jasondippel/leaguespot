@@ -190,12 +190,7 @@ export default class CreateLeague extends React.Component {
                                     handleDraftDateChange={this.handleDraftDateChange.bind(this)}
                                     handleDraftTimeChange={this.handleDraftTimeChange.bind(this)} />
 
-              case 2: return <AddUsers createLeague={this.createLeague.bind(this)}
-                                       prevStep={this.prevStep.bind(this)}
-                                       state={this.state}
-                                       handleInvitesChange={this.handleInvitesChange.bind(this)}
-                                       addBlankInvite={this.addBlankInvite.bind(this)}
-                                       removeInvite={this.removeInvite.bind(this)} />
+              case 2: return <div>dis page be in flux yo</div>
         		}
           })()}
         </div>

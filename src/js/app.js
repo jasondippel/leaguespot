@@ -22,6 +22,7 @@ import Dashboard from "./pages/Dashboard";
 import Inbox from "./pages/Inbox";
 import FantasyLeagueDashboard from "./pages/fantasyLeague/Dashboard";
 import Draft from "./pages/fantasyLeague/Draft";
+import Invite from "./pages/fantasyLeague/Invite";
 
 const app = document.getElementById('app');
 
@@ -53,6 +54,7 @@ ReactDOM.render(
 
       <Route path="/fantasyLeague/:fleagueId/dashboard" name="dashboard" component={FantasyLeagueDashboard} onEnter={requireAuth}></Route>
       <Route path="/fantasyLeague/:fleagueId/draft" name="draft" component={Draft} onEnter={requireAuth}></Route>
+      <Route path="/fantasyLeague/:fleagueId/invite" name="draft" component={Invite} onEnter={requireAuth}></Route>
     </Route>
   </Router>,
 app);

@@ -84,6 +84,12 @@ footer {
   color: #aaa !important;
 }
 
+.title {
+  font-size: 1.2em;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 .subtext {
   color: #aaa !important;
   font-size: 0.8em;

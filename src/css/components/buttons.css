@@ -118,3 +118,21 @@
  .simpleDarkBtn:hover {
    background-color: #303030;
  }
+
+ .simpleGreenBtn {
+   color: #4CAF50;
+   background-color: transparent;
+   border: none;
+ }
+ .simpleGreenBtn:hover {
+   background-color: #303030;
+ }
+
+ .simpleGreyBtn {
+   color: #606060;
+   background-color: transparent;
+   border: none;
+ }
+ .simpleGreyBtn:hover {
+   background-color: #303030;
+ }
