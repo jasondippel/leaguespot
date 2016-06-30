@@ -6,7 +6,6 @@
 import React from "react";
 import TextField from 'material-ui/TextField';
 
-import * as view from "../../scripts/ActiveView";
 import APIRequest from "../../scripts/APIRequest";
 
 export default class UserInviteList extends React.Component {
@@ -69,22 +68,17 @@ export default class UserInviteList extends React.Component {
 
     return (
       <div className="column12">
+        <span className="title">Invite Users</span>
+        <p className="subtext">Enter the emails of users you would like to join your league! If they're not already members of LeagueSpot, we'll send them an email to invite them.</p>
 
         { this.state.userEmails.map(function(email, index) {
           return (
             <div className="row">
-
-              { email !== "" ?
-                <TextField
-                  hintText="user@email.com"
-                  data-index={index}
-                  onChange={that._handleUserEmailChange.bind(that)}
-                  value={email} /> :
-                <TextField
-                  hintText="user@email.com"
-                  data-index={index}
-                  onChange={that._handleUserEmailChange.bind(that)} />
-              }
+              <TextField
+                data-index={index}
+                onChange={that._handleUserEmailChange.bind(that)}
+                floatingLabelText="User Email"
+                value={ email !== "" ? email : null} />
 
               { that.state.userEmails.length > 1 ?
                 <button

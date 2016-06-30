@@ -70,6 +70,10 @@
  .greenSolidBtn:hover {
    background-color: #2E7D32;
  }
+ .greenSolidBtn:disabled {
+   background-color: #404040;
+   color: #e0e0e0;
+ }
  .greenOutlineBtn.disabled {
    color: #bbb;
    background-color: #444;

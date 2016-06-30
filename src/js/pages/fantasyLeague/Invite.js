@@ -102,8 +102,8 @@ export default class Invite extends React.Component {
 
             <div className="column12 leagueBanner">
               <div className="column8">
-                <span className="title">Invite Users</span><br/>
-                <span className="subtext below small">{that.state.fantasyLeague.fleague_name}</span>
+                <span className="title">{that.state.fantasyLeague.fleague_name}</span><br/>
+                <span className="subtext below small">Fantasy League</span>
               </div>
               <div className="column4 right" style={{paddingTop: "1.5em"}}>
                 <button
@@ -120,7 +120,6 @@ export default class Invite extends React.Component {
             <div className="column6">
               <div className="column12 standardContainer grey">
                 <UserInviteList
-                  inviteUsersFunction={that.inviteUsers.bind(that)}
                   handleUserEmailChange={that.handleUserEmailChange.bind(that)} />
               </div>
 

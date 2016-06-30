@@ -1,9 +1,14 @@
 import React from "react";
+import customTheme from '../../materialUiTheme/CustomTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import { Step, Stepper, StepButton } from 'material-ui/Stepper';
+
 import UserStore from "../stores/UserStore";
 import * as FantasyLeagueActions from "../actions/FantasyLeagueActions";
-import Setup from "../components/fantasyLeague/creation/Setup";
+import LeagueSetup from "../components/fantasyLeague/creation/LeagueSetup";
+import RuleSetup from "../components/fantasyLeague/creation/RuleSetup";
 import UserInviteList from "../components/fantasyLeague/UserInviteList";
-import * as activeView from "../scripts/ActiveView";
 import APIRequest from "../scripts/APIRequest";
 import moment from "moment";
 
@@ -13,19 +18,21 @@ export default class CreateLeague extends React.Component {
     let admin = UserStore.getEmail();
 
     this.state = {
-      step                : 1,
-      inviteEmails        : [""],
-      fleague_name        : null,
-      fleague_admins      : { admin : "admin"},
-      sport               : "Basketball",
-      pro_leagues         : [],
-      contest_type        : "League",
-      privacy_mode        : "public",
-      league_size_limit   : 3,
-      draft_date          : null,
-      draft_time          : null,
-      status              : "in progress",
-      settings            : { draft_mode : "auto" }
+      stepIndex           : 0,
+      emailList           : [""],
+      leagueData          : {
+        fleague_name        : null,
+        fleague_admins      : {},
+        sport               : "",
+        pro_leagues         : [],
+        contest_type        : "",
+        privacy_mode        : "public",
+        league_size_limit   : 3,
+        draft_date          : null,
+        draft_time          : null,
+        status              : "in progress",
+        settings            : { draft_mode : "auto" }
+      }
     };
   }
 
@@ -39,32 +46,55 @@ export default class CreateLeague extends React.Component {
 
   setAdminUser() {
     let admin = UserStore.getEmail();
+    let leagueData = this.state.leagueData;
+    let admins = {};
+    admin[admin] = 'admin';
+
+    leagueData.fleague_admins = admins;
+
     this.setState({
-      fleague_admins: { admin : "admin"}
+      leagueData: leagueData
     });
   }
 
   nextStep() {
+    if(this.state.stepIndex >=2) {
+      // finish case
+      return;
+    }
+
     this.setState({
-      step: this.state.step + 1
+      stepIndex: this.state.stepIndex + 1
     });
   }
 
   prevStep() {
     this.setState({
-      step: this.state.step - 1
+      stepIndex: this.state.stepIndex - 1
     });
   }
 
-  handleFantasyLeagueNameChange(e) {
+  handleFantasyLeagueNameChange(value) {
+    let leagueData = this.state.leagueData;
+    leagueData.fleague_name = value;
+
     this.setState({
-      fleague_name : e.target.value
+      leagueData: leagueData
     });
   }
 
-  handleProLeagueSelection(e) {
-    let leagueList = this.state.pro_leagues;
-    let league = e.target.value;
+  handleSportChange(sport) {
+    let leagueData = this.state.leagueData;
+    leagueData.sport = sport;
+
+    this.setState({
+      leagueData: leagueData
+    });
+  }
+
+  handleProLeagueSelectionChange(league, isChecked) {
+    let leagueData = this.state.leagueData;
+    let leagueList = leagueData.pro_leagues;
     let index = leagueList.indexOf(league);
 
     if(index >= 0) {
@@ -74,71 +104,99 @@ export default class CreateLeague extends React.Component {
       leagueList.push(league);
     }
 
+    leagueData.pro_leagues = leagueList;
     this.setState({
-      pro_leagues: leagueList
+      leagueData: leagueData
+    });
+  }
+
+  handleFantasyLeagueTypeChange(type) {
+    let leagueData = this.state.leagueData;
+    leagueData.contest_type = type;
+
+    this.setState({
+      leagueData: leagueData
     });
   }
 
   handlePrivacyChange(e) {
+    let leagueData = this.state.leagueData;
+    leagueData.privacy_mode = e.target.value;
+
     this.setState({
-      privacy_mode: e.target.value
+      leagueData: leagueData
     });
   }
 
   handleLeagueSizeChange(e) {
-    this.setState({
-      league_size_limit: e.target.value
-    })
-  }
+    let leagueData = this.state.leagueData;
+    leagueData.league_size_limit = e.target.value;
 
-  handleDraftDateChange(date) {
     this.setState({
-      draft_date: date
+      leagueData: leagueData
     });
   }
 
-  handleDraftTimeChange(time) {
+  handleUserEmailChange(newEmailList) {
     this.setState({
-      draft_time: time
+      emailList: newEmailList
     });
   }
 
-  handleInvitesChange(e) {
-    let emailList = this.state.inviteEmails;
-
-    if(e.target.dataset.index) {
-      emailList[e.target.dataset.index] = e.target.value;
-
-      this.setState({
-        inviteEmails: emailList
-      });
-    }
-  }
-
-  addBlankInvite() {
-    let emailList = this.state.inviteEmails;
-    emailList.push("");
+  handleStartDateChange(date) {
+    let leagueData = this.state.leagueData;
+    leagueData.start_date = date;
 
     this.setState({
-      inviteEmails: emailList
+      leagueData: leagueData
     });
   }
 
-  removeInvite(e) {
-    let emailList = this.state.inviteEmails;
+  handleStartTimeChange(time) {
+    let leagueData = this.state.leagueData;
+    leagueData.start_time = time;
 
-    if(e.target.dataset.index && this.state.inviteEmails.length > 1) {
-      emailList.splice(e.target.dataset.index, 1);
+    this.setState({
+      leagueData: leagueData
+    });
+  }
 
-      this.setState({
-        inviteEmails: emailList
-      });
+  getStepContent() {
+    switch (this.state.stepIndex) {
+      case 0:
+      return (
+        <div className="column12">
+          <LeagueSetup
+            leagueData={this.state.leagueData}
+            handleFantasyLeagueNameChange={this.handleFantasyLeagueNameChange.bind(this)}
+            handleSportChange={this.handleSportChange.bind(this)}
+            handleProLeagueSelectionChange={this.handleProLeagueSelectionChange.bind(this)}
+            handleFantasyLeagueTypeChange={this.handleFantasyLeagueTypeChange.bind(this)} />
+        </div>
+      );
+      case 1:
+        return (
+          <div className="column12">
+            <RuleSetup
+              handlePrivacyChange={this.handlePrivacyChange.bind(this)}
+              handleLeagueSizeChange={this.handleLeagueSizeChange.bind(this)}
+              handleStartDateChange={this.handleStartDateChange.bind(this)}
+              handleStartTimeChange={this.handleStartTimeChange.bind(this)} />
+          </div>
+        );
+      case 2:
+        return (
+          <div className="column12">
+            <UserInviteList
+              handleUserEmailChange={this.handleUserEmailChange.bind(this)} />
+          </div>
+        );
+      default:
+        return 'How did you get here? Please stay within the sandbox';
     }
   }
 
   createLeague() {
-    // TODO: actually make call
-
     APIRequest.post({
       api: "LeagueSpot",
       apiExt: "/fantasy_leagues/create",
@@ -171,31 +229,73 @@ export default class CreateLeague extends React.Component {
   }
 
   render() {
+    let that = this;
+
     return (
-      <div className="darkContainer padBottom">
+      <MuiThemeProvider muiTheme={getMuiTheme(customTheme)}>
 
-        <div className="containerBanner">
-          <div className="title">Create Fantasy League</div>
+        <div className="darkContainer">
+
+          <div className="column12 leagueBanner">
+            <div className="column8">
+              <span className="title">Create Fantasy League</span>
+            </div>
+            <div className="column4 right" style={{paddingTop: "1.5em"}}>
+            </div>
+          </div>
+
+          <div className="column2"></div>
+
+          <div className="column8">
+            <div className="column12">
+              <Stepper activeStep={that.state.stepIndex} linear={false} style={{color: '#fff'}} >
+                <Step>
+                  <StepButton
+                    onClick={() => this.setState({stepIndex: 0})} >
+                    <span style={{color: '#fff'}}>Setup League Basics</span>
+                  </StepButton>
+                </Step>
+                <Step>
+                  <StepButton
+                    onClick={() => this.setState({stepIndex: 1})} >
+                    <span style={{color: '#fff'}}>Modify League Rules</span>
+                  </StepButton>
+                </Step>
+                <Step>
+                  <StepButton
+                    onClick={() => this.setState({stepIndex: 2})} >
+                    <span style={{color: '#fff'}}>Invite Users</span>
+                  </StepButton>
+                </Step>
+              </Stepper>
+            </div>
+
+            <div className="column12 standardContainer grey">
+              {this.getStepContent()}
+            </div>
+
+            <div className="column12 padTopSmall right">
+              <button
+                className="btn greenSolidBtn"
+                onClick={that.prevStep.bind(that)}
+                disabled={that.state.stepIndex === 0 ? true : false}
+                >
+                Back
+              </button>
+              <button
+                className="btn greenSolidBtn"
+                onClick={that.nextStep.bind(that)}
+                >
+                {that.state.stepIndex === 2 ? 'Finish' : 'Next'}
+              </button>
+            </div>
+          </div>
+
+          <div className="column2"></div>
+
         </div>
 
-        <div className="popupDark wide">
-          {(() => {
-            switch (this.state.step) {
-        			case 1: return <Setup state={this.state}
-                                    nextStep={this.nextStep.bind(this)}
-                                    handleFantasyLeagueNameChange={this.handleFantasyLeagueNameChange.bind(this)}
-                                    handleProLeagueSelection={this.handleProLeagueSelection.bind(this)}
-                                    handlePrivacyChange={this.handlePrivacyChange.bind(this)}
-                                    handleLeagueSizeChange={this.handleLeagueSizeChange.bind(this)}
-                                    handleDraftDateChange={this.handleDraftDateChange.bind(this)}
-                                    handleDraftTimeChange={this.handleDraftTimeChange.bind(this)} />
-
-              case 2: return <div>dis page be in flux yo</div>
-        		}
-          })()}
-        </div>
-
-      </div>
+      </MuiThemeProvider>
     );
   }
 }
