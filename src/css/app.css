@@ -94,9 +94,15 @@ footer {
   color: #aaa !important;
   font-size: 0.8em;
 }
+.subtextDark {
+  color: rgba(255, 255, 255, 0.498039) !important;
+  font-size: 0.8em;
+}
+.subtextDark.below,
 .subtext.below {
   line-height: 0.5em;
 }
+.subtextDark.small,
 .subtext.small {
   font-size: 0.4em;
 }

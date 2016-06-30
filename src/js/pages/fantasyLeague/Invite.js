@@ -19,7 +19,7 @@ export default class Invite extends React.Component {
       dialogOpen: false,
       dialogMessage: "",
       fantasyLeague: FantasyLeagueStore.getActiveFantasyLeague(),
-      emailList: []
+      emailList: [""]
     }
   }
 
@@ -120,6 +120,7 @@ export default class Invite extends React.Component {
             <div className="column6">
               <div className="column12 standardContainer grey">
                 <UserInviteList
+                  emailList={that.state.emailList}
                   handleUserEmailChange={that.handleUserEmailChange.bind(that)} />
               </div>
 

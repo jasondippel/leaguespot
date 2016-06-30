@@ -17,21 +17,23 @@ export default class CreateLeague extends React.Component {
     super();
     let admin = UserStore.getEmail();
 
+    // default start dateTime
+    let startDateTime = moment().add(1, 'days').hour(12).minute(30).second(0);
+
     this.state = {
       stepIndex           : 0,
       emailList           : [""],
       leagueData          : {
-        fleague_name        : null,
-        fleague_admins      : {},
-        sport               : "",
-        pro_leagues         : [],
-        contest_type        : "",
-        privacy_mode        : "public",
-        league_size_limit   : 3,
-        draft_date          : null,
-        draft_time          : null,
-        status              : "in progress",
-        settings            : { draft_mode : "auto" }
+        fleague_name           : null,
+        fleague_admins         : {},
+        sport                  : "",
+        pro_leagues            : [],
+        contest_type           : "",
+        privacy_mode           : "public",
+        league_size_limit      : 5,
+        league_start_dateTime  : startDateTime.toDate(),
+        status                 : "in progress",
+        settings               : { draft_mode : "auto" }
       }
     };
   }
@@ -119,18 +121,18 @@ export default class CreateLeague extends React.Component {
     });
   }
 
-  handlePrivacyChange(e) {
+  handlePrivacyChange(value) {
     let leagueData = this.state.leagueData;
-    leagueData.privacy_mode = e.target.value;
+    leagueData.privacy_mode = value;
 
     this.setState({
       leagueData: leagueData
     });
   }
 
-  handleLeagueSizeChange(e) {
+  handleLeagueSizeChange(value) {
     let leagueData = this.state.leagueData;
-    leagueData.league_size_limit = e.target.value;
+    leagueData.league_size_limit = value;
 
     this.setState({
       leagueData: leagueData
@@ -145,7 +147,15 @@ export default class CreateLeague extends React.Component {
 
   handleStartDateChange(date) {
     let leagueData = this.state.leagueData;
-    leagueData.start_date = date;
+    let oldDateTime = leagueData.league_start_dateTime;
+
+    // create new dateTime; restore old selected time
+    let newDateTime = moment(date);
+    newDateTime = moment(newDateTime).hour(moment(oldDateTime).hour());
+    newDateTime = moment(newDateTime).minute(moment(oldDateTime).minute());
+    newDateTime = moment(newDateTime).second(moment(oldDateTime).second());
+
+    leagueData.league_start_dateTime = moment(newDateTime).toDate();
 
     this.setState({
       leagueData: leagueData
@@ -154,7 +164,15 @@ export default class CreateLeague extends React.Component {
 
   handleStartTimeChange(time) {
     let leagueData = this.state.leagueData;
-    leagueData.start_time = time;
+    let oldDateTime = leagueData.league_start_dateTime;
+
+    // create new dateTime; restore old selected date
+    let newDateTime = moment(time);
+    newDateTime = moment(newDateTime).day(moment(oldDateTime).day())
+    newDateTime = moment(newDateTime).month(moment(oldDateTime).month())
+    newDateTime = moment(newDateTime).year(moment(oldDateTime).year());
+
+    leagueData.league_start_dateTime = moment(newDateTime).toDate();
 
     this.setState({
       leagueData: leagueData
@@ -178,6 +196,7 @@ export default class CreateLeague extends React.Component {
         return (
           <div className="column12">
             <RuleSetup
+              leagueData={this.state.leagueData}
               handlePrivacyChange={this.handlePrivacyChange.bind(this)}
               handleLeagueSizeChange={this.handleLeagueSizeChange.bind(this)}
               handleStartDateChange={this.handleStartDateChange.bind(this)}
@@ -188,6 +207,7 @@ export default class CreateLeague extends React.Component {
         return (
           <div className="column12">
             <UserInviteList
+              emailList={this.state.emailList}
               handleUserEmailChange={this.handleUserEmailChange.bind(this)} />
           </div>
         );
@@ -258,7 +278,7 @@ export default class CreateLeague extends React.Component {
                 <Step>
                   <StepButton
                     onClick={() => this.setState({stepIndex: 1})} >
-                    <span style={{color: '#fff'}}>Modify League Rules</span>
+                    <span style={{color: '#fff'}}>Modify League Rules & Dates</span>
                   </StepButton>
                 </Step>
                 <Step>

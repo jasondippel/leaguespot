@@ -11,9 +11,6 @@ import APIRequest from "../../scripts/APIRequest";
 export default class UserInviteList extends React.Component {
   constructor() {
     super()
-    this.state = {
-      userEmails: [ "" ]
-    };
   }
 
   validateEmail(email) {
@@ -27,39 +24,33 @@ export default class UserInviteList extends React.Component {
   }
 
   _handleUserEmailChange(event) {
-    let emailList = this.state.userEmails;
+    let emailList = this.props.emailList;
 
     if(event.target.dataset.index) {
       emailList[event.target.dataset.index] = event.target.value;
 
       // let parent know of change
       this.props.handleUserEmailChange(emailList);
-
-      this.setState({
-        userEmails: emailList
-      });
     }
   }
 
   _addUserEmailField(event) {
-    let emailList = this.state.userEmails;
+    let emailList = this.props.emailList;
     emailList.push("");
 
-    this.setState({
-      userEmails: emailList
-    });
+    // let parent know of change
+    this.props.handleUserEmailChange(emailList);
   }
 
   _removeInvite(event) {
-    let emailList = this.state.userEmails;
+    let emailList = this.props.emailList;
 
-    if(event.target.dataset.index && this.state.userEmails.length > 1) {
+    if(event.target.dataset.index && this.props.emailList.length > 1) {
       let index = event.target.dataset.index;
       emailList.splice(index, 1);
 
-      this.setState({
-        userEmails: emailList
-      });
+      // let parent know of change
+      this.props.handleUserEmailChange(emailList);
     }
   }
 
@@ -71,7 +62,7 @@ export default class UserInviteList extends React.Component {
         <span className="title">Invite Users</span>
         <p className="subtext">Enter the emails of users you would like to join your league! If they're not already members of LeagueSpot, we'll send them an email to invite them.</p>
 
-        { this.state.userEmails.map(function(email, index) {
+        { that.props.emailList.map(function(email, index) {
           return (
             <div className="row">
               <TextField
@@ -80,7 +71,7 @@ export default class UserInviteList extends React.Component {
                 floatingLabelText="User Email"
                 value={ email !== "" ? email : null} />
 
-              { that.state.userEmails.length > 1 ?
+              { that.props.emailList.length > 1 ?
                 <button
                   className="btn simpleGreyBtn"
                   data-index={index}
