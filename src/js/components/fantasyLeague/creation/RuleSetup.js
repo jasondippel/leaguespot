@@ -50,8 +50,8 @@ export default class RuleSetup extends React.Component {
       <div className="column12">
 
         <div className="column12">
-          <span className="title">League Dates</span>
-          <p className="subtext">These are the important dates for your fantasy league. Make sure they work for all of your friends!</p>
+          <span className="title">League Start Date</span>
+          <p className="subtext">This is the cutoff date for your league. After this date and time, members will no longer be able to join your league. All team selections must be done before this time.</p>
         </div>
 
         <div className="column12">
