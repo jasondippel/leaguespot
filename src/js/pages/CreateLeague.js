@@ -50,7 +50,7 @@ export default class CreateLeague extends React.Component {
     let admin = UserStore.getEmail();
     let leagueData = this.state.leagueData;
     let admins = {};
-    admin[admin] = 'admin';
+    if(admin) admin[admin] = 'admin';
 
     leagueData.fleague_admins = admins;
 
