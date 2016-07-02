@@ -173,7 +173,7 @@ export default class RegistrationFields extends React.Component {
 
         <div className="row">
           <label>Email</label>
-          <input type="text" ref="email" placeholder="your@email.com"  onChange={this.handleEmailChange.bind(this)} />
+          <input type="email" ref="email" placeholder="your@email.com"  onChange={this.handleEmailChange.bind(this)} />
         </div>
 
         <div className="row">
