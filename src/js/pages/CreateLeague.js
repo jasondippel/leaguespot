@@ -3,6 +3,7 @@ import customTheme from '../../materialUiTheme/CustomTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { Step, Stepper, StepButton } from 'material-ui/Stepper';
+import Dialog from 'material-ui/Dialog';
 
 import UserStore from "../stores/UserStore";
 import * as FantasyLeagueActions from "../actions/FantasyLeagueActions";
@@ -21,6 +22,8 @@ export default class CreateLeague extends React.Component {
     let startDateTime = moment().add(1, 'days').hour(12).minute(30).second(0);
 
     this.state = {
+      dialogOpen          : false,
+      dialogMessage       : "",
       stepIndex           : 0,
       emailList           : [""],
       leagueData          : {
@@ -62,6 +65,7 @@ export default class CreateLeague extends React.Component {
   nextStep() {
     if(this.state.stepIndex >=2) {
       // finish case
+      this.createLeague();
       return;
     }
 
@@ -179,6 +183,19 @@ export default class CreateLeague extends React.Component {
     });
   }
 
+  _handleDialogOpen = () => {
+    this.setState({
+      dialogOpen: true
+    });
+  };
+
+
+  _handleDialogClose = () => {
+    this.setState({
+      dialogOpen: false
+    });
+  };
+
   getStepContent() {
     switch (this.state.stepIndex) {
       case 0:
@@ -216,27 +233,85 @@ export default class CreateLeague extends React.Component {
     }
   }
 
+  validateEmail(email) {
+    var atpos = email.indexOf("@");
+    var dotpos = email.lastIndexOf(".");
+    if (atpos<1 || dotpos<atpos+2 || dotpos+2>=email.length) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  verifyData() {
+    // league data
+    if(!this.state.leagueData.fleague_name) {
+      this.setState({
+        dialogMessage: "You must choose a fantasy league name before continuing."
+      });
+      return false;
+    } else if(!this.state.leagueData.sport || this.state.leagueData.pro_leagues.length === 0) {
+      this.setState({
+        dialogMessage: "You must choose a fantasy sport and professional leagues before continuing."
+      });
+      return false;
+    } else if(!this.state.leagueData.contest_type) {
+      this.setState({
+        dialogMessage: "You must choose a fantasy league type before continuing."
+      });
+      return false;
+    } else if(!this.state.leagueData.sport || !this.state.leagueData.pro_leagues) {
+      this.setState({
+        dialogMessage: "You must choose a fantasy sport and professional leagues before continuing."
+      });
+      return false;
+    }
+
+    // email invites
+    let i=0;
+    let emailList = this.state.emailList;
+    for(; i < emailList.length; i++) {
+      if(emailList[i] !== "" && !this.validateEmail(emailList[i])) {
+        this.setState({
+          dialogMessage: "One or more emails you've entered are invalid. Please fix this before continuing."
+        });
+        return false;
+      }
+    }
+
+    return true;
+
+  }
+
   createLeague() {
+    // verify data is valid
+    if(!this.verifyData()) {
+      this._handleDialogOpen();
+      return;
+    }
+
     APIRequest.post({
       api: "LeagueSpot",
       apiExt: "/fantasy_leagues/create",
       data: {
-        fleague_name        : this.state.fleague_name,
-        fleague_admins      : this.state.fleague_admins,
-        sport               : this.state.sport,
-        pro_leagues         : this.state.pro_leagues,
-        contest_type        : this.state.contest_type,
-        privacy_mode        : this.state.privacy_mode,
-        league_size_limit   : this.state.league_size_limit,
-        // draft_date          : this.state.draft_date,
-        // draft_time          : this.state.draft_time,
-        status              : this.state.status,
-        settings            : this.state.settings
+        fleague_name          : this.state.leagueData.fleague_name,
+        fleague_admins        : this.state.leagueData.fleague_admins,
+        sport                 : this.state.leagueData.sport,
+        pro_leagues           : this.state.leagueData.pro_leagues,
+        contest_type          : this.state.leagueData.contest_type,
+        privacy_mode          : this.state.leagueData.privacy_mode,
+        league_size_limit     : this.state.leagueData.league_size_limit,
+        league_start_dateTime : this.state.leagueData.league_start_dateTime,
+        status                : this.state.leagueData.status,
+        settings              : this.state.leagueData.settings
       }
     }).then((resp) => {
       if (resp.success) {
+        // send invites
+        this.sendInvites(resp.league.fleague_id);
+
         FantasyLeagueActions.setActiveFantasyLeague(resp.league);
-        this.props.history.push("/fantasyLeague/dashboard/" + resp.league.fleague_id);
+        this.props.history.push("/fantasyLeague/" + resp.league.fleague_id + "/dashboard");
       }
       else {
         alert("creation failed");
@@ -248,8 +323,50 @@ export default class CreateLeague extends React.Component {
     });
   }
 
+  sendInvites(fleagueId) {
+    let emailList = this.state.emailList;
+
+    // remove any empty entries
+    let filterFunction = function(value) {
+      return value !== "";
+    }
+
+    let filteredEmailList = emailList.filter(filterFunction);
+
+    if(filteredEmailList.length === 0) {
+      return;
+    }
+
+    APIRequest.post({
+      api: "LeagueSpot",
+      apiExt: "/fantasy_leagues/invite",
+      data: {
+        fleague_id  : fleagueId,
+        emailList   : emailList
+      }
+    }).then((resp) => {
+      if (resp.success) {
+      }
+      else {
+        alert("invitation failed");
+        console.log("invitation failed", resp);
+      }
+    }).catch((error) => {
+      alert("invitation errored");
+      console.log("invitation errored", error);
+    });
+  }
+
   render() {
     let that = this;
+
+    const actions = [
+      <button
+        className="btn simpleGreenBtn brightBackground"
+        onClick={this._handleDialogClose.bind(that)} >
+        Close
+      </button>
+    ];
 
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(customTheme)}>
@@ -312,6 +429,15 @@ export default class CreateLeague extends React.Component {
           </div>
 
           <div className="column2"></div>
+
+          <Dialog
+            actions={actions}
+            modal={false}
+            open={this.state.dialogOpen}
+            onRequestClose={this._handleDialogClose}
+          >
+            {this.state.dialogMessage}
+          </Dialog>
 
         </div>
 

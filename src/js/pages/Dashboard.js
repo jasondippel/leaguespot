@@ -106,7 +106,7 @@ export default class Upcoming extends React.Component {
       );
     }
 
-    let leaguesList;
+    let leaguesList = [];
     this.state.myFantasyLeagues.map(function(leagueData, index) {
       if(index === (that.state.myFantasyLeagues.length - 1) ) {
         leaguesList.push(
