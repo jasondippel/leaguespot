@@ -31,9 +31,11 @@ export default class Upcoming extends React.Component {
     };
   }
 
+
   componentWillMount() {
     FantasyLeagueStore.on("change", this.setMyFantasyLeagues.bind(this));
   }
+
 
   componentDidMount() {
     if(!this.state.myFantasyLeagues) {
@@ -41,9 +43,11 @@ export default class Upcoming extends React.Component {
     }
   }
 
+
   componentWillUnmount() {
     FantasyLeagueStore.removeListener("change", this.setMyFantasyLeagues.bind(this));
   }
+
 
   setMyFantasyLeagues() {
     let myFantasyLeagues = FantasyLeagueStore.getMyFantasyLeagues();
@@ -52,17 +56,20 @@ export default class Upcoming extends React.Component {
     });
   }
 
+
   _handleDialogOpen = () => {
     this.setState({
       dialogOpen: true
     });
   };
 
+
   _handleDialogClose = () => {
     this.setState({
       dialogOpen: false
     });
   };
+
 
   _goToLeagueDashboard(event) {
     let leagueId = event.target.dataset.leagueid;
@@ -71,9 +78,80 @@ export default class Upcoming extends React.Component {
     this.props.history.push("/fantasyLeague/" + leagueId + "/dashboard");
   }
 
+
+  _goToCreateLeague(event) {
+    this.props.history.push("/createLeague");
+  }
+
+
   _editAccount() {
     this._handleDialogOpen();
   }
+
+
+  getLeaguesList() {
+    let that = this;
+
+    if(this.state.myFantasyLeagues.length === 0) {
+      return (
+        <div className="column12 center brightSecondaryText">
+          <p>You don't seem to belong to any leagues yet...</p>
+          <button
+            className="btn greenSolidBtn"
+            onClick={that._goToCreateLeague.bind(that)}
+            >
+            Create a League!
+          </button>
+        </div>
+      );
+    }
+
+    let leaguesList;
+    this.state.myFantasyLeagues.map(function(leagueData, index) {
+      if(index === (that.state.myFantasyLeagues.length - 1) ) {
+        leaguesList.push(
+          <ListItem
+            leftAvatar={<Avatar icon={ <Group /> } />}
+            primaryText={
+              leagueData.fleague_name
+            }
+            rightIcon={(
+              <button
+                className="btn listButton"
+                data-leagueId={leagueData.fleague_id}
+                onClick={that._goToLeagueDashboard.bind(that)} >
+                View
+              </button>
+            )}
+          />
+        );
+      } else {
+        leaguesList.push(
+          <span>
+            <ListItem
+              leftAvatar={<Avatar icon={ <Group /> } />}
+              primaryText={
+                leagueData.fleague_name
+              }
+              rightIcon={(
+                <button
+                  className="btn listButton"
+                  data-leagueId={leagueData.fleague_id}
+                  onClick={that._goToLeagueDashboard.bind(that)} >
+                  View
+                </button>
+              )}
+            />
+          <Divider />
+        </span>
+        );
+      }
+    });
+
+    return leaguesList;
+
+  }
+
 
   getMyFantasyLeagues() {
     let that = this;
@@ -82,57 +160,17 @@ export default class Upcoming extends React.Component {
       return (
         <Spinner />
       )
-    } else if (this.state.myFantasyLeagues == {}) {
-      return (
-        <div className='column12 center brightSecondaryText'>You haven't entered any fantasy leagues!</div>
-      );
     } else {
+      let leaguesList = this.getLeaguesList();
+
       return (
         <List>
-        {this.state.myFantasyLeagues.map(function(leagueData, index) {
-          if(index === that.state.myFantasyLeagues.length - 1) {
-            return (
-              <ListItem
-                leftAvatar={<Avatar icon={ <Group /> } />}
-                primaryText={
-                  leagueData.fleague_name
-                }
-                rightIcon={(
-                  <button
-                    className="btn listButton"
-                    data-leagueId={leagueData.fleague_id}
-                    onClick={that._goToLeagueDashboard.bind(that)} >
-                    View
-                  </button>
-                )}
-              />
-            );
-          } else {
-            return (
-              <span>
-                <ListItem
-                  leftAvatar={<Avatar icon={ <Group /> } />}
-                  primaryText={
-                    leagueData.fleague_name
-                  }
-                  rightIcon={(
-                    <button
-                      className="btn listButton"
-                      data-leagueId={leagueData.fleague_id}
-                      onClick={that._goToLeagueDashboard.bind(that)} >
-                      View
-                    </button>
-                  )}
-                />
-              <Divider />
-            </span>
-            );
-          }
-        })}
+          {leaguesList}
         </List>
       );
     }
   }
+
 
   render() {
 
@@ -191,7 +229,9 @@ export default class Upcoming extends React.Component {
               <div className='column6 standardContainer right'>
                 <Tabs style={{backgroundColor: 'rgb(47, 49, 55)'}}>
                   <Tab label="Upcoming Events" >
-                    <div className='column12 center brightSecondaryText'>No Upcoming Events</div>
+                    <div className='column12 center brightSecondaryText'>
+                      <p>No Upcoming Events</p>
+                    </div>
                   </Tab>
                 </Tabs>
               </div>
