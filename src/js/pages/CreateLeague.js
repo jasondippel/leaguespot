@@ -342,7 +342,7 @@ export default class CreateLeague extends React.Component {
       apiExt: "/fantasy_leagues/invite",
       data: {
         fleague_id  : fleagueId,
-        emailList   : emailList
+        emailList   : filteredEmailList
       }
     }).then((resp) => {
       if (resp.success) {

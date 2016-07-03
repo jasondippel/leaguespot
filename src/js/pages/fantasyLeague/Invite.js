@@ -67,10 +67,46 @@ export default class Invite extends React.Component {
   };
 
   inviteUsers() {
-    this.setState({
-      dialogMessage: "Successfully invited users"
+    let emailList = this.state.emailList;
+
+    // remove any empty entries
+    let filterFunction = function(value) {
+      return value !== "";
+    }
+
+    let filteredEmailList = emailList.filter(filterFunction);
+
+    if(filteredEmailList.length === 0) {
+      this.setState({
+        dialogMessage: "No emails entered to invite."
+      });
+      this._handleDialogOpen();
+      return;
+    }
+
+    APIRequest.post({
+      api: "LeagueSpot",
+      apiExt: "/fantasy_leagues/invite",
+      data: {
+        fleague_id  : this.props.params.fleagueId,
+        emailList   : filteredEmailList
+      }
+    }).then((resp) => {
+      if (resp.success) {
+        this.setState({
+          dialogMessage: "Successfully invited users."
+        });
+        this._handleDialogOpen();
+      }
+      else {
+        alert("invitation failed");
+        console.log("invitation failed", resp);
+      }
+    }).catch((error) => {
+      alert("invitation errored");
+      console.log("invitation errored", error);
     });
-    this._handleDialogOpen();
+
   }
 
   render() {
@@ -88,11 +124,6 @@ export default class Invite extends React.Component {
         className="btn simpleGreenBtn brightBackground"
         onClick={this._handleDialogClose.bind(that)} >
         Close
-      </button>,
-      <button
-        className="btn simpleDarkBtn brightBackground"
-        onClick={this._goToLeagueDashboard.bind(that)} >
-        To Dashboard
       </button>
     ];
 
@@ -115,9 +146,9 @@ export default class Invite extends React.Component {
               </div>
             </div>
 
-            <div className="column3"></div>
+            <div className="column2"></div>
 
-            <div className="column6">
+            <div className="column8">
               <div className="column12 standardContainer grey">
                 <UserInviteList
                   emailList={that.state.emailList}
@@ -134,7 +165,7 @@ export default class Invite extends React.Component {
               </div>
             </div>
 
-            <div className="column3"></div>
+            <div className="column2"></div>
 
 
             <Dialog
