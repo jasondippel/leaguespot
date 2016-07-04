@@ -12,6 +12,7 @@ import Scrollbars from 'react-custom-scrollbars';
 
 import PlayerList from '../../components/player/playerList';
 import FantasyLeagueStore from "../../stores/FantasyLeagueStore";
+import * as ProLeagues from "../../scripts/ProLeagues";
 import * as FantasyLeagueActions from "../../actions/FantasyLeagueActions";
 import LoadingScreen from "../LoadingScreen";
 
@@ -24,7 +25,10 @@ export default class Draft extends React.Component {
       dialogMessage: "",
       snackbarOpen: false,
       snackbarMessage: "",
-      fantasyLeague: FantasyLeagueStore.getActiveFantasyLeague()
+      fantasyLeague: FantasyLeagueStore.getActiveFantasyLeague(),
+      rosterSize: ProLeagues.getRosterSize('Basketball'),
+      selectedRoster: [],
+      playerList: {}
     };
   }
 
@@ -130,7 +134,7 @@ export default class Draft extends React.Component {
       <div className="darkContainer">
         <div className="column12 leagueBanner">
             <div className="column8">
-              <span className="title">Team Selection</span><br/>
+              <span className="title">Draft</span><br/>
               <span className="subtext below small">{this.state.fantasyLeague.fleague_name}</span>
             </div>
             <div className="column4 right" style={{paddingTop: "1.5em"}}>
@@ -153,6 +157,7 @@ export default class Draft extends React.Component {
                 <Tab label="NBA" >
                   <Scrollbars style={{ height: "50vh" }}>
                     <PlayerList
+                      playerList={that.state.playerList['nba']}
                       addPlayerOption={true}
                       showPlayerInfo={that._showPlayerInfo.bind(this)}
                       addPlayer={that._addPlayer.bind(this)}
@@ -163,6 +168,7 @@ export default class Draft extends React.Component {
                 <Tab label="WNBA" >
                   <Scrollbars style={{ height: "50vh" }}>
                     <PlayerList
+                      playerList={that.state.playerList['wnba']}
                       addPlayerOption={true}
                       showPlayerInfo={that._showPlayerInfo.bind(this)}
                       addPlayer={that._addPlayer.bind(this)}
@@ -173,6 +179,7 @@ export default class Draft extends React.Component {
                 <Tab label="NCAA Men's" >
                   <Scrollbars style={{ height: "50vh" }}>
                     <PlayerList
+                      playerList={that.state.playerList['ncaambd1']}
                       addPlayerOption={true}
                       showPlayerInfo={that._showPlayerInfo.bind(this)}
                       addPlayer={that._addPlayer.bind(this)}
@@ -204,6 +211,9 @@ export default class Draft extends React.Component {
                 <Tab label="Roster" >
                   <Scrollbars style={{ height: "50vh" }}>
                     <PlayerList
+                      selectionRoster={true}
+                      rosterSize={that.state.rosterSize}
+                      roster={that.state.selectedRoster}
                       removePlayerOption={true}
                       showPlayerInfo={that._showPlayerInfo.bind(this)}
                       addPlayer={that._addPlayer.bind(this)}

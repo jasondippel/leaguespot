@@ -7,13 +7,17 @@
 const sports = ['Basketball'];
 
 const proLeaguesInSport = {
-  Basketball: ['nba', 'wnba', 'ncaa_mb', 'ncaa_wb']
+  Basketball: ['nba', 'wnba', 'ncaambd1', 'ncaa_wb']
+}
+
+const rosterSizeBySport = {
+  Basketball: 15
 }
 
 const leagueNames = {
   nba: 'NBA',
   wnba: 'WNBA',
-  ncaa_mb: 'NCAA MB',
+  ncaambd1: 'NCAA MB',
   ncaa_wb: 'NCAA WB'
 }
 
@@ -31,4 +35,11 @@ export function getLeaguesInSport(sport) {
 
 export function getLeagueName(leagueId) {
   return leagueNames[leagueId];
+}
+
+export function getRosterSize(sport) {
+  if(rosterSizeBySport[sport]) return rosterSizeBySport[sport];
+
+  console.error("Error: roster size not defined for " + sport);
+  return 0;
 }

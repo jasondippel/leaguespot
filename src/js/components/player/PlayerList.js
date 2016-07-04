@@ -56,71 +56,97 @@ export default class PlayerListItem extends React.Component {
       );
     }
 
-    let playerInfo=(
-      <div className="column12 brightSecondaryText">
-        <div className="column4">
-          <span>PG</span>
-        </div>
-        <div className="column4">
-          <span>23 FPPG</span>
-        </div>
-        <div className="column4">
-          <span>$3000</span>
-        </div>
-      </div>
-    )
+    if(!this.props.playerList && !this.props.selectionRoster) {
+      return (
+        <p>No players found</p>
+      )
+    }
+
+    let listItems = [];
+
+    if(this.props.selectionRoster) {
+      let i=0;
+      let maxRosterSpots = this.props.rosterSize;
+
+      // display selected players
+      for(; i < this.props.roster.length; i++) {
+        let player = this.props.roster[i];
+        let playerInfo=(
+          <div className="column12 brightSecondaryText">
+            <div className="column4">
+              <span>{player.position}</span>
+            </div>
+            <div className="column4">
+              <span>{player.pg_points} FPPG</span>
+            </div>
+            <div className="column4">
+              <span>${player.cost}</span>
+            </div>
+          </div>
+        );
+
+        if(i < maxRosterSpots - 1) {
+          listItems.push(
+            <span>
+              <ListItem
+                leftAvatar={<Avatar icon={ <AccountCircle /> } />}
+                rightIcon={ rightIcon }
+                primaryText={player.last_name + ", " + player.first_name}
+                secondaryText={playerInfo}
+              />
+              <Divider />
+            </span>
+          );
+        } else {
+          listItems.push(
+            <span>
+              <ListItem
+                leftAvatar={<Avatar icon={ <AccountCircle /> } />}
+                rightIcon={ rightIcon }
+                primaryText={player.last_name + ", " + player.first_name}
+                secondaryText={playerInfo}
+              />
+              <Divider />
+            </span>
+          );
+        }
+      }
+
+      // display empty slots for remaining players
+      for(; i < maxRosterSpots; i++) {
+        if(i < maxRosterSpots - 1) {
+          listItems.push(
+            <span>
+              <ListItem
+                leftAvatar={<Avatar icon={ <AccountCircle /> } />}
+                primaryText={(<span className="brightSecondaryText">Empty</span>)}
+              />
+              <Divider />
+            </span>
+          );
+        } else {
+          listItems.push(
+            <ListItem
+              leftAvatar={<Avatar icon={ <AccountCircle /> } />}
+              primaryText={(<span className="brightSecondaryText">Empty</span>)}
+            />
+          );
+        }
+      }
+    }
+
+    // <ListItem
+    //   leftAvatar={<Avatar icon={ <AccountCircle /> } />}
+    //   rightIcon={ rightIcon }
+    //   primaryText="Jon Doe"
+    //   secondaryText={playerInfo}
+    // />
+    // <Divider />
 
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
         <List>
-          <ListItem
-            leftAvatar={<Avatar icon={ <AccountCircle /> } />}
-            rightIcon={ rightIcon }
-            primaryText="Jon Doe"
-            secondaryText={playerInfo}
-          />
-          <Divider />
-          <ListItem
-            leftAvatar={<Avatar icon={ <AccountCircle /> } />}
-            rightIcon={ rightIcon }
-            primaryText="Jon Doe"
-            secondaryText={playerInfo}
-          />
-          <Divider />
-          <ListItem
-            leftAvatar={<Avatar icon={ <AccountCircle /> } />}
-            rightIcon={ rightIcon }
-            primaryText="Jon Doe"
-            secondaryText={playerInfo}
-          />
-          <Divider />
-          <ListItem
-            leftAvatar={<Avatar icon={ <AccountCircle /> } />}
-            rightIcon={ rightIcon }
-            primaryText="Jon Doe"
-            secondaryText={playerInfo}
-          />
-          <Divider />
-          <ListItem
-            leftAvatar={<Avatar icon={ <AccountCircle /> } />}
-            rightIcon={ rightIcon }
-            primaryText="Jon Doe"
-            secondaryText={playerInfo}
-          />
-          <Divider />
-          <ListItem
-            leftAvatar={<Avatar icon={ <AccountCircle /> } />}
-            rightIcon={ rightIcon }
-            primaryText="Jon Doe"
-            secondaryText={playerInfo}
-          />
-          <Divider />
-          <ListItem
-            leftAvatar={<Avatar icon={ <AccountCircle /> } />}
-            rightIcon={ rightIcon }
-            primaryText="Jon Doe"
-            secondaryText={playerInfo}
-          />
+          {listItems}
         </List>
       </MuiThemeProvider>
     );
