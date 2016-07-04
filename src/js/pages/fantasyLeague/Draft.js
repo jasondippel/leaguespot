@@ -12,8 +12,10 @@ import Scrollbars from 'react-custom-scrollbars';
 
 import PlayerList from '../../components/player/playerList';
 import FantasyLeagueStore from "../../stores/FantasyLeagueStore";
+import PlayerStore from "../../stores/PlayerStore";
 import * as ProLeagues from "../../scripts/ProLeagues";
 import * as FantasyLeagueActions from "../../actions/FantasyLeagueActions";
+import * as PlayerActions from "../../actions/PlayerActions";
 import LoadingScreen from "../LoadingScreen";
 
 export default class Draft extends React.Component {
@@ -30,12 +32,13 @@ export default class Draft extends React.Component {
       selectedRoster: [],
       selectedRosterCost: 0,
       maxRosterCost: 50000,
-      playerList: {}
+      playerList: PlayerStore.getPlayers()
     };
   }
 
   componentWillMount() {
     FantasyLeagueStore.on("change", this.setActiveFantasyLeague.bind(this));
+    PlayerStore.on("change", this.setPlayerList.bind(this));
   }
 
   componentDidMount() {
@@ -46,11 +49,18 @@ export default class Draft extends React.Component {
 
   componentWillUnmount() {
     FantasyLeagueStore.removeListener("change", this.setActiveFantasyLeague.bind(this));
+    PlayerStore.removeListener("change", this.setPlayerList.bind(this));
   }
 
   setActiveFantasyLeague() {
     this.setState({
       fantasyLeague: FantasyLeagueStore.getActiveFantasyLeague()
+    });
+  }
+
+  setPlayerList() {
+    this.setState({
+      playerList: PlayerStore.getPlayers()
     });
   }
 
@@ -143,7 +153,7 @@ export default class Draft extends React.Component {
                   />
               </Scrollbars>
             :
-            <Scrollbars style={{ height: "50vh", backgroundColor: 'rgb(47, 50, 56)' }}>
+            <Scrollbars style={{ height: "50vh", backgroundColor: 'rgb(47, 49, 55)' }}>
               <LoadingScreen small={true} />
             </Scrollbars>
             }

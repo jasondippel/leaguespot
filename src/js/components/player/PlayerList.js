@@ -134,6 +134,58 @@ export default class PlayerListItem extends React.Component {
         }
       }
     }
+    else if(this.props.playerList) {
+      let i=0;
+
+      // display players
+      for(; i < this.props.playerList.length; i++) {
+        let player = this.props.playerList[i];
+        let playerInfo=(
+          <div className="column12 brightSecondaryText">
+            <div className="column4">
+              <span>{player.position}</span>
+            </div>
+            <div className="column4">
+              <span>{player.pg_points} FPPG</span>
+            </div>
+            <div className="column4">
+              <span>${player.cost}</span>
+            </div>
+          </div>
+        );
+
+        if(i < this.props.playerList.length - 1) {
+          listItems.push(
+            <span>
+              <ListItem
+                leftAvatar={<Avatar icon={ <AccountCircle /> } />}
+                rightIcon={ rightIcon }
+                primaryText={player.last_name + ", " + player.first_name}
+                secondaryText={playerInfo}
+              />
+              <Divider />
+            </span>
+          );
+        } else {
+          listItems.push(
+            <span>
+              <ListItem
+                leftAvatar={<Avatar icon={ <AccountCircle /> } />}
+                rightIcon={ rightIcon }
+                primaryText={player.last_name + ", " + player.first_name}
+                secondaryText={playerInfo}
+              />
+              <Divider />
+            </span>
+          );
+        }
+      }
+    }
+    else {
+      console.error("Error: Player list attempted to be created without passing in a list of players");
+    }
+
+
 
     // <ListItem
     //   leftAvatar={<Avatar icon={ <AccountCircle /> } />}

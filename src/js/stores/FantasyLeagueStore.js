@@ -1,6 +1,7 @@
 import { EventEmitter } from "events";
 import APIRequest from "../scripts/APIRequest";
 import dispatcher from "../dispatcher";
+import PlayerStore from "./PlayerStore";
 
 /*
  * NOTE: any setters/functions that change the store need to emit a change event
@@ -68,6 +69,7 @@ class FantasyLeagueStore extends EventEmitter {
     this.activeFantasyLeague = league;
     this.fantasyLeagues[league.fleague_id] = league;
     this.emit("change");
+    PlayerStore._loadPlayersInLeagues(league.pro_leagues);
   }
 
   /**
@@ -78,6 +80,7 @@ class FantasyLeagueStore extends EventEmitter {
   _setActiveFantasyLeagueById(leagueId) {
     this.activeFantasyLeague = this.fantasyLeagues[leagueId];
     this.emit("change");
+    PlayerStore._loadPlayersInLeagues(this.activeFantasyLeague.pro_leagues);
   }
 
 
