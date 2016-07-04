@@ -20,8 +20,8 @@ https://github.com/reactjs/react-router-tutorial/tree/master/lessons/01-setting-
 
 ## Modules
 
-### React DatePicker
-https://hacker0x01.github.io/react-datepicker/
+### Material UI
+http://www.material-ui.com/#/
 
-### React TimePicker
-http://react-component.github.io/time-picker/
+### React Custom Scrollbar
+http://malte-wessel.github.io/react-custom-scrollbars/

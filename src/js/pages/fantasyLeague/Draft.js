@@ -28,6 +28,8 @@ export default class Draft extends React.Component {
       fantasyLeague: FantasyLeagueStore.getActiveFantasyLeague(),
       rosterSize: ProLeagues.getRosterSize('Basketball'),
       selectedRoster: [],
+      selectedRosterCost: 0,
+      maxRosterCost: 50000,
       playerList: {}
     };
   }
@@ -76,6 +78,10 @@ export default class Draft extends React.Component {
     });
   };
 
+  numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
   _showPlayerInfo(event) {
     this._handleOpenDialog();
   }
@@ -112,6 +118,46 @@ export default class Draft extends React.Component {
     this.props.history.push("/fantasyLeague/" + leagueId + "/dashboard");
   }
 
+  createTabs() {
+    let that = this;
+
+    let selectedLeagues = this.state.fantasyLeague.pro_leagues;
+
+    let i=0;
+    let tabList = []
+    for(; i < selectedLeagues.length; i++) {
+      let leagueId = selectedLeagues[i];
+      let leagueName = ProLeagues.getLeagueName(leagueId);
+
+      tabList.push(
+        <Tab label={leagueName} >
+            {
+            that.state.playerList[leagueId] ?
+              <Scrollbars style={{ height: "50vh" }}>
+                <PlayerList
+                  playerList={that.state.playerList[leagueId]}
+                  addPlayerOption={true}
+                  showPlayerInfo={that._showPlayerInfo.bind(this)}
+                  addPlayer={that._addPlayer.bind(this)}
+                  removePlayer={that._removePlayer.bind(this)}
+                  />
+              </Scrollbars>
+            :
+            <Scrollbars style={{ height: "50vh", backgroundColor: 'rgb(47, 50, 56)' }}>
+              <LoadingScreen small={true} />
+            </Scrollbars>
+            }
+        </Tab>
+      )
+    }
+
+    return (
+      <Tabs style={{backgroundColor: 'rgb(47, 49, 55)'}} >
+        {tabList}
+      </Tabs>
+    );
+  }
+
   render() {
     let that = this;
 
@@ -123,12 +169,14 @@ export default class Draft extends React.Component {
     }
 
     const actions = [
-      <FlatButton
-        label="Close"
-        primary={true}
-        onTouchTap={this._handleDialogClose}
-      />
+      <button
+        className="btn simpleGreenBtn brightBackground"
+        onClick={this._handleDialogClose.bind(this)} >
+        Close
+      </button>
     ];
+
+    let tabs = this.createTabs();
 
     return (
       <div className="darkContainer">
@@ -153,41 +201,7 @@ export default class Draft extends React.Component {
 
               <h3>Player Pool</h3>
 
-              <Tabs style={{backgroundColor: 'rgb(47, 49, 55)'}} >
-                <Tab label="NBA" >
-                  <Scrollbars style={{ height: "50vh" }}>
-                    <PlayerList
-                      playerList={that.state.playerList['nba']}
-                      addPlayerOption={true}
-                      showPlayerInfo={that._showPlayerInfo.bind(this)}
-                      addPlayer={that._addPlayer.bind(this)}
-                      removePlayer={that._removePlayer.bind(this)}
-                      />
-                  </Scrollbars>
-                </Tab>
-                <Tab label="WNBA" >
-                  <Scrollbars style={{ height: "50vh" }}>
-                    <PlayerList
-                      playerList={that.state.playerList['wnba']}
-                      addPlayerOption={true}
-                      showPlayerInfo={that._showPlayerInfo.bind(this)}
-                      addPlayer={that._addPlayer.bind(this)}
-                      removePlayer={that._removePlayer.bind(this)}
-                      />
-                  </Scrollbars>
-                </Tab>
-                <Tab label="NCAA Men's" >
-                  <Scrollbars style={{ height: "50vh" }}>
-                    <PlayerList
-                      playerList={that.state.playerList['ncaambd1']}
-                      addPlayerOption={true}
-                      showPlayerInfo={that._showPlayerInfo.bind(this)}
-                      addPlayer={that._addPlayer.bind(this)}
-                      removePlayer={that._removePlayer.bind(this)}
-                      />
-                  </Scrollbars>
-                </Tab>
-              </Tabs>
+              { tabs }
 
             </div>
 
@@ -197,12 +211,12 @@ export default class Draft extends React.Component {
                 <h3>Selected Team</h3>
               </div>
               <div className="column3">
-                <label>$50,000<br/>
+                <label>${this.numberWithCommas(this.state.maxRosterCost - this.state.selectedRosterCost)}<br/>
                 <span className="subtext below">Salary Remaining</span>
                 </label>
               </div>
               <div className="column3">
-                <label>$50,000<br/>
+                <label>${this.numberWithCommas(this.state.selectedRosterCost)}<br/>
                 <span className="subtext below">Payroll</span>
                 </label>
               </div>
