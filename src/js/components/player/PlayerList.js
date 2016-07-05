@@ -47,7 +47,7 @@ export default class PlayerListItem extends React.Component {
     );
   }
 
-  _getRightIcon(player) {
+  _getRightIcon(player, index) {
     let rightIcon = "";
 
     if (this.props.removePlayerOption) {
@@ -56,6 +56,7 @@ export default class PlayerListItem extends React.Component {
           className="btn listButton removal"
           data-leagueId={player.league}
           data-playerId={player.id}
+          data-index={index}
           onClick={this._removePlayer.bind(this)} >
           Remove
         </button>
@@ -67,6 +68,7 @@ export default class PlayerListItem extends React.Component {
           className="btn listButton addition"
           data-leagueId={player.league}
           data-playerId={player.id}
+          data-index={index}
           onClick={this._addPlayer.bind(this)} >
           Add
         </button>
@@ -95,7 +97,7 @@ export default class PlayerListItem extends React.Component {
       for(; i < this.props.roster.length; i++) {
         let player = this.props.roster[i];
         let playerInfo = this._getPlayerInfo(player);
-        let rightIcon = this._getRightIcon(player);
+        let rightIcon = this._getRightIcon(player, i);
 
         if(i < maxRosterSpots - 1) {
           listItems.push(
@@ -152,8 +154,10 @@ export default class PlayerListItem extends React.Component {
       // display players
       for(; i < this.props.playerList.length; i++) {
         let player = this.props.playerList[i];
+        if(player.hideOnDisplay) continue;
+
         let playerInfo = this._getPlayerInfo(player);
-        let rightIcon = this._getRightIcon(player);
+        let rightIcon = this._getRightIcon(player, i);
 
         if(i < this.props.playerList.length - 1) {
           listItems.push(

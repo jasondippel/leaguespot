@@ -31,8 +31,8 @@ export default class Draft extends React.Component {
       rosterSize: ProLeagues.getRosterSize('Basketball'),
       selectedRoster: [],
       selectedRosterCost: 0,
-      maxRosterCost: 50000,
-      playerList: PlayerStore.getPlayers()
+      maxRosterCost: 60000,
+      playerList: PlayerStore.getPlayers()  // add field player.hideDisplay?
     };
   }
 
@@ -97,8 +97,42 @@ export default class Draft extends React.Component {
   }
 
   _addPlayer(event) {
+    // get player object from list
+    let index = event.target.dataset.index;
+    let leagueId = event.target.dataset.leagueid;
+    let newPlayerList = this.state.playerList;
+    let originalPlayerObj = newPlayerList[leagueId][index];
+
+    // do we have an open roster spot?
+    if(this.state.selectedRoster.length + 1 > this.state.rosterSize) {
+      this.setState({
+        snackbarMessage: "You don't have any open spots on your roster."
+      });
+      this._handleSnackbarOpen();
+      return;
+    }
+
+    // do we have the capspace for the player?
+    if(parseInt(this.state.selectedRosterCost) + parseInt(originalPlayerObj.cost) > parseInt(this.state.maxRosterCost)) {
+      this.setState({
+        snackbarMessage: "You don't have enough money left to afford this player."
+      });
+      this._handleSnackbarOpen();
+      return;
+    }
+
+    // hide in master list
+    newPlayerList[leagueId][index].hideOnDisplay = true;
+
+    // add player to selected list
+    let newSelectedRoster = this.state.selectedRoster;
+    newSelectedRoster.push(originalPlayerObj);
+    let newSelectedRosterCost = parseInt(this.state.selectedRosterCost) + parseInt(originalPlayerObj.cost);
+
     this.setState({
-      snackbarOpen: true,
+      playerList: newPlayerList,
+      selectedRoster: newSelectedRoster,
+      selectedRosterCost: newSelectedRosterCost,
       snackbarMessage: "Player added to active roster"
     });
     this._handleSnackbarOpen();
@@ -107,8 +141,8 @@ export default class Draft extends React.Component {
   }
 
   _removePlayer(event) {
+
     this.setState({
-      snackbarOpen: true,
       snackbarMessage: "Player removed from active roster"
     });
     this._handleSnackbarOpen();
@@ -232,7 +266,7 @@ export default class Draft extends React.Component {
               </div>
 
               <Tabs style={{backgroundColor: 'rgb(47, 49, 55)'}}>
-                <Tab label="Roster" >
+                <Tab label={"Roster (" + this.state.selectedRoster.length + "/" + this.state.rosterSize + ")"} >
                   <Scrollbars style={{ height: "50vh" }}>
                     <PlayerList
                       selectionRoster={true}
