@@ -31,16 +31,32 @@ export default class PlayerListItem extends React.Component {
     event.stopPropagation();
   }
 
-  render() {
-    let that = this;
+  _getPlayerInfo(player) {
+    return (
+      <div className="column12 brightSecondaryText">
+        <div className="column4">
+          <span>{player.position}</span>
+        </div>
+        <div className="column4">
+          <span>{player.pg_points} FPPG</span>
+        </div>
+        <div className="column4">
+          <span>${player.cost}</span>
+        </div>
+      </div>
+    );
+  }
 
+  _getRightIcon(player) {
     let rightIcon = "";
+
     if (this.props.removePlayerOption) {
       rightIcon= (
         <button
           className="btn listButton removal"
-          data-leagueId={123}
-          onClick={that._removePlayer.bind(that)} >
+          data-leagueId={player.league}
+          data-playerId={player.id}
+          onClick={this._removePlayer.bind(this)} >
           Remove
         </button>
       );
@@ -49,12 +65,19 @@ export default class PlayerListItem extends React.Component {
       rightIcon= (
         <button
           className="btn listButton addition"
-          data-leagueId={123}
-          onClick={that._addPlayer.bind(that)} >
+          data-leagueId={player.league}
+          data-playerId={player.id}
+          onClick={this._addPlayer.bind(this)} >
           Add
         </button>
       );
     }
+
+    return rightIcon;
+  }
+
+  render() {
+    let that = this;
 
     if(!this.props.playerList && !this.props.selectionRoster) {
       return (
@@ -71,19 +94,8 @@ export default class PlayerListItem extends React.Component {
       // display selected players
       for(; i < this.props.roster.length; i++) {
         let player = this.props.roster[i];
-        let playerInfo=(
-          <div className="column12 brightSecondaryText">
-            <div className="column4">
-              <span>{player.position}</span>
-            </div>
-            <div className="column4">
-              <span>{player.pg_points} FPPG</span>
-            </div>
-            <div className="column4">
-              <span>${player.cost}</span>
-            </div>
-          </div>
-        );
+        let playerInfo = this._getPlayerInfo(player);
+        let rightIcon = this._getRightIcon(player);
 
         if(i < maxRosterSpots - 1) {
           listItems.push(
@@ -140,19 +152,8 @@ export default class PlayerListItem extends React.Component {
       // display players
       for(; i < this.props.playerList.length; i++) {
         let player = this.props.playerList[i];
-        let playerInfo=(
-          <div className="column12 brightSecondaryText">
-            <div className="column4">
-              <span>{player.position}</span>
-            </div>
-            <div className="column4">
-              <span>{player.pg_points} FPPG</span>
-            </div>
-            <div className="column4">
-              <span>${player.cost}</span>
-            </div>
-          </div>
-        );
+        let playerInfo = this._getPlayerInfo(player);
+        let rightIcon = this._getRightIcon(player);
 
         if(i < this.props.playerList.length - 1) {
           listItems.push(
@@ -184,16 +185,6 @@ export default class PlayerListItem extends React.Component {
     else {
       console.error("Error: Player list attempted to be created without passing in a list of players");
     }
-
-
-
-    // <ListItem
-    //   leftAvatar={<Avatar icon={ <AccountCircle /> } />}
-    //   rightIcon={ rightIcon }
-    //   primaryText="Jon Doe"
-    //   secondaryText={playerInfo}
-    // />
-    // <Divider />
 
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
