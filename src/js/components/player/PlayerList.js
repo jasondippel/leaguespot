@@ -122,7 +122,6 @@ export default class PlayerListItem extends React.Component {
                 primaryText={player.last_name + ", " + player.first_name}
                 secondaryText={playerInfo}
               />
-              <Divider />
             </span>
           );
         }

@@ -156,7 +156,6 @@ export default class Draft extends React.Component {
 
     // updated selectedRosterCost
     let newSelectedRosterCost = parseInt(this.state.selectedRosterCost) - parseInt(newPlayerList[leagueId][masterIndex].cost);
-    console.log("new cost", newSelectedRosterCost);
 
     this.setState({
       playerList: newPlayerList,
@@ -170,10 +169,42 @@ export default class Draft extends React.Component {
   }
 
   _finalizeTeam() {
+    if(this.state.selectedRoster.length < this.state.rosterSize) {
+      this.setState({
+        dialogMessage: "You don't have a full roster yet! You must select " + this.state.rosterSize + " players before continuing."
+      });
+      this._handleDialogOpen();
+      return;
+    }
+    if(this.state.selectedRoster.length > this.state.rosterSize) {
+      this.setState({
+        dialogMessage: "You're a wizard! Somehow you managed to select too many players. Please only select " + this.state.rosterSize + " players."
+      });
+      this._handleDialogOpen();
+      return;
+    }
+
+    if(parseInt(this.state.selectedRosterCost) > parseInt(this.state.maxRosterCost)) {
+      this.setState({
+        dialogMessage: "You're a wizard! Somehow you managed to select a roster that exceeds your maximum salary allowance. You may only submit a roster that has a payroll of $" + this.numberWithCommas(this.state.maxRosterCost) + " or less."
+      });
+      this._handleDialogOpen();
+      return;
+    }
+
     this.setState({
-      dialogMessage: "Sorry, not yet implemented"
+      dialogMessage: (
+        <div>
+          Finalizing team selection...<br/>
+          <LoadingScreen small={true} />
+        </div>
+      )
     });
     this._handleDialogOpen();
+
+    // send call to update
+
+
   }
 
   _goToLeagueDashboard() {
