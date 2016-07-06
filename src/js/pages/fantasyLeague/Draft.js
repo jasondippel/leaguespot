@@ -99,8 +99,10 @@ export default class Draft extends React.Component {
   _addPlayer(event) {
     // get player object from list
     let index = event.target.dataset.index;
+    let masterIndex = event.target.dataset.masterindex;
     let leagueId = event.target.dataset.leagueid;
     let newPlayerList = this.state.playerList;
+    let newSelectedRoster = this.state.selectedRoster;
     let originalPlayerObj = newPlayerList[leagueId][index];
 
     // do we have an open roster spot?
@@ -121,11 +123,11 @@ export default class Draft extends React.Component {
       return;
     }
 
-    // hide in master list
+    // hide in master list and give masterIndex val
     newPlayerList[leagueId][index].hideOnDisplay = true;
+    newPlayerList[leagueId][index].masterIndex = masterIndex;
 
     // add player to selected list
-    let newSelectedRoster = this.state.selectedRoster;
     newSelectedRoster.push(originalPlayerObj);
     let newSelectedRosterCost = parseInt(this.state.selectedRosterCost) + parseInt(originalPlayerObj.cost);
 
@@ -141,8 +143,25 @@ export default class Draft extends React.Component {
   }
 
   _removePlayer(event) {
+    // get player object from list
+    let selectedListIndex = event.target.dataset.index;
+    let masterIndex = event.target.dataset.masterindex;
+    let leagueId = event.target.dataset.leagueid;
+    let newPlayerList = this.state.playerList;
+    let newSelectedRoster = this.state.selectedRoster;
+
+    // remove player from selectedRoster and add back to playerList
+    newPlayerList[leagueId][masterIndex].hideOnDisplay = false;
+    let removedPlayer = newSelectedRoster.splice(selectedListIndex, 1);
+
+    // updated selectedRosterCost
+    let newSelectedRosterCost = parseInt(this.state.selectedRosterCost) - parseInt(newPlayerList[leagueId][masterIndex].cost);
+    console.log("new cost", newSelectedRosterCost);
 
     this.setState({
+      playerList: newPlayerList,
+      selectedRoster: newSelectedRoster,
+      selectedRosterCost: newSelectedRosterCost,
       snackbarMessage: "Player removed from active roster"
     });
     this._handleSnackbarOpen();
