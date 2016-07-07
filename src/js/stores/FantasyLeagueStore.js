@@ -42,7 +42,7 @@ class FantasyLeagueStore extends EventEmitter {
         break;
 
       default:
-        // console.log("ERROR: FantasyLeagueStore: Unknown action type", action.type);
+        // do nothing
     }
   }
 

@@ -9,6 +9,7 @@ import Dialog from 'material-ui/Dialog';
 import Snackbar from 'material-ui/Snackbar';
 
 import Scrollbars from 'react-custom-scrollbars';
+import Spinner from "../../components/loading/Spinner";
 
 import PlayerList from '../../components/player/playerList';
 import FantasyLeagueStore from "../../stores/FantasyLeagueStore";
@@ -16,7 +17,6 @@ import PlayerStore from "../../stores/PlayerStore";
 import * as ProLeagues from "../../scripts/ProLeagues";
 import * as FantasyLeagueActions from "../../actions/FantasyLeagueActions";
 import * as PlayerActions from "../../actions/PlayerActions";
-import LoadingScreen from "../LoadingScreen";
 
 export default class Draft extends React.Component {
   constructor() {
@@ -196,7 +196,7 @@ export default class Draft extends React.Component {
       dialogMessage: (
         <div>
           Finalizing team selection...<br/>
-          <LoadingScreen small={true} />
+          <Spinner/>
         </div>
       )
     });
@@ -238,7 +238,7 @@ export default class Draft extends React.Component {
               </Scrollbars>
             :
             <Scrollbars style={{ height: "50vh", backgroundColor: 'rgb(47, 49, 55)' }}>
-              <LoadingScreen small={true} />
+              <Spinner />
             </Scrollbars>
             }
         </Tab>
@@ -258,7 +258,7 @@ export default class Draft extends React.Component {
     // if fantasyLeague info isn't loaded yet, display loading page until it is
     if(!this.state.fantasyLeague) {
       return (
-        <LoadingScreen />
+        <Spinner />
       )
     }
 

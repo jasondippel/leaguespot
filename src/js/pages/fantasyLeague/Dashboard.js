@@ -3,10 +3,17 @@ import { Link } from "react-router";
 import customTheme from '../../../materialUiTheme/CustomTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import Divider from 'material-ui/Divider';
+import {Tabs, Tab} from 'material-ui/Tabs';
+import MenuItem from 'material-ui/MenuItem';
+import {List, ListItem} from 'material-ui/List';
+import Dialog from 'material-ui/Dialog';
+
+import Spinner from "../../components/loading/Spinner";
 
 import APIRequest from "../../scripts/APIRequest";
-// import Standings from "../../components/fantasyLeague/Standings";
-// import Roster from "../../components/fantasyLeague/Roster";
+import FantasyTeamStore from "../../stores/FantasyTeamStore";
+import * as FantasyTeamActions from "../../actions/FantasyTeamActions";
 import FantasyLeagueStore from "../../stores/FantasyLeagueStore";
 import * as FantasyLeagueActions from "../../actions/FantasyLeagueActions";
 import LoadingScreen from "../LoadingScreen";
@@ -14,24 +21,35 @@ import LoadingScreen from "../LoadingScreen";
 export default class Dashboard extends React.Component {
   constructor() {
     super();
+    let activeFantasyLeague = FantasyLeagueStore.getActiveFantasyLeague();
+    let fantasyTeams;
+    if(activeFantasyLeague) {
+      fantasyTeams = FantasyTeamStore.getFantasyTeams(activeFantasyLeague.fleague_id);
+    }
 
     this.state = {
-      fantasyLeague: FantasyLeagueStore.getActiveFantasyLeague()
+      fantasyLeague: activeFantasyLeague,
+      fantasyTeams: fantasyTeams
     }
   }
 
   componentWillMount() {
     FantasyLeagueStore.on("change", this.setActiveFantasyLeague.bind(this));
+    FantasyTeamStore.on("change", this.setFantasyTeams.bind(this));
   }
 
   componentDidMount() {
     if(!this.state.fantasyLeague) {
-      FantasyLeagueActions.loadActiveFantasyLeague(this.props.params.fleagueId );
+      FantasyLeagueActions.loadActiveFantasyLeague(this.props.params.fleagueId);
+    }
+    else if(!this.state.fantasyTeams) {
+      FantasyTeamActions.loadFantasyTeams(this.props.params.fleagueId);
     }
   }
 
   componentWillUnmount() {
     FantasyLeagueStore.removeListener("change", this.setActiveFantasyLeague.bind(this));
+    FantasyTeamStore.removeListener("change", this.setFantasyTeams.bind(this));
   }
 
   setActiveFantasyLeague() {
@@ -40,24 +58,65 @@ export default class Dashboard extends React.Component {
     });
   }
 
+  setFantasyTeams() {
+    let fleagueId = this.props.params.fleagueId;
+
+    this.setState({
+      fantasyTeams: FantasyTeamStore.getFantasyTeams(fleagueId)
+    });
+  }
+
+  getFantasyTeams() {
+    let fleagueId = this.props.params.fleagueId;
+
+    // get all fantasy teams in the league
+    let fantasyTeamList = this.state.fantasyTeams;
+
+    if(!fantasyTeamList) {
+      // loading
+      return (
+        <Spinner />
+      );
+    }
+    else if(fantasyTeamList.length === 0) {
+      // no fteams in fleague
+      return (
+        <div>
+          No teams in fleague
+        </div>
+      );
+    }
+    else {
+      // have teams so display them
+      return (
+        <div>
+          There be teams
+        </div>
+      );
+    }
+
+    // Find user's fantasy team. If they don't have one, show create message
+
+  }
+
   _inviteUsers() {
-    let leagueId = this.props.params.fleagueId;
-    this.props.history.push("/fantasyLeague/" + leagueId + "/draft");
+    let fleagueId = this.props.params.fleagueId;
+    this.props.history.push("/fantasyLeague/" + fleagueId + "/draft");
   }
 
   _goToDraftTeam() {
-    let leagueId = this.props.params.fleagueId;
-    this.props.history.push("/fantasyLeague/" + leagueId + "/draft");
+    let fleagueId = this.props.params.fleagueId;
+    this.props.history.push("/fantasyLeague/" + fleagueId + "/draft");
   }
 
   _goToLeagueDashboard() {
-    let leagueId = this.state.fantasyLeague.fleague_id;
-    this.props.history.push("/fantasyLeague/" + leagueId + "/dashboard");
+    let fleagueId = this.state.fantasyLeague.fleague_id;
+    this.props.history.push("/fantasyLeague/" + fleagueId + "/dashboard");
   }
 
   _goToInviteUsers() {
-    let leagueId = this.state.fantasyLeague.fleague_id;
-    this.props.history.push("/fantasyLeague/" + leagueId + "/invite");
+    let fleagueId = this.state.fantasyLeague.fleague_id;
+    this.props.history.push("/fantasyLeague/" + fleagueId + "/invite");
   }
 
   render() {
@@ -69,6 +128,8 @@ export default class Dashboard extends React.Component {
         <LoadingScreen />
       )
     }
+
+    let fantasyTeamsComponent = this.getFantasyTeams();
 
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(customTheme)}>
@@ -92,19 +153,31 @@ export default class Dashboard extends React.Component {
 
             </div>
 
-            <div className="column10 darkContainer leagueBanner">
-              <div className="column8">
-                <span className="title">{that.state.fantasyLeague.fleague_name}</span><br/>
-                <span className="subtext below small">Fantasy League</span>
+            <div className="column10 darkContainer">
+
+              <div className="column12 leagueBanner">
+                <div className="column8">
+                  <span className="title">{that.state.fantasyLeague.fleague_name}</span><br/>
+                  <span className="subtext below small">Fantasy League</span>
+                </div>
+                <div className="column4 right" style={{paddingTop: "1.5em"}}>
+                  <button
+                    className="btn simpleDarkBtn"
+                    onClick={that._goToInviteUsers.bind(that)}
+                    >
+                    Invite Users
+                  </button>
+                </div>
               </div>
-              <div className="column4 right" style={{paddingTop: "1.5em"}}>
-                <button
-                  className="btn simpleDarkBtn"
-                  onClick={that._goToInviteUsers.bind(that)}
-                  >
-                  Invite Users
-                </button>
+
+              <div className='column6 standardContainer left'>
+                <Tabs style={{backgroundColor: 'rgb(47, 49, 55)'}}>
+                  <Tab label="Teams" >
+                    {fantasyTeamsComponent}
+                  </Tab>
+                </Tabs>
               </div>
+
             </div>
 
         </div>
