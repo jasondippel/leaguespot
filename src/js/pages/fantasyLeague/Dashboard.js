@@ -12,6 +12,7 @@ import Dialog from 'material-ui/Dialog';
 import Spinner from "../../components/loading/Spinner";
 
 import APIRequest from "../../scripts/APIRequest";
+import UserStore from "../../stores/UserStore";
 import FantasyTeamStore from "../../stores/FantasyTeamStore";
 import * as FantasyTeamActions from "../../actions/FantasyTeamActions";
 import FantasyLeagueStore from "../../stores/FantasyLeagueStore";
@@ -23,17 +24,23 @@ export default class Dashboard extends React.Component {
     super();
     let activeFantasyLeague = FantasyLeagueStore.getActiveFantasyLeague();
     let fantasyTeams;
+    let myFantasyTeam;
+    let userId = UserStore.getUserId();
+
     if(activeFantasyLeague) {
       fantasyTeams = FantasyTeamStore.getFantasyTeams(activeFantasyLeague.fleague_id);
+      myFantasyTeam = this.findMyFantasyTeam(userId);
     }
 
     this.state = {
       fantasyLeague: activeFantasyLeague,
-      fantasyTeams: fantasyTeams
+      fantasyTeams: fantasyTeams,
+      myFantasyTeam: myFantasyTeam
     }
   }
 
   componentWillMount() {
+    UserStore.on("change", this.setMyFantasyTeam.bind(this));
     FantasyLeagueStore.on("change", this.setActiveFantasyLeague.bind(this));
     FantasyTeamStore.on("change", this.setFantasyTeams.bind(this));
   }
@@ -48,6 +55,7 @@ export default class Dashboard extends React.Component {
   }
 
   componentWillUnmount() {
+    UserStore.removeListener("change", this.setMyFantasyTeam.bind(this));
     FantasyLeagueStore.removeListener("change", this.setActiveFantasyLeague.bind(this));
     FantasyTeamStore.removeListener("change", this.setFantasyTeams.bind(this));
   }
@@ -60,10 +68,124 @@ export default class Dashboard extends React.Component {
 
   setFantasyTeams() {
     let fleagueId = this.props.params.fleagueId;
+    let userId = UserStore.getUserId();
+
+    // find user's fantasy team if it exists
+    let myFantasyTeam = this.findMyFantasyTeam(userId);
 
     this.setState({
-      fantasyTeams: FantasyTeamStore.getFantasyTeams(fleagueId)
+      fantasyTeams: FantasyTeamStore.getFantasyTeams(fleagueId),
+      myFantasyTeam: myFantasyTeam
     });
+  }
+
+  setMyFantasyTeam() {
+    let fleagueId = this.state.activeFantasyLeague.fleague_id;
+    let fantasyTeams = FantasyTeamStore.getFantasyTeams(fleagueId);
+    let userId = UserStore.getUserId();
+
+    if(!fantasyTeams) return;
+
+    // find user's fantasy team if it exists
+    let myFantasyTeam = this.findMyFantasyTeam(userId);
+
+    this.setState({
+      myFantasyTeam: myFantasyTeam
+    });
+  }
+
+  findMyFantasyTeam(myId) {
+    if(!this.props || !this.props.params || !this.props.params.fleagueId) return;
+
+    let fleagueId = this.props.params.fleagueId;
+    let fantasyTeams = FantasyTeamStore.getFantasyTeams(fleagueId);
+
+    if(!fantasyTeams || !myId) return null;
+
+    // loop through list of fantasy teams; if contains a team where user_id === myId
+    // then we've found it; else return null
+    let i = 0;
+
+    for(; i < fantasyTeams.length; i++) {
+      let fantasyTeam = fantasyTeams[i];
+      if(fantasyTeam.user_id === myId) {
+        return fantasyTeam;
+      }
+    }
+
+    return null;
+  }
+
+  _getRightButton(teamData) {
+    let myId = UserStore.getUserId();
+
+    if(teamData.user_id === myId && Object.keys(teamData.roster).length === 0) {
+      // select roster button
+      return (
+        <button
+          className="btn listButton"
+          data-teamId={teamData.fteam_id}
+          onClick={this._goToDraftTeam.bind(this)} >
+          Draft
+        </button>
+      )
+    } else {
+      // TODO: view team button
+    }
+  }
+
+  getFantasyTeamsList() {
+    let fantasyTeams = this.state.fantasyTeams;
+    let fantasyTeamsList = [];
+
+    if(fantasyTeams.length === 0) {
+      // no fteams in fleague
+      return (
+        <div className="column12 center brightSecondaryText">
+          <p>There's no teams in this league yet!</p>
+          <button
+            className="btn greenSolidBtn"
+            >
+            Create a Team!
+          </button>
+        </div>
+      );
+    }
+    else {
+      let that = this;
+      fantasyTeams.map(function(teamData, index) {
+        let rightIcon = that._getRightButton(teamData);
+
+        if(index === (fantasyTeams.length - 1) ) {
+          fantasyTeamsList.push(
+            <ListItem
+              primaryText = {
+                teamData.team_name
+              }
+              rightIcon = {
+                rightIcon
+              }
+            />
+          );
+        } else {
+          fantasyTeamsList.push(
+            <span>
+              <ListItem
+                primaryText = {
+                  teamData.team_name
+                }
+                rightIcon = {
+                  rightIcon
+                }
+              />
+            <Divider />
+          </span>
+          );
+        }
+      });
+    }
+
+    return fantasyTeamsList;
   }
 
   getFantasyTeams() {
@@ -77,25 +199,15 @@ export default class Dashboard extends React.Component {
       return (
         <Spinner />
       );
-    }
-    else if(fantasyTeamList.length === 0) {
-      // no fteams in fleague
-      return (
-        <div>
-          No teams in fleague
-        </div>
-      );
-    }
-    else {
-      // have teams so display them
-      return (
-        <div>
-          There be teams
-        </div>
-      );
-    }
+    } else {
+      let teamsList = this.getFantasyTeamsList();
 
-    // Find user's fantasy team. If they don't have one, show create message
+      return (
+        <List>
+          {teamsList}
+        </List>
+      );
+    }
 
   }
 
@@ -104,9 +216,10 @@ export default class Dashboard extends React.Component {
     this.props.history.push("/fantasyLeague/" + fleagueId + "/draft");
   }
 
-  _goToDraftTeam() {
+  _goToDraftTeam(event) {
     let fleagueId = this.props.params.fleagueId;
-    this.props.history.push("/fantasyLeague/" + fleagueId + "/draft");
+    let teamId = event.target.dataset.teamid;
+    this.props.history.push("/fantasyLeague/" + fleagueId + "/" + teamId + "/draft");
   }
 
   _goToLeagueDashboard() {
@@ -131,6 +244,8 @@ export default class Dashboard extends React.Component {
 
     let fantasyTeamsComponent = this.getFantasyTeams();
 
+    console.log("my fantasy team", that.state.myFantasyTeam);
+
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(customTheme)}>
         <div className="greyContainer">
@@ -142,13 +257,17 @@ export default class Dashboard extends React.Component {
               </div>
 
               <div className="column12 actionButtons">
-                <button
-                  className="btn greenSolidBtn"
-                  data-leagueId={123}
-                  onClick={that._goToDraftTeam.bind(that)}
-                  >
-                  Draft your team!
-                </button>
+                {
+                  that.state.myFantasyTeam ?
+                    <button
+                      className="btn greenSolidBtn"
+                      data-teamId={this.state.myFantasyTeam.fteam_id}
+                      onClick={that._goToDraftTeam.bind(that)}
+                      >
+                      Draft your team!
+                    </button>
+                    : <Spinner />
+                }
               </div>
 
             </div>

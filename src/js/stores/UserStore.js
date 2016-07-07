@@ -52,6 +52,14 @@ class UserStore extends EventEmitter {
     return this.user.first_name + " " + this.user.last_name;
   }
 
+  getUserId() {
+    if(!this.user) {
+      return;
+    }
+
+    return this.user.id;
+  }
+
   _setLoggedInUser(sessionId, user) {
     this.loggedIn = true;
     this.sessionId = sessionId;

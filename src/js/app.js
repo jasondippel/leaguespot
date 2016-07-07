@@ -53,8 +53,9 @@ ReactDOM.render(
       <Route path="/inbox" name="inbox" component={Inbox}  onEnter={requireAuth}></Route>
 
       <Route path="/fantasyLeague/:fleagueId/dashboard" name="dashboard" component={FantasyLeagueDashboard} onEnter={requireAuth}></Route>
-      <Route path="/fantasyLeague/:fleagueId/draft" name="draft" component={Draft} onEnter={requireAuth}></Route>
       <Route path="/fantasyLeague/:fleagueId/invite" name="draft" component={Invite} onEnter={requireAuth}></Route>
+
+      <Route path="/fantasyLeague/:fleagueId/:fteamId/draft" name="draft" component={Draft} onEnter={requireAuth}></Route>
     </Route>
   </Router>,
 app);
