@@ -17,6 +17,7 @@ import PlayerStore from "../../stores/PlayerStore";
 import * as ProLeagues from "../../scripts/ProLeagues";
 import * as FantasyLeagueActions from "../../actions/FantasyLeagueActions";
 import * as PlayerActions from "../../actions/PlayerActions";
+import APIRequest from "../../scripts/APIRequest";
 
 export default class Draft extends React.Component {
   constructor() {
@@ -198,11 +199,39 @@ export default class Draft extends React.Component {
           Finalizing team selection...<br/>
           <Spinner/>
         </div>
-      )
+      ),
+      dialogOpen: true
     });
-    this._handleDialogOpen();
+
+    let rosterIds = {};
+    let i = 0;
+    for(; i < this.state.selectedRoster.length; i++) {
+      rosterIds[i] = this.state.selectedRoster[i].id;
+    }
+
+    let that = this;
+    let data = {
+      fteam_id: this.props.params.fteamId,
+      roster: rosterIds
+    }
 
     // send call to update
+    APIRequest.post({
+      api: "LeagueSpot",
+      apiExt: "/fantasy_teams/update",
+      data: data
+    }).then((resp) => {
+      if(resp.success) {
+        // update team in store to include roster
+        // go back to fleague dashboard
+        that._goToLeagueDashboard();
+      }
+      else {
+        console.log("Failed to get proper response: ", resp);
+      }
+    }).catch((error) => {
+      console.log("Error making request: ", error);
+    });
 
 
   }
