@@ -84,6 +84,22 @@ class FantasyTeamStore extends EventEmitter {
 
 
   /**
+   * Add given fantasy team to the fantasy teams list
+   *
+   * @param {int} fleagueId - id of the fantasy league the team belongs to
+   * @param {object} fteam - the fantasy team object to add the the list
+   */
+  addFantasyTeam(fleagueId, fteam) {
+    if(fleagueId === this.activeFantasyLeagueId) {
+      this.fantasyTeams.push(fteam);
+    } else {
+      this.fantasyTeams = [fteam];
+    }
+    this.emit("change");
+  }
+
+
+  /**
    * Sets the fantasyTeams list to null
    */
   _clearFantasyTeamsNoEmit() {

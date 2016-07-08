@@ -40,6 +40,7 @@ export function loggedIn() {
     // UserStore.
     let decodedJWT = jwtDecode(sessionId);
     setSessionId(sessionId, decodedJWT);
+    UserActions.setLoggedInUser(sessionId, decodedJWT);
 
     return true;
   }
