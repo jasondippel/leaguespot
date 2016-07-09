@@ -311,6 +311,7 @@ export default class CreateLeague extends React.Component {
         this.sendInvites(resp.league.fleague_id);
 
         FantasyLeagueActions.setActiveFantasyLeague(resp.league);
+        FantasyLeagueActions.addLeagueToMyLeagues(resp.league);
         this.props.history.push("/fantasyLeague/" + resp.league.fleague_id + "/dashboard");
       }
       else {

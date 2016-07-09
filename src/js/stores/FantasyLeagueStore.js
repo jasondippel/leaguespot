@@ -29,9 +29,13 @@ class FantasyLeagueStore extends EventEmitter {
         this._setActiveFantasyLeague(action.league);
         break;
 
-        case "FANTASY_LEAGUE_STORE_SET_ACTIVE_FANTASY_LEAGUE_BY_ID":
-          this._setActiveFantasyLeagueById(action.leagueId);
-          break;
+      case "FANTASY_LEAGUE_STORE_ADD_FANTASY_LEAGUE_TO_MY_LEAGUES":
+        this._addFantasyLeagueToMyLeagues(action.league);
+        break;
+
+      case "FANTASY_LEAGUE_STORE_SET_ACTIVE_FANTASY_LEAGUE_BY_ID":
+        this._setActiveFantasyLeagueById(action.leagueId);
+        break;
 
       case "FANTASY_LEAGUE_STORE_LOAD_MY_FANTASY_LEAGUES":
         this._loadMyFantasyLeagues();
@@ -56,6 +60,17 @@ class FantasyLeagueStore extends EventEmitter {
     for(i = 0; i<leagues.length; i++) {
       this.fantasyLeagues[leagues[i].fleague_id] = leagues[i];
     }
+  }
+
+
+  /**
+   * Adds the given fantasy league to myFantasyLeagues list
+   *
+   * @param {object} league - fantasy league object
+   */
+  _addFantasyLeagueToMyLeagues(league) {
+    this.myFantasyLeagues.push(league);
+    this.emit("change");
   }
 
 

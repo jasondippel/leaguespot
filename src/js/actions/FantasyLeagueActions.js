@@ -12,6 +12,13 @@ export function setActiveFantasyLeague(league) {
   });
 }
 
+export function addLeagueToMyLeagues(league) {
+  dispatcher.dispatch({
+    type: "FANTASY_LEAGUE_STORE_ADD_FANTASY_LEAGUE_TO_MY_LEAGUES",
+    league: league
+  });
+}
+
 export function setActiveFantasyLeagueById(leagueId) {
   dispatcher.dispatch({
     type: "FANTASY_LEAGUE_STORE_SET_ACTIVE_FANTASY_LEAGUE_BY_ID",
