@@ -65,10 +65,10 @@ class FantasyTeamStore extends EventEmitter {
     this.activeFantasyLeagueId = fleagueId;
     APIRequest.get({
       api: "LeagueSpot",
-      apiExt: "/fantasy_teams/fantasy_leagues/" + fleagueId
+      apiExt: "/fantasy_leagues/view/" + fleagueId
     }).then((resp) => {
       if (resp.success) {
-        that._addTeamsToList(resp.teams);
+        that._addTeamsToList(resp.league.fantasy_teams);
       }
       else {
         // TODO: handle better
@@ -95,6 +95,30 @@ class FantasyTeamStore extends EventEmitter {
     } else {
       this.fantasyTeams = [fteam];
     }
+    this.emit("change");
+  }
+
+  /**
+   * Sets the roster of the fantasy teams specified by the given ID to the
+   * roster that is passed.
+   *
+   * @param {int} fteamId - the ID of the fantasy team to add the roster to
+   * @param {object} roster - the roster to add to the fantasy team
+   */
+  addRosterToTeam(fteamId, roster) {
+    // add to active team
+    if(this.activeFantasyTeam && fteamId === this.activeFantasyTeam.fteam_id) {
+      this.activeFantasyTeam.roster = roster;
+    }
+
+    // add to teamList team
+    let i = 0;
+    for(; i < this.fantasyTeams.length; i++) {
+      if(this.fantasyTeams[i].fteam_id === fteamId) {
+        this.fantasyTeams[i].roster = roster;
+      }
+    }
+
     this.emit("change");
   }
 

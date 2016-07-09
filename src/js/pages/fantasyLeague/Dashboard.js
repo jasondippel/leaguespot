@@ -125,12 +125,13 @@ export default class Dashboard extends React.Component {
       )
     } else {
       // TODO: view team button
-      <button
-        disabled
-        className="btn listButton"
-        data-teamId={teamData.fteam_id} >
-        View
-      </button>
+      return (
+        <button
+          className="btn listButton"
+          data-teamId={teamData.fteam_id} >
+          View
+        </button>
+      );
     }
   }
 
@@ -283,7 +284,7 @@ export default class Dashboard extends React.Component {
       });
       console.log("Error making request: ", error);
     });
-    
+
   }
 
   _inviteUsers() {

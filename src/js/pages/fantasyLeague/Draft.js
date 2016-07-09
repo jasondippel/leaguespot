@@ -12,6 +12,7 @@ import Scrollbars from 'react-custom-scrollbars';
 import Spinner from "../../components/loading/Spinner";
 
 import PlayerList from '../../components/player/playerList';
+import FantasyTeamStore from "../../stores/FantasyTeamStore";
 import FantasyLeagueStore from "../../stores/FantasyLeagueStore";
 import PlayerStore from "../../stores/PlayerStore";
 import * as ProLeagues from "../../scripts/ProLeagues";
@@ -105,6 +106,7 @@ export default class Draft extends React.Component {
     let newPlayerList = this.state.playerList;
     let newSelectedRoster = this.state.selectedRoster;
     let originalPlayerObj = newPlayerList[leagueId][index];
+    this._handleSnackbarClose();
 
     // do we have an open roster spot?
     if(this.state.selectedRoster.length + 1 > this.state.rosterSize) {
@@ -150,6 +152,7 @@ export default class Draft extends React.Component {
     let leagueId = event.target.dataset.leagueid;
     let newPlayerList = this.state.playerList;
     let newSelectedRoster = this.state.selectedRoster;
+    this._handleSnackbarClose();
 
     // remove player from selectedRoster and add back to playerList
     newPlayerList[leagueId][masterIndex].hideOnDisplay = false;
@@ -223,11 +226,14 @@ export default class Draft extends React.Component {
     }).then((resp) => {
       if(resp.success) {
         // update team in store to include roster
+        FantasyTeamStore.addRosterToTeam(that.props.params.fteamId, that.state.selectedRoster);
+
         // go back to fleague dashboard
         that._goToLeagueDashboard();
       }
       else {
         console.log("Failed to get proper response: ", resp);
+        console.log("message", resp.message);
       }
     }).catch((error) => {
       console.log("Error making request: ", error);
@@ -385,7 +391,7 @@ export default class Draft extends React.Component {
             <Snackbar
               open={this.state.snackbarOpen}
               message={this.state.snackbarMessage}
-              autoHideDuration={3000}
+              autoHideDuration={2000}
               onRequestClose={this._handleSnackbarClose}
               bodyStyle={{textAlign: 'center'}}
             />
