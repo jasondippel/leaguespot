@@ -91,7 +91,6 @@ export default class RuleSetup extends React.Component {
             <TextField
               onChange={that.handleLeagueSizeChange.bind(that)}
               floatingLabelText="Max League Size"
-              fullWidth={true}
               value={ that.props.leagueData.league_size_limit !== "" ? that.props.leagueData.league_size_limit : null } />
           </div>
         </div>

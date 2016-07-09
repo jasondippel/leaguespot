@@ -43,11 +43,13 @@ export default class Dashboard extends React.Component {
     }
   }
 
+
   componentWillMount() {
     UserStore.on("change", this.setMyFantasyTeam.bind(this));
     FantasyLeagueStore.on("change", this.setActiveFantasyLeague.bind(this));
     FantasyTeamStore.on("change", this.setFantasyTeams.bind(this));
   }
+
 
   componentDidMount() {
     if(!this.state.fantasyLeague) {
@@ -58,17 +60,20 @@ export default class Dashboard extends React.Component {
     }
   }
 
+
   componentWillUnmount() {
     UserStore.removeListener("change", this.setMyFantasyTeam.bind(this));
     FantasyLeagueStore.removeListener("change", this.setActiveFantasyLeague.bind(this));
     FantasyTeamStore.removeListener("change", this.setFantasyTeams.bind(this));
   }
 
+
   setActiveFantasyLeague() {
     this.setState({
       fantasyLeague: FantasyLeagueStore.getActiveFantasyLeague()
     });
   }
+
 
   setFantasyTeams() {
     let fleagueId = this.props.params.fleagueId;
@@ -82,6 +87,7 @@ export default class Dashboard extends React.Component {
     });
   }
 
+
   setMyFantasyTeam() {
     let fleagueId = this.props.params.fleagueId;
     let fantasyTeams = FantasyTeamStore.getFantasyTeams(fleagueId);
@@ -92,6 +98,7 @@ export default class Dashboard extends React.Component {
       myFantasyTeam: myFantasyTeam
     });
   }
+
 
   findMyFantasyTeam(fantasyTeams, userId) {
     if(!fantasyTeams || !userId) return null;
@@ -109,6 +116,7 @@ export default class Dashboard extends React.Component {
 
     return null;
   }
+
 
   _getRightButton(teamData) {
     let myId = UserStore.getUserId();
@@ -134,6 +142,7 @@ export default class Dashboard extends React.Component {
       );
     }
   }
+
 
   getFantasyTeamsList() {
     let fantasyTeams = this.state.fantasyTeams;
@@ -191,6 +200,7 @@ export default class Dashboard extends React.Component {
     return fantasyTeamsList;
   }
 
+
   getFantasyTeams() {
     let fleagueId = this.props.params.fleagueId;
     let fantasyTeamList = this.state.fantasyTeams;
@@ -209,6 +219,7 @@ export default class Dashboard extends React.Component {
       );
     }
   }
+
 
   getSideBar() {
     let myFantasyTeam = this.state.myFantasyTeam;
@@ -249,6 +260,7 @@ export default class Dashboard extends React.Component {
     }
   }
 
+
   _createTeam() {
     if(!this.state.fantasyTeamCreationName) {
       this.setState({
@@ -284,13 +296,14 @@ export default class Dashboard extends React.Component {
       });
       console.log("Error making request: ", error);
     });
-
   }
+
 
   _inviteUsers() {
     let fleagueId = this.props.params.fleagueId;
     this.props.history.push("/fantasyLeague/" + fleagueId + "/draft");
   }
+
 
   _goToDraftTeam(event) {
     let fleagueId = this.props.params.fleagueId;
@@ -298,25 +311,30 @@ export default class Dashboard extends React.Component {
     this.props.history.push("/fantasyLeague/" + fleagueId + "/" + teamId + "/draft");
   }
 
+
   _goToLeagueDashboard() {
     let fleagueId = this.state.fantasyLeague.fleague_id;
     this.props.history.push("/fantasyLeague/" + fleagueId + "/dashboard");
   }
+
 
   _goToInviteUsers() {
     let fleagueId = this.state.fantasyLeague.fleague_id;
     this.props.history.push("/fantasyLeague/" + fleagueId + "/invite");
   }
 
+
   _displayCreateTeam() {
     this._handleDialogOpen();
   }
+
 
   _handleDialogOpen = () => {
     this.setState({
       dialogOpen: true
     });
   };
+
 
   _handleDialogClose = () => {
     this.setState({
@@ -326,12 +344,14 @@ export default class Dashboard extends React.Component {
     });
   };
 
+
   _handleFantasyTeamCreationNameChange(event) {
     let newValue = event.target.value;
     this.setState({
       fantasyTeamCreationName: newValue
     });
   }
+
 
   render() {
     let that = this;

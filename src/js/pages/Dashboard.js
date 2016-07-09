@@ -10,7 +10,6 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import {List, ListItem} from 'material-ui/List';
-import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 
 import Spinner from "../components/loading/Spinner";
@@ -177,11 +176,12 @@ export default class Upcoming extends React.Component {
     let myFantasyLeaguesComponent = this.getMyFantasyLeagues();
 
     const actions = [
-      <FlatButton
-        label="Close"
-        primary={true}
-        onTouchTap={this._handleDialogClose}
-      />
+      <button
+        className="btn simpleGreenBtn"
+        onClick={this._handleDialogClose.bind(this)}
+        >
+        Close
+      </button>
     ];
 
     return (
@@ -214,6 +214,12 @@ export default class Upcoming extends React.Component {
                       onClick={this._editAccount.bind(this)}
                       >
                       Edit Account
+                    </button>
+                    <button
+                      className="btn greenSolidBtn"
+                      onClick={this._goToCreateLeague.bind(this)}
+                      >
+                      Create League
                     </button>
                   </div>
               </div>
