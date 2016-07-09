@@ -8,6 +8,9 @@ import UserStore from "../stores/UserStore";
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
 import * as auth from "../scripts/PersistentUser";
+import * as FantasyLeagueActions from "../actions/FantasyLeagueActions";
+import * as FantasyTeamActions from "../actions/FantasyTeamActions";
+import * as PlayerActions from "../actions/PlayerActions";
 
 export default class Layout extends React.Component {
   constructor() {
@@ -33,6 +36,12 @@ export default class Layout extends React.Component {
 
   logout() {
     auth.removeSessionId();
+
+    // clear stores of all data
+    FantasyLeagueActions.clearData();
+    FantasyTeamActions.clearData();
+    PlayerActions.clearData();
+
     this.setState({
       loggedIn: false
     });

@@ -45,10 +45,26 @@ class FantasyLeagueStore extends EventEmitter {
         this._loadActiveFantasyLeague(action.fleagueId);
         break;
 
+      case "FANTASY_LEAGUE_STORE_CLEAR_DATA":
+        this._clearData();
+        break;
+
       default:
         // do nothing
     }
   }
+
+
+  /**
+   * Clears all the data that is stored in the store. We do not want this to
+   * emit a change notification as it may trigger the retrieval of data.
+   *
+   */
+  _clearData() {
+    this.fantasyLeagues = {};
+    this.myFantasyLeagues = null;
+  }
+
 
   /**
    * Adds given leagues to the list of stored leagues

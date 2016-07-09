@@ -26,19 +26,15 @@ class FantasyTeamStore extends EventEmitter {
   _handleActions(action) {
     switch(action.type) {
       case "FANTASY_TEAM_STORE_LOAD_FANTASY_TEAMS":
+      case "FANTASY_LEAGUE_STORE_LOAD_ACTIVE_FANTASY_LEAGUE":
         // clear old list
-        this._clearFantasyTeamsNoEmit();
+        this._clearData();
         // load new list
         this._loadFantasyTeams(action.fleagueId);
         break;
 
-      case "FANTASY_LEAGUE_STORE_LOAD_ACTIVE_FANTASY_LEAGUE":
-        // special case: if we load a new active fantasy league, fetch the teams
-        //               for that league
-        // clear old list
-        this._clearFantasyTeamsNoEmit();
-        // load new list
-        this._loadFantasyTeams(action.fleagueId);
+      case "FANTASY_TEAM_STORE_CLEAR_DATA":
+        this._clearData();
         break;
 
       default:
@@ -48,38 +44,14 @@ class FantasyTeamStore extends EventEmitter {
 
 
   /**
-   * Given a fleagueId, the function loads the fantasy teams for that league
+   * Clears all the data that is stored in the store. We do not want this to
+   * emit a change notification as it may trigger the retrieval of data.
    *
-   * @param {int} fleagueId - id corresponding to the fantasy league to load
-   *                          teams from
    */
-  _loadFantasyTeams(fleagueId) {
-    let that = this;
-
-    // case: already have the teams
-    if(fleagueId === this.activeFantasyLeagueId) {
-      return;
-    }
-
-    // case: need to get the teams
-    this.activeFantasyLeagueId = fleagueId;
-    APIRequest.get({
-      api: "LeagueSpot",
-      apiExt: "/fantasy_leagues/view/" + fleagueId
-    }).then((resp) => {
-      if (resp.success) {
-        that._addTeamsToList(resp.league.fantasy_teams);
-      }
-      else {
-        // TODO: handle better
-        console.log("Response", resp);
-        alert("Bad Response");
-      }
-    }).catch((error) => {
-      // TODO: handle better
-      console.log("Error", error);
-      alert("Error", error);
-    });
+  _clearData() {
+    this.activeFantasyLeagueId = null;
+    this.activeFantasyTeam = null;
+    this.fantasyTeams = null;
   }
 
 
@@ -124,14 +96,6 @@ class FantasyTeamStore extends EventEmitter {
 
 
   /**
-   * Sets the fantasyTeams list to null
-   */
-  _clearFantasyTeamsNoEmit() {
-    this.fantasyTeams = null;
-  }
-
-
-  /**
    * Sets the fantasyTeams list to teams
    *
    * @param {array} teams - list of fantasy teams in the active league
@@ -139,6 +103,41 @@ class FantasyTeamStore extends EventEmitter {
   _addTeamsToList(teams) {
     this.fantasyTeams = teams;
     this.emit("change");
+  }
+
+  /**
+   * Given a fleagueId, the function loads the fantasy teams for that league
+   *
+   * @param {int} fleagueId - id corresponding to the fantasy league to load
+   *                          teams from
+   */
+  _loadFantasyTeams(fleagueId) {
+    let that = this;
+
+    // case: already have the teams
+    if(fleagueId === this.activeFantasyLeagueId) {
+      return;
+    }
+
+    // case: need to get the teams
+    this.activeFantasyLeagueId = fleagueId;
+    APIRequest.get({
+      api: "LeagueSpot",
+      apiExt: "/fantasy_leagues/view/" + fleagueId
+    }).then((resp) => {
+      if (resp.success) {
+        that._addTeamsToList(resp.league.fantasy_teams);
+      }
+      else {
+        // TODO: handle better
+        console.log("Response", resp);
+        alert("Bad Response");
+      }
+    }).catch((error) => {
+      // TODO: handle better
+      console.log("Error", error);
+      alert("Error", error);
+    });
   }
 
 

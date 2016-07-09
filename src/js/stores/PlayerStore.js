@@ -12,15 +12,6 @@ class PlayerStore extends EventEmitter {
 
 
   /**
-   * Returns the players object
-   *
-   */
-  getPlayers() {
-    return this.players;
-  }
-
-
-  /**
    * Handles the various actions that occur and involve the store
    *
    * @param {object} action - the action to be performed, includes any extra vars
@@ -35,9 +26,23 @@ class PlayerStore extends EventEmitter {
         this._loadPlayersInLeague(action.leagueId);
         break;
 
+      case "PLAYER_STORE_CLEAR_DATA":
+        this._clearData();
+        break;
+
       default:
         // do nothing
     }
+  }
+
+
+  /**
+   * Clears all the data that is stored in the store. We do not want this to
+   * emit a change notification as it may trigger the retrieval of data.
+   *
+   */
+  _clearData() {
+    this.players = {};
   }
 
 
@@ -102,6 +107,15 @@ class PlayerStore extends EventEmitter {
         alert("Error", error);
       });
     }
+  }
+
+
+  /**
+   * Returns the players object
+   *
+   */
+  getPlayers() {
+    return this.players;
   }
 
 }

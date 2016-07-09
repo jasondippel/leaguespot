@@ -11,3 +11,9 @@ export function loadPlayersInLeagues(leagueIds) {
     leagueIds: leagueIds
   });
 }
+
+export function clearData() {
+  dispatcher.dispatch({
+    type: "PLAYER_STORE_CLEAR_DATA"
+  });
+}

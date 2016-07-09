@@ -11,3 +11,9 @@ export function loadFantasyTeams(fleagueId) {
     fleagueId: fleagueId
   });
 }
+
+export function clearData() {
+  dispatcher.dispatch({
+    type: "FANTASY_TEAM_STORE_CLEAR_DATA"
+  });
+}

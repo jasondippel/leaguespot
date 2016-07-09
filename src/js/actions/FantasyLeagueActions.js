@@ -38,3 +38,9 @@ export function loadActiveFantasyLeague(fleagueId) {
     fleagueId: fleagueId
   });
 }
+
+export function clearData() {
+  dispatcher.dispatch({
+    type: "FANTASY_LEAGUE_STORE_CLEAR_DATA"
+  });
+}
