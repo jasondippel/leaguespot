@@ -61,6 +61,17 @@ footer {
 .right {
   text-align: right;
 }
+.left {
+  text-align: left;
+}
+
+.italicize {
+  font-style: italic;
+}
+.skinny {
+  font-weight: 200;
+}
+
 .spinner {
   height: 1em;
   margin: auto;
@@ -105,4 +116,9 @@ footer {
 .subtextDark.small,
 .subtext.small {
   font-size: 0.4em;
+}
+
+.elipse {
+  width: 100%;
+  text-overflow: ellipsis;
 }
