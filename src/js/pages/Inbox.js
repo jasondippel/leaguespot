@@ -3,24 +3,48 @@ import customTheme from '../../materialUiTheme/CustomTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {List, ListItem, MakeSelectable} from 'material-ui/List';
-import Avatar from 'material-ui/Avatar';
-import Subheader from 'material-ui/Subheader';
+
+import MessagesStore from "../stores/MessagesStore";
+import * as MessagesActions from "../actions/MessagesActions";
 
 export default class Inbox extends React.Component {
   constructor() {
     super();
 
-    let invites = {};
-    invites['test1@gmail.com'] = 'test1@gmail.com';
-    invites['test2@gmail.com'] = 'test2@gmail.com';
-    invites['test3@gmail.com'] = 'test3@gmail.com';
-    invites['test4@gmail.com'] = 'test4@gmail.com';
-
     this.state = {
-      messages: {},
-      selectedIndex: 1
+      messages: MessagesStore.getMessages(),
+      selectedIndex: 1,
+      activeMessageId: null // TODO: keep track of which message is displayed via ID
+                            // so it works when updating message list
     }
   }
+
+
+  componentWillMount() {
+    MessagesStore.on("change", this.setMessages.bind(this));
+  }
+
+
+  componentDidMount() {
+    if(!this.state.messages || this.state.messages.length === 0) {
+      MessagesActions.loadMessages();
+    }
+  }
+
+
+  componentWillUnmount() {
+    MessagesStore.removeListener("change", this.setMessages.bind(this));
+  }
+
+
+  setMessages() {
+    let messages = MessagesStore.getMessages();
+    console.log("messages", messages);
+    this.setState({
+      messages: messages
+    });
+  }
+
 
   getMessagesList() {
     let SelectableList = MakeSelectable(List);
@@ -62,6 +86,7 @@ export default class Inbox extends React.Component {
     // );
   }
 
+
   getSelectedMessage() {
     if(Object.keys(this.state.messages).length === 0) {
       return(
@@ -71,6 +96,7 @@ export default class Inbox extends React.Component {
       );
     }
   }
+
 
   // function for SelectableList
   wrapState(ComposedComponent) {
@@ -107,9 +133,11 @@ export default class Inbox extends React.Component {
     };
   }
 
+
   _handleMessageSelection(newIndex) {
     console.log("selected message: " + newIndex);
   }
+
 
   render() {
     let that = this;

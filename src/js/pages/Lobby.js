@@ -16,9 +16,9 @@ export default class Lobby extends React.Component {
           </div>
         </div>
 
-        <LeagueFilters />
-
-        <LeagueList />
+        <div className="column12">
+          This page is under construction. It will list public fantasy leagues and allow you to join them if there's room left.
+        </div>
 
       </div>
     );
