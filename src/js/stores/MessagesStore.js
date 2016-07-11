@@ -11,10 +11,15 @@ class MessagesStore extends EventEmitter {
     this.messages = [];
   }
 
+
   _handleActions(action) {
     switch(action.type) {
       case "MESSAGES_STORE_LOAD_MESSAGES":
         this._loadMessages();
+        break;
+
+      case "MESSAGES_STORE_REMOVE_MESSAGE":
+        this._removeMessage(action.messageIndex);
         break;
 
       case "MESSAGES_STORE_CLEAR_DATA":
@@ -43,10 +48,21 @@ class MessagesStore extends EventEmitter {
    *
    * @param {array} messages - an array of messages
    */
-   _addMessages(messages) {
-     this.messages = messages;
-     this.emit("change");
-   }
+  _addMessages(messages) {
+    this.messages = messages;
+    this.emit("change");
+  }
+
+
+  /**
+   * Removes the message at the given index.
+   *
+   * @param {int} messageIndex - the index of the message to remove
+   */
+  _removeMessage(messageIndex) {
+    this.messages.splice(messageIndex, 1);
+    this.emit("change");
+  }
 
 
   /**

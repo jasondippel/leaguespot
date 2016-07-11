@@ -10,6 +10,7 @@ import Header from "../components/layout/Header";
 import * as auth from "../scripts/PersistentUser";
 import * as FantasyLeagueActions from "../actions/FantasyLeagueActions";
 import * as FantasyTeamActions from "../actions/FantasyTeamActions";
+import * as MessagesActions from "../actions/MessagesActions";
 import * as PlayerActions from "../actions/PlayerActions";
 
 export default class Layout extends React.Component {
@@ -40,6 +41,7 @@ export default class Layout extends React.Component {
     // clear stores of all data
     FantasyLeagueActions.clearData();
     FantasyTeamActions.clearData();
+    MessagesActions.clearData();
     PlayerActions.clearData();
 
     this.setState({

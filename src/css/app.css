@@ -40,7 +40,11 @@ footer {
   padding-top: 3em;
 }
 .padBottom {
-  padding-bottom: 3em !important;
+  padding-bottom: 3em;
+}
+.padSides {
+  padding-left: 2em;
+  padding-right: 2em;
 }
 
 .padTopSmall {
