@@ -111,9 +111,11 @@ export default class Upcoming extends React.Component {
         leaguesList.push(
           <ListItem
             leftAvatar={<Avatar icon={ <Group /> } />}
-            primaryText={
-              leagueData.fleague_name
-            }
+            primaryText={(
+              <div style={{width: "calc(100% - 2em)"}}>
+                {leagueData.fleague_name}
+              </div>
+            )}
             rightIcon={(
               <button
                 className="btn listButton"
