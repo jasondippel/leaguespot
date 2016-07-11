@@ -89,7 +89,7 @@ export default class Invite extends React.Component {
       apiExt: "/fantasy_leagues/invite",
       data: {
         fleague_id  : this.props.params.fleagueId,
-        emailList   : filteredEmailList
+        emails   : filteredEmailList
       }
     }).then((resp) => {
       if (resp.success) {

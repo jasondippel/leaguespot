@@ -56,7 +56,7 @@ class MessagesStore extends EventEmitter {
    * @param {associative array} invitedLeages - list of leagues the user is
    *                                            invited to
    */
-  _generateInviteMessages(invitedLeages) {
+  _generateInviteMessages(invitedLeagues) {
     let messages = [];
 
     // generate messages
@@ -78,24 +78,24 @@ class MessagesStore extends EventEmitter {
   _loadMessages() {
     let that = this;
 
-    // APIRequest.get({
-    //   api: "LeagueSpot",
-    //   apiExt: "/fantasy_leagues/my_invited_leagues"
-    // }).then((resp) => {
-    //   if (resp.success) {
-    //     let inviteMessages = that._generateInviteMessages(resp.leagues);
-    //     this._addMessages(inviteMessages);
-    //   }
-    //   else {
-    //     // TODO: handle better
-    //     console.log("Response", resp);
-    //     alert("Bad Response");
-    //   }
-    // }).catch((error) => {
-    //   // TODO: handle better
-    //   console.log("Error", error);
-    //   alert("Error", error);
-    // });
+    APIRequest.get({
+      api: "LeagueSpot",
+      apiExt: "/fantasy_leagues/my_invited_leagues"
+    }).then((resp) => {
+      if (resp.success) {
+        let inviteMessages = that._generateInviteMessages(resp.leagues);
+        this._addMessages(inviteMessages);
+      }
+      else {
+        // TODO: handle better
+        console.log("Response", resp);
+        alert("Bad Response");
+      }
+    }).catch((error) => {
+      // TODO: handle better
+      console.log("Error", error);
+      alert("Error", error);
+    });
   }
 
 
