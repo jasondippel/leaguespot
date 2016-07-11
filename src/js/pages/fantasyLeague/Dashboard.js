@@ -143,6 +143,21 @@ export default class Dashboard extends React.Component {
     }
   }
 
+  _getTeamName(teamData) {
+    let myId = UserStore.getUserId();
+    let myTeamStyle = {
+      color: '#4CAF50'
+    };
+
+    if(teamData.user_id === myId) {
+      return (
+        <span style={myTeamStyle}>{teamData.team_name}</span>
+      )
+    } else {
+      return teamData.team_name;
+    }
+  }
+
 
   getFantasyTeamsList() {
     let fantasyTeams = this.state.fantasyTeams;
@@ -167,13 +182,23 @@ export default class Dashboard extends React.Component {
 
       fantasyTeams.map(function(teamData, index) {
         let rightIcon = that._getRightButton(teamData);
+        let teamName = that._getTeamName(teamData);
+        let standingsInfo = (
+          <div className="column12 subtext skinny">
+            <div className="column4">
+              Standing: -
+            </div>
+            <div className="column4">
+              Movement: -
+            </div>
+          </div>
+        );
 
         if(index === (fantasyTeams.length - 1) ) {
           fantasyTeamsList.push(
             <ListItem
-              primaryText = {
-                teamData.team_name
-              }
+              primaryText = {teamName}
+              secondaryText = {standingsInfo}
               rightIcon = {
                 rightIcon
               }
@@ -183,9 +208,8 @@ export default class Dashboard extends React.Component {
           fantasyTeamsList.push(
             <span>
               <ListItem
-                primaryText = {
-                  teamData.team_name
-                }
+                primaryText = {teamName}
+                secondaryText = {standingsInfo}
                 rightIcon = {
                   rightIcon
                 }
@@ -411,7 +435,7 @@ export default class Dashboard extends React.Component {
 
               <div className='column6 standardContainer left'>
                 <Tabs style={{backgroundColor: 'rgb(47, 49, 55)'}}>
-                  <Tab label="Teams" >
+                  <Tab label="Standings" >
                     {fantasyTeamsComponent}
                   </Tab>
                 </Tabs>

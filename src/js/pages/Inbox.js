@@ -229,6 +229,11 @@ export default class Inbox extends React.Component {
       }
     }).then((resp) => {
       if (resp.success) {
+        if(that.state.messages.length === that.state.selectedIndex + 1) {
+          that.setState({
+            selectedIndex: that.state.selectedIndex - 1
+          });
+        }
         MessagesActions.removeMessage(messageIndex);
       }
       else {
@@ -259,6 +264,11 @@ export default class Inbox extends React.Component {
       }
     }).then((resp) => {
       if (resp.success) {
+        if(that.state.messages.length === that.state.selectedIndex + 1) {
+          that.setState({
+            selectedIndex: that.state.selectedIndex - 1
+          });
+        }
         MessagesActions.removeMessage(messageIndex);
       }
       else {
