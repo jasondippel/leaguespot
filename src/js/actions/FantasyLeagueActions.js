@@ -19,6 +19,13 @@ export function addLeagueToMyLeagues(league) {
   });
 }
 
+export function removeLeagueFromMyLeaguesById(fleagueId) {
+  dispatcher.dispatch({
+    type: "FANTASY_LEAGUE_STORE_REMOVE_FANTASY_LEAGUE_FROM_MY_LEAGUES_BY_ID",
+    fleagueId: fleagueId
+  });
+}
+
 export function setActiveFantasyLeagueById(leagueId) {
   dispatcher.dispatch({
     type: "FANTASY_LEAGUE_STORE_SET_ACTIVE_FANTASY_LEAGUE_BY_ID",

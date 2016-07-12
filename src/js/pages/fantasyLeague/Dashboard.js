@@ -293,7 +293,7 @@ export default class Dashboard extends React.Component {
     let userEmail = UserStore.getEmail();
 
     // if user is only admin and no other members, show delete league button
-    if(Object.keys( this.state.fantasyLeague.users).length === 1
+    if(Object.keys(this.state.fantasyLeague.users).length === 1
       && Object.keys(this.state.fantasyLeague.fleague_admins).length === 1
       && this.state.fantasyLeague.fleague_admins[userEmail]) {
       return (
@@ -325,8 +325,28 @@ export default class Dashboard extends React.Component {
   }
 
 
-  leaveLeague() {
+  leaveLeague(event) {
+    let fleagueId = this.state.fantasyLeague.fleague_id;
 
+    APIRequest.post({
+      api: "LeagueSpot",
+      apiExt: "/fantasy_leagues/leave",
+      data: {
+        fleague_id: fleagueId
+      }
+    }).then((resp) => {
+      if(resp.success) {
+        FantasyLeagueActions.removeLeagueFromMyLeaguesById(fleagueId);
+        this.props.history.push("/dashboard");
+      }
+      else {
+        alert("Failed to leave league cleanly.");
+        console.log("Leave league failed", resp);
+      }
+    }).catch((error) => {
+      alert("Error making request");
+      console.log("Error making request: ", error);
+    });
   }
 
 
