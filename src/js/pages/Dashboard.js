@@ -37,7 +37,7 @@ export default class Upcoming extends React.Component {
 
 
   componentDidMount() {
-    if(!this.state.myFantasyLeagues) {
+    if(this.state.myFantasyLeagues.length === 0) {
       FantasyLeagueActions.loadMyFantasyLeagues();
     }
   }

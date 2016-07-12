@@ -285,6 +285,51 @@ export default class Dashboard extends React.Component {
   }
 
 
+  getLeaveButton() {
+    if(!this.state.fantasyLeague) {
+      return;
+    }
+
+    let userEmail = UserStore.getEmail();
+
+    // if user is only admin and no other members, show delete league button
+    if(Object.keys( this.state.fantasyLeague.users).length === 1
+      && Object.keys(this.state.fantasyLeague.fleague_admins).length === 1
+      && this.state.fantasyLeague.fleague_admins[userEmail]) {
+      return (
+        <button
+          className="btn simpleDarkBtn"
+          onClick={this.deleteLeague.bind(this)}
+          >
+          Delete League
+        </button>
+      );
+    }
+
+    // if user is not admin, show leave button
+    if(!this.state.fantasyLeague.fleague_admins[userEmail]) {
+      return (
+        <button
+          className="btn simpleDarkBtn"
+          onClick={this.leaveLeague.bind(this)}
+          >
+          Leave League
+        </button>
+      );
+    }
+  }
+
+
+  deleteLeague() {
+
+  }
+
+
+  leaveLeague() {
+
+  }
+
+
   _createTeam() {
     if(!this.state.fantasyTeamCreationName) {
       this.setState({
@@ -389,6 +434,7 @@ export default class Dashboard extends React.Component {
 
     let fantasyTeamsComponent = this.getFantasyTeams();
     let sideBarComponent = this.getSideBar();
+    let leaveButton = this.getLeaveButton();
     const actions = [
       <button
         className="btn simpleGreyBtn brightBackground"
@@ -406,7 +452,7 @@ export default class Dashboard extends React.Component {
       <MuiThemeProvider muiTheme={getMuiTheme(customTheme)}>
         <div className="greyContainer">
 
-            <div className="column2 sideMenu">
+            <div className="column3 sideMenu">
 
               <div className="column12 mainTitle">
                 Team Highlights
@@ -416,7 +462,7 @@ export default class Dashboard extends React.Component {
 
             </div>
 
-            <div className="column10 darkContainer">
+            <div className="column9 darkContainer">
 
               <div className="column12 leagueBanner">
                 <div className="column8">
@@ -430,13 +476,24 @@ export default class Dashboard extends React.Component {
                     >
                     Invite Users
                   </button>
+                  {leaveButton}
                 </div>
               </div>
 
-              <div className='column6 standardContainer left'>
+              <div className='column8 standardContainer left'>
                 <Tabs style={{backgroundColor: 'rgb(47, 49, 55)'}}>
                   <Tab label="Standings" >
                     {fantasyTeamsComponent}
+                  </Tab>
+                </Tabs>
+              </div>
+
+              <div className='column4 standardContainer left'>
+                <Tabs style={{backgroundColor: 'rgb(47, 49, 55)'}}>
+                  <Tab label="Members" >
+                    <div>
+                      List of Users
+                    </div>
                   </Tab>
                 </Tabs>
               </div>

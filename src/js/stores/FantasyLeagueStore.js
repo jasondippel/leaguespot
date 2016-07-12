@@ -14,7 +14,7 @@ class FantasyLeagueStore extends EventEmitter {
     super();
 
     this.fantasyLeagues = {};
-    this.myFantasyLeagues = null;
+    this.myFantasyLeagues = [];
   }
 
 
@@ -62,7 +62,7 @@ class FantasyLeagueStore extends EventEmitter {
    */
   _clearData() {
     this.fantasyLeagues = {};
-    this.myFantasyLeagues = null;
+    this.myFantasyLeagues = [];
   }
 
 

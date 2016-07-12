@@ -17,6 +17,11 @@ export default class CreateLeague extends React.Component {
   constructor() {
     super();
     let admin = UserStore.getEmail();
+    let fleagueAdmins = {};
+
+    if(admin) {
+      fleagueAdmins[admin] = 'admin';
+    }
 
     // default start dateTime
     let startDateTime = moment().add(1, 'days').hour(12).minute(30).second(0);
@@ -28,7 +33,7 @@ export default class CreateLeague extends React.Component {
       emailList           : [""],
       leagueData          : {
         fleague_name           : null,
-        fleague_admins         : {},
+        fleague_admins         : fleagueAdmins,
         sport                  : "",
         pro_leagues            : [],
         contest_type           : "",
