@@ -39,7 +39,9 @@ export default class Dashboard extends React.Component {
       myFantasyTeam: myFantasyTeam,
       fantasyTeamCreationName: "",
       fantasyTeamCreationErrorMessage: "",
-      dialogOpen: false
+      createTeamDialogOpen: false,
+      leaveLeagueDialogOpen: false,
+      deleteLeagueDialogOpen: false
     }
   }
 
@@ -299,7 +301,7 @@ export default class Dashboard extends React.Component {
       return (
         <button
           className="btn simpleDarkBtn"
-          onClick={this.deleteLeague.bind(this)}
+          onClick={this._displayDeleteLeague.bind(this)}
           >
           Delete League
         </button>
@@ -311,7 +313,7 @@ export default class Dashboard extends React.Component {
       return (
         <button
           className="btn simpleDarkBtn"
-          onClick={this.leaveLeague.bind(this)}
+          onClick={this._displayLeaveLeague.bind(this)}
           >
           Leave League
         </button>
@@ -320,13 +322,162 @@ export default class Dashboard extends React.Component {
   }
 
 
-  deleteLeague() {
+  getCreateTeamDialog() {
+    const actions = [
+      <button
+        className="btn simpleGreenBtn brightBackground"
+        onClick={this._createTeam.bind(this)} >
+        Create
+      </button>,
+      <button
+        className="btn simpleGreyBtn brightBackground"
+        onClick={this._handleDialogClose.bind(this)} >
+        Close
+      </button>
+    ];
 
+    return (
+      <Dialog
+        actions={actions}
+        modal={true}
+        open={this.state.dialogOpen}
+      >
+        <div>
+          <div className="column12">
+            <span className="title">Create Team</span>
+          </div>
+
+          <div className="column12">
+            <TextField
+              onChange={this._handleFantasyTeamCreationNameChange.bind(this)}
+              floatingLabelText="Fantasy Team Name"
+              value={ this.state.fantasyTeamCreationName !== "" ? this.state.fantasyTeamCreationName : null } />
+          </div>
+
+          <div className="column12">
+            <span className="failureMessage">{this.state.fantasyTeamCreationErrorMessage}</span>
+          </div>
+
+        </div>
+      </Dialog>
+    )
+  }
+
+
+  getLeaveLeagueDialog() {
+    const actions = [
+      <button
+        className="btn simpleGreenBtn brightBackground"
+        onClick={this.leaveLeague.bind(this)} >
+        Yes
+      </button>,
+      <button
+        className="btn simpleGreyBtn brightBackground"
+        onClick={this._handleDialogClose.bind(this)} >
+        No
+      </button>
+    ];
+
+    return (
+      <Dialog
+        actions={actions}
+        modal={true}
+        open={this.state.dialogOpen}
+      >
+        <div>
+          <div className="column12">
+            <span className="title">Leave League</span>
+          </div>
+
+          <div className="column12 brightSecondaryText">
+            <p>Are you sure you want to leave this league?</p>
+          </div>
+
+        </div>
+      </Dialog>
+    )
+  }
+
+
+  getDeleteLeagueDialog() {
+    const actions = [
+      <button
+        className="btn simpleGreenBtn brightBackground"
+        onClick={this.deleteLeague.bind(this)} >
+        Yes
+      </button>,
+      <button
+        className="btn simpleGreyBtn brightBackground"
+        onClick={this._handleDialogClose.bind(this)} >
+        No
+      </button>
+    ];
+
+    return (
+      <Dialog
+        actions={actions}
+        modal={true}
+        open={this.state.dialogOpen}
+      >
+        <div>
+          <div className="column12">
+            <span className="title">Delte League</span>
+          </div>
+
+          <div className="column12 brightSecondaryText">
+            <p>Are you sure you want to delete this league? Once you do, you won't be able to get it back.</p>
+          </div>
+
+        </div>
+      </Dialog>
+    );
+  }
+
+
+  getDialog() {
+    let dialog = "";
+
+    if(this.state.createTeamDialogOpen) {
+      dialog = this.getCreateTeamDialog();
+    } else if(this.state.leaveLeagueDialogOpen) {
+      dialog = this.getLeaveLeagueDialog();
+    } else if(this.state.deleteLeagueDialogOpen) {
+      dialog = this.getDeleteLeagueDialog();
+    }
+
+    return dialog;
+  }
+
+
+  deleteLeague() {
+    let fleagueId = this.state.fantasyLeague.fleague_id;
+    this._handleDialogClose();
+
+    APIRequest.post({
+      api: "LeagueSpot",
+      apiExt: "/fantasy_leagues/delete",
+      data: {
+        fleague_id: fleagueId
+      }
+    }).then((resp) => {
+      if(resp.success) {
+        FantasyLeagueActions.removeLeagueById(fleagueId);
+        this.props.history.push("/dashboard");
+      }
+      else {
+        alert("Failed to leave league cleanly.");
+        console.log("Leave league failed", resp);
+      }
+    }).catch((error) => {
+      alert("Error making request");
+      console.log("Error making request: ", error);
+    });
   }
 
 
   leaveLeague(event) {
     let fleagueId = this.state.fantasyLeague.fleague_id;
+    this._handleDialogClose();
 
     APIRequest.post({
       api: "LeagueSpot",
@@ -414,22 +565,37 @@ export default class Dashboard extends React.Component {
 
 
   _displayCreateTeam() {
-    this._handleDialogOpen();
+    this.setState({
+      dialogOpen: true,
+      createTeamDialogOpen: true
+    });
   }
 
 
-  _handleDialogOpen = () => {
+  _displayDeleteLeague() {
     this.setState({
-      dialogOpen: true
+      dialogOpen: true,
+      deleteLeagueDialogOpen: true
     });
-  };
+  }
+
+
+  _displayLeaveLeague() {
+    this.setState({
+      dialogOpen: true,
+      leaveLeagueDialogOpen: true
+    });
+  }
 
 
   _handleDialogClose = () => {
     this.setState({
       fantasyTeamCreationErrorMessage: "",
       fantasyTeamCreationName: "",
-      dialogOpen: false
+      dialogOpen: false,
+      createTeamDialogOpen: false,
+      deleteLeagueDialogOpen: false,
+      leaveLeagueDialogOpen: false
     });
   };
 
@@ -455,18 +621,7 @@ export default class Dashboard extends React.Component {
     let fantasyTeamsComponent = this.getFantasyTeams();
     let sideBarComponent = this.getSideBar();
     let leaveButton = this.getLeaveButton();
-    const actions = [
-      <button
-        className="btn simpleGreyBtn brightBackground"
-        onClick={this._handleDialogClose.bind(this)} >
-        Close
-      </button>,
-      <button
-        className="btn simpleGreenBtn brightBackground"
-        onClick={this._createTeam.bind(this)} >
-        Create
-      </button>
-    ];
+    let dialog = this.getDialog();
 
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(customTheme)}>
@@ -520,29 +675,7 @@ export default class Dashboard extends React.Component {
 
             </div>
 
-            <Dialog
-              actions={actions}
-              modal={true}
-              open={this.state.dialogOpen}
-            >
-              <div>
-                <div className="column12">
-                  <span className="title">Create Team</span>
-                </div>
-
-                <div className="column12">
-                  <TextField
-                    onChange={that._handleFantasyTeamCreationNameChange.bind(that)}
-                    floatingLabelText="Fantasy Team Name"
-                    value={ that.state.fantasyTeamCreationName !== "" ? that.state.fantasyTeamCreationName : null } />
-                </div>
-
-                <div className="column12">
-                  <span className="failureMessage">{that.state.fantasyTeamCreationErrorMessage}</span>
-                </div>
-
-              </div>
-            </Dialog>
+            {dialog}
 
         </div>
       </MuiThemeProvider>

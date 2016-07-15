@@ -37,6 +37,10 @@ class FantasyLeagueStore extends EventEmitter {
         this._removeFantasyLeagueFromMyLeagues(action.fleagueId);
         break;
 
+      case "FANTASY_LEAGUE_STORE_REMOVE_FANTASY_LEAGUE_BY_ID":
+        this._removeFantasyLeague(action.fleagueId);
+        break;
+
       case "FANTASY_LEAGUE_STORE_SET_ACTIVE_FANTASY_LEAGUE_BY_ID":
         this._setActiveFantasyLeagueById(action.leagueId);
         break;
@@ -95,7 +99,7 @@ class FantasyLeagueStore extends EventEmitter {
 
 
   /**
-   * Adds the given fantasy league to myFantasyLeagues list
+   * Removes the given fantasy league from myFantasyLeagues list
    *
    * @param {int} fleagueId - ID of fantasy league to remove
    */
@@ -108,6 +112,28 @@ class FantasyLeagueStore extends EventEmitter {
         break;
       }
     }
+
+    this.emit("change");
+  }
+
+
+  /**
+   * Removes the given fantasy league from all league lists
+   *
+   * @param {int} fleagueId - ID of fantasy league to remove
+   */
+  _removeFantasyLeague(fleagueId) {
+    // remove fantasy league from this.myFantasyLeagues array
+    let i = 0;
+    for(; i < this.myFantasyLeagues.length; i++) {
+      if(this.myFantasyLeagues[i].fleague_id === fleagueId) {
+        this.myFantasyLeagues.splice(i, 1);
+        break;
+      }
+    }
+
+    // remove fantasy league from master list of fantasy leagues
+    delete this.fantasyLeagues[fleagueId];
 
     this.emit("change");
   }
