@@ -53,8 +53,13 @@ export default class Inbox extends React.Component {
       <ListItem
         value={value}
         primaryText="Invitation to Join Fantasy League"
-        secondaryText={<div className="brightSecondaryText elipse">Congrats! You've been invited to join {message.league.fleague_name}!</div>}
+        secondaryText = {
+          <div className="brightSecondaryText elipse">
+            Congrats! You've been invited to join {message.league.fleague_name}!
+          </div>
+        }
         style={{borderBottom: '1px solid #555'}}
+        disabled={true}
       />
     );
   }
@@ -298,7 +303,7 @@ export default class Inbox extends React.Component {
         <div className="greyContainer" style={{paddingTop: 0}}>
 
             <div className="column3 sideMenu left" style={{paddingTop: 0}}>
-              <div className="column12 mainTitle" style={{backgroundColor: '#4CAF50', paddingTop: '1em', borderBottom: '1px solid #FFF'}}>
+              <div className="column12 mainTitle" style={{backgroundColor: '#49b64d', paddingTop: '1em', borderBottom: '1px solid #FFF'}}>
                 Inbox
               </div>
               {MessageListComponent}

@@ -80,7 +80,7 @@ export default class LeagueSetup extends React.Component {
     return (
       <div className="column12">
         <span className="title">League Setup</span>
-        <p className="subtext">Let's get started by entering some basic information about your fantasy league.</p>
+        <p className="subtext">Let's get started by entering some basic information about your fantasy league below. The <i><b>alpha version</b></i> only supports Basketball and a seasonal (full season) league type.</p>
 
         <div className="column12">
           <div className="column6">
@@ -98,6 +98,7 @@ export default class LeagueSetup extends React.Component {
               value={ that.props.leagueData.sport !== "" ? that.props.leagueData.sport : null }
               onChange={that.handleSportChange.bind(that)}
               floatingLabelText="Sport"
+              disabled={true}
             >
               {sportOptions}
             </SelectField>
@@ -108,6 +109,7 @@ export default class LeagueSetup extends React.Component {
               value={ that.props.leagueData.contest_type !== "" ? that.props.leagueData.contest_type : null }
               onChange={that.handleFantasyLeagueTypeChange.bind(that)}
               floatingLabelText="Fantasy League Type"
+              disabled={true}
             >
               {contestTypeOptions}
             </SelectField>

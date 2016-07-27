@@ -1,5 +1,4 @@
 import {
-  green500,
   grey50, grey200, grey400, grey600,
   fullWhite,
 } from 'material-ui/styles/colors';
@@ -10,8 +9,8 @@ export default {
   spacing: spacing,
   fontFamily: 'Roboto, sans-serif',
   palette: {
-    primary1Color: green500,
-    primary2Color: green500,
+    primary1Color: "#49b64d",
+    primary2Color: "#49b64d",
     primary3Color: grey600,
     accent1Color: grey200,
     accent2Color: grey400,

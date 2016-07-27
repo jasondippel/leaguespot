@@ -40,6 +40,7 @@ export default class RuleSetup extends React.Component {
 
   render() {
     let that = this;
+    let minStart = moment().add(30, 'minutes').toDate();
 
     let privacyOptions = [
       <MenuItem key={0} value={'public'} primaryText={'Public'} />,
@@ -60,7 +61,8 @@ export default class RuleSetup extends React.Component {
             <DatePicker
               hintText="League Start Date"
               value={that.props.leagueData.league_start_dateTime}
-              onChange={that.handleStartDateChange.bind(that)}/>
+              minDate={minStart}
+              onChange={that.handleStartDateChange.bind(that)} />
           </div>
 
           <div className="column6">
@@ -82,6 +84,7 @@ export default class RuleSetup extends React.Component {
               value={ that.props.leagueData.privacy_mode !== "" ? that.props.leagueData.privacy_mode : null }
               onChange={that.handlePrivacyChange.bind(that)}
               floatingLabelText="Privacy"
+              disabled={true}
             >
               {privacyOptions}
             </SelectField>

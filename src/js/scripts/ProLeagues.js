@@ -7,7 +7,7 @@
 const sports = ['Basketball'];
 
 const proLeaguesInSport = {
-  Basketball: ['nba', 'wnba', 'ncaambd1', 'ncaa_wb']
+  Basketball: ['nba', 'wnba', 'ncaambd1']
 }
 
 const rosterSizeBySport = {
@@ -17,8 +17,7 @@ const rosterSizeBySport = {
 const leagueNames = {
   nba: 'NBA',
   wnba: 'WNBA',
-  ncaambd1: 'NCAA MB',
-  ncaa_wb: 'NCAA WB'
+  ncaambd1: 'NCAA MB'
 }
 
 

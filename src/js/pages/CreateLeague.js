@@ -29,15 +29,15 @@ export default class CreateLeague extends React.Component {
     this.state = {
       dialogOpen          : false,
       dialogMessage       : "",
-      stepIndex           : 0,
+      stepIndex           : 0,    // 0 - league basics, 1 - rules and dates, 2 - invites
       emailList           : [""],
       leagueData          : {
         fleague_name           : null,
         fleague_admins         : fleagueAdmins,
-        sport                  : "",
+        sport                  : "Basketball",
         pro_leagues            : [],
-        contest_type           : "",
-        privacy_mode           : "public",
+        contest_type           : "league",
+        privacy_mode           : "private",
         league_size_limit      : 5,
         league_start_dateTime  : startDateTime.toDate(),
         status                 : "in progress",
@@ -68,6 +68,11 @@ export default class CreateLeague extends React.Component {
   }
 
   nextStep() {
+    if(!this.verifyStepData()) {
+      this._handleDialogOpen();
+      return;
+    }
+
     if(this.state.stepIndex >=2) {
       // finish case
       this.createLeague();
@@ -250,6 +255,24 @@ export default class CreateLeague extends React.Component {
 
   verifyData() {
     // league data
+    if(!this.verifyLeagueBasicsData()) {
+      return false;
+    }
+
+    // league dates and rules
+    if(!this.verifyRulesDatesData()) {
+      return false;
+    }
+
+    // email invites
+    if(!this.verifyInviteEmails()) {
+      return false;
+    }
+
+    return true;
+  }
+
+  verifyLeagueBasicsData() {
     if(!this.state.leagueData.fleague_name) {
       this.setState({
         dialogMessage: "You must choose a fantasy league name before continuing."
@@ -265,14 +288,32 @@ export default class CreateLeague extends React.Component {
         dialogMessage: "You must choose a fantasy league type before continuing."
       });
       return false;
-    } else if(!this.state.leagueData.sport || !this.state.leagueData.pro_leagues) {
+    }
+
+    return true;
+  }
+
+  verifyRulesDatesData() {
+    let minStart = moment().add(30, 'minutes').toDate();
+
+    if(this.state.leagueData.league_start_dateTime < minStart) {
       this.setState({
-        dialogMessage: "You must choose a fantasy sport and professional leagues before continuing."
+        dialogMessage: "You must choose a start date and time at least 30 minutes in the future."
       });
       return false;
     }
 
-    // email invites
+    if(this.state.leagueData.league_size_limit <=1) {
+      this.setState({
+        dialogMessage: "You must choose a fantasy league size of at least 2 before continuing."
+      });
+      return false;
+    }
+
+    return true;
+  }
+
+  verifyInviteEmails() {
     let i=0;
     let emailList = this.state.emailList;
     for(; i < emailList.length; i++) {
@@ -285,7 +326,18 @@ export default class CreateLeague extends React.Component {
     }
 
     return true;
+  }
 
+  verifyStepData() {
+    if(this.state.stepIndex === 0) {
+      return this.verifyLeagueBasicsData();
+    }
+    else if (this.state.stepIndex === 1) {
+      return this.verifyRulesDatesData();
+    }
+    else {
+      return this.verifyInviteEmails();
+    }
   }
 
   createLeague() {
@@ -391,7 +443,7 @@ export default class CreateLeague extends React.Component {
 
           <div className="column8">
             <div className="column12">
-              <Stepper activeStep={that.state.stepIndex} linear={false} style={{color: '#fff'}} >
+              <Stepper activeStep={that.state.stepIndex} style={{color: '#fff'}} >
                 <Step>
                   <StepButton
                     onClick={() => this.setState({stepIndex: 0})} >

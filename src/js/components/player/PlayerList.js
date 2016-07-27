@@ -109,6 +109,7 @@ export default class PlayerListItem extends React.Component {
                 rightIcon={ rightIcon }
                 primaryText={player.last_name + ", " + player.first_name}
                 secondaryText={playerInfo}
+                disabled={true}
               />
               <Divider />
             </span>
@@ -121,6 +122,7 @@ export default class PlayerListItem extends React.Component {
                 rightIcon={ rightIcon }
                 primaryText={player.last_name + ", " + player.first_name}
                 secondaryText={playerInfo}
+                disabled={true}
               />
             </span>
           );
@@ -135,6 +137,7 @@ export default class PlayerListItem extends React.Component {
               <ListItem
                 leftAvatar={<Avatar icon={ <AccountCircle /> } />}
                 primaryText={(<span className="brightSecondaryText">Empty</span>)}
+                disabled={true}
               />
               <Divider />
             </span>
@@ -144,6 +147,7 @@ export default class PlayerListItem extends React.Component {
             <ListItem
               leftAvatar={<Avatar icon={ <AccountCircle /> } />}
               primaryText={(<span className="brightSecondaryText">Empty</span>)}
+              disabled={true}
             />
           );
         }
@@ -168,6 +172,7 @@ export default class PlayerListItem extends React.Component {
                 rightIcon={ rightIcon }
                 primaryText={player.last_name + ", " + player.first_name}
                 secondaryText={playerInfo}
+                disabled={true}
               />
               <Divider />
             </span>
@@ -180,6 +185,7 @@ export default class PlayerListItem extends React.Component {
                 rightIcon={ rightIcon }
                 primaryText={player.last_name + ", " + player.first_name}
                 secondaryText={playerInfo}
+                disabled={true}
               />
               <Divider />
             </span>

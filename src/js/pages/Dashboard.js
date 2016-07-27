@@ -124,6 +124,7 @@ export default class Upcoming extends React.Component {
                 View
               </button>
             )}
+            disabled={true}
           />
         );
       } else {
@@ -142,6 +143,7 @@ export default class Upcoming extends React.Component {
                   View
                 </button>
               )}
+              disabled={true}
             />
           <Divider />
         </span>

@@ -91,7 +91,7 @@ class PlayerStore extends EventEmitter {
       // make request to server to get players in pro league
       APIRequest.get({
         api: "LeagueSpot",
-        apiExt: "/players/" + leagueId
+        apiExt: "/players/view_league/" + leagueId
       }).then((resp) => {
         if (resp.success) {
           that._addPlayersToLeague(leagueId, resp.players);

@@ -64,7 +64,7 @@
  }
  .greenSolidBtn {
    color: #fff;
-   background-color: #4CAF50;
+   background-color: #49b64d;
    border: none;
  }
  .greenSolidBtn:hover {
@@ -88,10 +88,9 @@
    padding: 0px;
    min-width: 6em !important;
    height: 2em !important;
-   border: none;
-   background-color: #606060;
-   font-weight: bold;
-   color: #303030;
+   border: 1px solid #fff;
+   background-color: transparent;
+   color: #fff;
    box-shadow: 0px 0px 2px 0px #2a2a2a;
    text-transform: uppercase;
  }
@@ -104,7 +103,7 @@
    color: #303030;
  }
  .listButton.addition:hover {
-   background-color: #4CAF50;
+   background-color: #49b64d;
  }
 
  .listButton.removal {
@@ -124,7 +123,7 @@
  }
 
  .simpleGreenBtn {
-   color: #4CAF50;
+   color: #49b64d;
    background-color: transparent;
    border: none;
  }

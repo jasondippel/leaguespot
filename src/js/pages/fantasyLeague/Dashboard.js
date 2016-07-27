@@ -148,7 +148,7 @@ export default class Dashboard extends React.Component {
   _getTeamName(teamData) {
     let myId = UserStore.getUserId();
     let myTeamStyle = {
-      color: '#4CAF50'
+      color: '#49b64d'
     };
 
     if(teamData.user_id === myId) {
@@ -204,6 +204,7 @@ export default class Dashboard extends React.Component {
               rightIcon = {
                 rightIcon
               }
+              disabled={true}
             />
           );
         } else {
@@ -215,6 +216,7 @@ export default class Dashboard extends React.Component {
                 rightIcon = {
                   rightIcon
                 }
+                disabled={true}
               />
             <Divider />
           </span>
