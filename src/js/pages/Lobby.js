@@ -17,7 +17,17 @@ export default class Lobby extends React.Component {
         </div>
 
         <div className="column12">
-          This page is under construction. It will list public fantasy leagues and allow you to join them if there's room left.
+          <div className="column3"></div>
+
+          <div className="column6 standardContainer grey">
+            <div>
+              <h3>We're sorry...</h3>
+              <p>This feature is not available in the <b>alpha version</b>. The ability to search through and join public leagues will be added soon.</p>
+              <p>In the mean time, you can click the creat button above to start your own private fantasy league. Invite your friends and let the competition begin!</p>
+            </div>
+          </div>
+
+          <div className="column3"></div>
         </div>
 
       </div>

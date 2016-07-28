@@ -80,7 +80,7 @@ export default class LeagueSetup extends React.Component {
     return (
       <div className="column12">
         <span className="title">League Setup</span>
-        <p className="subtext">Let's get started by entering some basic information about your fantasy league below. The <i><b>alpha version</b></i> only supports Basketball and a seasonal (full season) league type.</p>
+        <p className="subtext">Let's get started by entering some basic information about your fantasy league below. The <b>alpha version</b> only supports Basketball and a seasonal (full season) league type.</p>
 
         <div className="column12">
           <div className="column6">

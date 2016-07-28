@@ -306,6 +306,13 @@ export default class Draft extends React.Component {
     ];
 
     let tabs = this.createTabs();
+    let avgPlayerCost;
+    if(this.state.selectedRoster.length === this.state.rosterSize) {
+      avgPlayerCost = 0;
+    } else {
+      avgPlayerCost = (this.state.maxRosterCost - this.state.selectedRosterCost) / (this.state.rosterSize - this.state.selectedRoster.length);
+      avgPlayerCost = avgPlayerCost - (avgPlayerCost % 1);
+    }
 
     return (
       <div className="darkContainer">
@@ -341,12 +348,12 @@ export default class Draft extends React.Component {
               </div>
               <div className="column3">
                 <label>${this.numberWithCommas(this.state.maxRosterCost - this.state.selectedRosterCost)}<br/>
-                <span className="subtext below">Salary Remaining</span>
+                <span className="subtext below">Remaining Budget</span>
                 </label>
               </div>
               <div className="column3">
-                <label>${this.numberWithCommas(this.state.selectedRosterCost)}<br/>
-                <span className="subtext below">Payroll</span>
+                <label>${this.numberWithCommas(avgPlayerCost)}<br/>
+                <span className="subtext below">Avg. Cost for Remaining Players</span>
                 </label>
               </div>
 

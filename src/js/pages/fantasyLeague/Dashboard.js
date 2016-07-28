@@ -170,12 +170,6 @@ export default class Dashboard extends React.Component {
       return (
         <div className="column12 center brightSecondaryText">
           <p>There's no teams in this league yet!</p>
-          <button
-            className="btn greenSolidBtn"
-            onClick={this._displayCreateTeam.bind(this)}
-            >
-            Create a Team!
-          </button>
         </div>
       );
     }
@@ -302,7 +296,7 @@ export default class Dashboard extends React.Component {
       && this.state.fantasyLeague.fleague_admins[userEmail]) {
       return (
         <button
-          className="btn simpleDarkBtn"
+          className="btn simpleDarkBtn redHover"
           onClick={this._displayDeleteLeague.bind(this)}
           >
           Delete League
@@ -314,7 +308,7 @@ export default class Dashboard extends React.Component {
     if(!this.state.fantasyLeague.fleague_admins[userEmail]) {
       return (
         <button
-          className="btn simpleDarkBtn"
+          className="btn simpleDarkBtn redHover"
           onClick={this._displayLeaveLeague.bind(this)}
           >
           Leave League
@@ -448,6 +442,50 @@ export default class Dashboard extends React.Component {
     }
 
     return dialog;
+  }
+
+
+  getMembersList() {
+    if(!this.state.fantasyLeague) {
+      return (
+        <div className="column12 center brightSecondaryText">
+          <p>No members found</p>
+        </div>
+      );
+    }
+
+    let userKeys = Object.keys(this.state.fantasyLeague.users);
+    let users = this.state.fantasyLeague.users;
+    let usersList = [];
+
+    userKeys.map(function(key, index) {
+      if(index === userKeys.length - 1) {
+        usersList.push(
+          <ListItem
+            primaryText = {users[key].full_name}
+            disabled={true}
+          />
+        );
+      }
+      else {
+        usersList.push(
+          <span>
+            <ListItem
+              primaryText = {users[key].full_name}
+              disabled={true}
+            />
+          <Divider/>
+          </span>
+        );
+      }
+
+    });
+
+    return (
+      <List>
+        {usersList}
+      </List>
+    );
   }
 
 
@@ -623,6 +661,7 @@ export default class Dashboard extends React.Component {
     let fantasyTeamsComponent = this.getFantasyTeams();
     let sideBarComponent = this.getSideBar();
     let leaveButton = this.getLeaveButton();
+    let membersList = this.getMembersList();
     let dialog = this.getDialog();
 
     return (
@@ -669,7 +708,7 @@ export default class Dashboard extends React.Component {
                 <Tabs style={{backgroundColor: 'rgb(47, 49, 55)'}}>
                   <Tab label="Members" >
                     <div>
-                      List of Users
+                      {membersList}
                     </div>
                   </Tab>
                 </Tabs>

@@ -99,8 +99,7 @@
  }
 
  .listButton.addition {
-   background-color: #606060;
-   color: #303030;
+   /*color: #303030;*/
  }
  .listButton.addition:hover {
    background-color: #49b64d;
@@ -120,6 +119,9 @@
  }
  .simpleDarkBtn:hover {
    background-color: #303030;
+ }
+ .simpleDarkBtn.redHover:hover {
+   background-color: #D32F2F;
  }
 
  .simpleGreenBtn {
