@@ -23,7 +23,7 @@ export default class Lobby extends React.Component {
             <div>
               <h3>We're sorry...</h3>
               <p>This feature is not available in the <b>alpha version</b>. The ability to search through and join public leagues will be added soon.</p>
-              <p>In the mean time, you can click the creat button above to start your own private fantasy league. Invite your friends and let the competition begin!</p>
+              <p>In the mean time, you can click the create button above to start your own private fantasy league. Invite your friends and let the competition begin!</p>
             </div>
           </div>
 
