@@ -1,8 +1,23 @@
 {
   "name": "leaguespot",
   "version": "0.0.0",
-  "description": "",
+  "description": "Main web app for LeagueSpot.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jasondippel/leaguespot"
+  },
   "main": "webpack.config.js",
+  "scripts": {
+    "dev": "webpack-dev-server --content-base src --inline --hot",
+    "lint": "eslint --ext .js,.jsx ."
+  },
+  "pre-commit": [
+    "npm run lint"
+  ],
+  "devDependencies": {
+    "eslint": "^3.5.0",
+    "eslint-plugin-react": "^6.2.2"
+  },
   "dependencies": {
     "babel-loader": "^6.2.0",
     "babel-plugin-add-module-exports": "^0.1.2",
@@ -12,10 +27,14 @@
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "babel-preset-stage-0": "^6.3.13",
-    "flux": "^2.1.1",
+    "css-loader": "^0.25.0",
+    "es6-promise": "^3.3.1",
+    "eslint": "^3.5.0",
+    "eslint-plugin-react": "^6.2.2",
     "history": "^1.17.0",
     "jquery": "^2.2.4",
     "jwt-decode": "^2.0.1",
+    "less": "^2.7.1",
     "material-ui": "^0.15.1",
     "moment": "^2.13.0",
     "react": "^15.0.1",
@@ -25,10 +44,6 @@
     "react-tap-event-plugin": "^1.0.0",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "dev": "webpack-dev-server --content-base src --inline --hot"
   },
   "author": "",
   "license": "ISC"
