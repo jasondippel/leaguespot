@@ -8,11 +8,14 @@
   },
   "main": "webpack.config.js",
   "scripts": {
+    "build": "npm run build-css & npm run build-js",
+    "build-css": "catw -c 'lessc -' 'styles/*.less' > prod/bundle.css",
+    "build-js": "webpack",
     "dev": "webpack-dev-server --content-base src --inline --hot",
     "lint": "eslint --ext .js,.jsx ."
   },
   "pre-commit": [
-    "npm run lint"
+    "lint"
   ],
   "devDependencies": {
     "eslint": "^3.5.0",
@@ -35,8 +38,10 @@
     "jquery": "^2.2.4",
     "jwt-decode": "^2.0.1",
     "less": "^2.7.1",
+    "less-plugin-clean-css": "^1.5.1",
     "material-ui": "^0.15.1",
     "moment": "^2.13.0",
+    "precommit-hook": "^3.0.0",
     "react": "^15.0.1",
     "react-custom-scrollbars": "^4.0.0-beta.2",
     "react-dom": "^15.0.1",
