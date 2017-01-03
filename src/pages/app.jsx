@@ -1,6 +1,6 @@
- /**
-  * The main app file that gets things started.
-  */
+/**
+ * The main app file that gets things started.
+ */
 
 import React from 'react';
 import ReactDOM from 'react-dom';

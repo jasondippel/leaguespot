@@ -1,5 +1,5 @@
+.idea
 node_modules
+dev
 prod
-*.log
-.DS_Store
-*.txt
+npm-debug.log
