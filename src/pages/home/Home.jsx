@@ -16,7 +16,20 @@ export default class Home extends React.Component {
   render() {
     return (
       <div className="rc-Home">
-        <p>Home page... I'll add stuff here eventually :P</p>
+
+        <div className='banner'>
+          <div className="title">
+            LeagueSpot
+          </div>
+          <div className="subText">
+            Fantasy Sports for Real Social Change
+          </div>
+        </div>
+
+        <div className='content'>
+          Add content here...
+        </div>
+
       </div>
     );
   }

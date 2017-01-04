@@ -1,0 +1,32 @@
+@import '../../../node_modules/leaguespot-components/src/constants/colours';
+@import '../../../node_modules/leaguespot-components/src/constants/fonts';
+
+.rc-Home {
+  min-height: calc(~"100vh - 64px");
+  background-color: @lightBackgroundPrimary;
+  margin: 0px;
+  color: @darkTextPrimary;
+  font-size: 1.25em;
+
+  .banner {
+    background-color: @leaguespotGreenPrimary;
+    color: @lightTextPrimary;
+    padding-top: 5em;
+    padding-bottom: 3em;
+
+    .title {
+      font-family: 'Lobster', sans-serif;
+      color: @lightTextPrimary;
+      text-decoration: none;
+      font-size: 4.55em;
+      text-shadow: 2px 0px 3px #000;
+      text-align: center;
+    }
+
+    .subText {
+      text-align: center;
+      font-size: 2em;
+      line-height: 2.5em;
+    }
+  }
+}
