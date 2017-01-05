@@ -10,6 +10,9 @@ import { Router, Route, hashHistory, IndexRoute } from 'react-router';
 // Pages
 import Layout from './layout/Layout';
 import Home from './home/Home';
+import SignUp from './signUp/SignUp';
+import LogIn from './logIn/LogIn';
+import Dashboard from './dashboard/Dashboard';
 
 
 export default (
@@ -17,7 +20,10 @@ export default (
     <Route component={Layout}>
 
       <Route path='/'>
-        <IndexRoute path='' component={Home} />
+        <IndexRoute component={Home} />
+        <Route path='sign-up' component={SignUp} />
+        <Route path='login' component={LogIn} />
+        <Route path='dashboard' component={Dashboard} />
       </Route>
 
     </Route>

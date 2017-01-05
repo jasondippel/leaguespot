@@ -2,7 +2,6 @@
 @import '../../../node_modules/leaguespot-components/src/constants/fonts';
 
 .rc-Home {
-  min-height: calc(~"100vh - 64px");
   background-color: @lightBackgroundPrimary;
   margin: 0px;
   color: @darkTextPrimary;
@@ -28,5 +27,17 @@
       font-size: 2em;
       line-height: 2.5em;
     }
+  }
+
+  .infoBanner {
+    background-color: darken(@lightBackgroundPrimary, 6%);
+    padding-top: 4em;
+    padding-bottom: 3em;
+    padding-left: 10em;
+    padding-right: 10em;
+  }
+
+  .content {
+    padding: 2em;
   }
 }

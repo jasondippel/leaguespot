@@ -1,0 +1,32 @@
+@import '../../constants/colours';
+@import '../../constants/fonts';
+
+.rc-Toast {
+  .message {
+    color: @darkTextPrimary;
+    text-align: center;
+
+    svg {
+      color: @darkTextPrimary !important;
+      vertical-align: text-bottom;
+      padding-right: 0.5em;
+    }
+
+    &.success {
+      color: @leaguespotGreenPrimary !important;
+
+      svg {
+        color: @leaguespotGreenPrimary !important;
+      }
+
+    }
+    &.error {
+      color: @danger;
+
+      svg {
+        color: @danger !important;
+      }
+
+    }
+  }
+}

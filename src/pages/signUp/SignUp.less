@@ -1,0 +1,48 @@
+@import '../../../node_modules/leaguespot-components/src/constants/colours';
+@import '../../../node_modules/leaguespot-components/src/constants/fonts';
+
+.rc-SignUp {
+  background-color: @lightBackgroundPrimary;
+  margin: 0px;
+  color: @darkTextPrimary;
+  font-size: 1.25em;
+  min-height: calc(~"100vh - 64px");
+
+  .infoBanner {
+    background-color: darken(@lightBackgroundPrimary, 6%);
+    padding-top: 2em;
+    padding-bottom: 3em;
+    padding-left: 10em;
+    padding-right: 10em;
+
+    .title {
+      font-size: 2em;
+      font-weight: 300;
+      margin-bottom: 0.5em;
+    }
+  }
+
+  .content {
+    padding: 2em;
+
+    .signUpForm {
+      .errorMessage {
+        color: @danger;
+        font-size: 0.75em;
+        font-weight: 400;
+      }
+
+      .buttons {
+        margin-top: 2em;
+        text-align: center;
+
+        .rc-RaisedButton button {
+            box-shadow: none;
+            padding-left: 2em;
+            padding-right: 2em;
+        }
+
+      }
+    }
+  }
+}
