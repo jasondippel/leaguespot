@@ -4,13 +4,14 @@
 
 /* Style Dependencies */
 import './Tabs.less';
+import colours from '../../constants/colours';
 
 /* Script Dependencies */
 import React from 'react';
 import {Tabs as MuiTabs, Tab} from 'material-ui/Tabs';
 
 /* Material UI Theme */
-import customTheme from '../../constants/CustomTheme';
+import LightTheme from '../../constants/LightTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
@@ -25,7 +26,8 @@ export default class Tabs extends React.Component {
       fontSize: '1.5em',
       fontWeight: '300',
       boxSizing: 'border-box',
-      textTransform: 'none'
+      textTransform: 'none',
+      color: colours.lightTextPrimary
     };
 
     let tabs = this.props.tabs.map(function(tabObj, key) {
@@ -41,7 +43,7 @@ export default class Tabs extends React.Component {
 
   render() {
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme(customTheme)}>
+      <MuiThemeProvider muiTheme={getMuiTheme(LightTheme)}>
         <div className='rc-Tabs'>
           <MuiTabs
             tabItemContainerStyle={{'borderTopLeftRadius': '2px', 'borderTopRightRadius': '2px'}}

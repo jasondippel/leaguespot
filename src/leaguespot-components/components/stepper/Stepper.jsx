@@ -17,7 +17,7 @@ import RaisedButton from '../buttons/RaisedButton';
 import FlatButton from '../buttons/FlatButton';
 
 /* Material UI Theme */
-import customTheme from '../../constants/CustomTheme';
+import LightTheme from '../../constants/LightTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
@@ -42,7 +42,7 @@ export default class LsStepper extends React.Component {
     let steps = this.props.stepNames.map(function(name, key) {
       return (
         <Step key={key}>
-          <StepLabel style={{color: Colours.lightTextPrimary}}>{name}</StepLabel>
+          <StepLabel style={{color: Colours.darkTextPrimary}}>{name}</StepLabel>
         </Step>
       );
     });
@@ -56,7 +56,7 @@ export default class LsStepper extends React.Component {
 
   render() {
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme(customTheme)}>
+      <MuiThemeProvider muiTheme={getMuiTheme(LightTheme)}>
         <div className='rc-Stepper'>
           <div className='steps'>
             <Stepper activeStep={this.props.currentStep}>

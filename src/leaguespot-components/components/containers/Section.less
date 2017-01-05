@@ -2,7 +2,7 @@
 @import '../../constants/fonts';
 
 .rc-Section {
-  background-color: @darkBackgroundContainer;
+  background-color: @lightBackgroundContainer;
   border-radius: 2px;
   margin-top: 1em;
   margin-bottom:1em;
@@ -107,10 +107,11 @@
 
     &.coloured {
         background-color: @leaguespotGreenPrimary;
-        border-bottom: 2px solid @lightTextPrimary !important;
+        border-bottom: 2px solid #FFF !important;
         border-top-right-radius: 2px;
         border-top-left-radius: 2px;
         box-sizing: border-box;
+        color: @lightTextPrimary;
 
         .subTitle {
           opacity: 0.7;
@@ -136,7 +137,7 @@
   }
 
   .rc-Section {
-    background-color: lighten(@darkBackgroundContainer, 4%);
+    background-color: lighten(@lightBackgroundContainer, 4%);
     margin-top: 0;
     margin-bottom: 0;
 

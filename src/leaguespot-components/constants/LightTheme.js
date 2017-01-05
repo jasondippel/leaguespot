@@ -9,23 +9,24 @@ import {
 } from 'material-ui/styles/colors';
 import {fade} from 'material-ui/utils/colorManipulator';
 import spacing from 'material-ui/styles/spacing';
+import colors from './colours';
 
 export default {
   spacing: spacing,
   fontFamily: 'Lato, sans-serif',
   palette: {
-    primary1Color: '#49b64d',
-    primary2Color: '#49b64d',
+    primary1Color: colors.leaguespotGreenPrimary,
+    primary2Color: colors.leaguespotGreenPrimary,
     primary3Color: grey600,
     accent1Color: grey200,
     accent2Color: grey400,
-    accent3Color: '#999',
-    textColor: '#0f0f0f',
-    alternateTextColor: '#aaaaaa',
-    canvasColor: fullWhite,
+    accent3Color: colors.lightTextSecondary,
+    textColor: colors.darkTextPrimary,
+    alternateTextColor: colors.lightTextPrimary,
+    canvasColor: colors.lightBackgroundContainer,
     borderColor: fade('#0f0f0f', 0.3),
     disabledColor: fade('#0f0f0f', 0.3),
-    pickerHeaderColor: '#49b64d',
+    pickerHeaderColor: colors.leaguespotGreenPrimary,
     clockCircleColor: fade('#0f0f0f', 0.12),
   },
 };

@@ -11,7 +11,7 @@ import MuiSelectField from 'material-ui/SelectField';
 import _ from 'underscore';
 
 /* Material UI Theme */
-import customTheme from '../../../constants/CustomTheme';
+import LightTheme from '../../../constants/LightTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
@@ -50,7 +50,7 @@ export default class SelectField extends React.Component {
     selectFieldProps.value = this.state.value;
 
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme(customTheme)}>
+      <MuiThemeProvider muiTheme={getMuiTheme(LightTheme)}>
         <div className='rc-SelectField'>
           <MuiSelectField {...selectFieldProps}
             floatingLabelStyle={{color: '#aaa'}}

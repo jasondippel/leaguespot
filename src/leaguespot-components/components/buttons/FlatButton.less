@@ -20,13 +20,13 @@
     transition: background-color 0.125s ease-in-out;
 
     &.default {
-      color: @lightTextPrimary;
+      color: @darkTextPrimary;
     }
     &.primary {
       color: @leaguespotGreenPrimary;
     }
     &.secondary {
-      color: lighten(@lightTextSecondary, 20%);
+      color: lighten(@darkTextPrimary, 20%);
     }
     &.warning {
       color: @danger;
@@ -39,7 +39,7 @@
   }
   button:active,
   button:hover {
-    background-color: @darkBackgroundPrimary;
+    background-color: @lightBackgroundSecondary;
 
     &.default {
     }

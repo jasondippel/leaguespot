@@ -27,7 +27,8 @@ export default class Home extends React.Component {
             <div>Fantasy Sports for Real Social Change</div>
             <Link to='/dashboard'>
               <RaisedButton
-                label='My Dashboard' />
+                label='My Dashboard'
+                shaddow={true} />
             </Link>
           </div>
         </div>

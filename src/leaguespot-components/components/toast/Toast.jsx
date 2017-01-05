@@ -78,6 +78,7 @@ export default class Toast extends React.Component {
             message={contents}
             autoHideDuration={6000}
             onRequestClose={this.handleRequestClose}
+            className='container'
           />
         </div>
       </MuiThemeProvider>

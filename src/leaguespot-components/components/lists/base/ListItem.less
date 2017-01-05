@@ -2,7 +2,7 @@
 @import '../../../constants/fonts';
 
 .rc-ListItem {
-  background-color: lighten(@darkBackgroundContainer, 8%);
+  background-color: lighten(@lightBackgroundContainer, 8%);
   margin-top: 2px;
   margin-bottom: 2px;
   padding: 8px;
@@ -20,7 +20,7 @@
     margin-top: 0px;
   }
   &:hover {
-    background-color: lighten(@darkBackgroundContainer, 6%);
+    background-color: lighten(@lightBackgroundContainer, 6%);
   }
 
   .mediaLeft {
@@ -36,10 +36,11 @@
     .main {
       font-weight: 400;
       font-size: 1.1em;
+      color: @darkTextPrimary;
     }
 
     .secondary {
-      color: @lightTextSecondary;
+      color: @darkTextSecondary;
       margin-top: 3px;
     }
   }

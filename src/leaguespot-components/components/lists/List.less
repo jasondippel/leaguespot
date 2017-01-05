@@ -104,9 +104,8 @@
 }
 
 .rc-List {
-  background-color: @darkBackgroundContainer;
   border-radius: 2px;
-  padding: 5px;
+  margin: 5px;
   box-sizing: border-box;
   // NOTE: bug when rendering with scrollbar, causes width to be wider than actually is; Need this to fix it
   overflow-x: hidden;
@@ -126,6 +125,7 @@
       border: none !important;
       font-size: 1.5em !important;
       font-weight: 300 !important;
+      color: @lightTextPrimary;
     }
   }
 
@@ -135,6 +135,7 @@
     border-bottom-right-radius: 2px;
     border-bottom-left-radius: 2px;
     border: 0px !important;
+    background-color: darken(@lightBackgroundContainer, 8%);
   }
 
 }

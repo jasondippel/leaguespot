@@ -21,12 +21,20 @@ export default class RaisedButton extends React.Component {
   }
 
   render() {
+    let style = {};
+    if (this.props.shaddow) {
+      style = {
+        boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.35)'
+      };
+    }
+
     return (
       <div className='rc-RaisedButton'>
         <button
           className={this.props.type}
           onClick={this.handleOnClick}
           disabled={this.props.type === 'disabled' ? true : false}
+          style={style}
           >
           {this.props.label}
         </button>
@@ -43,6 +51,7 @@ RaisedButton.propTypes = {
   disabled: bool,
   label: string,
   onClick: func,
+  shaddow: bool,
   type: React.PropTypes.oneOf([
     'default',
     'primary',
@@ -53,6 +62,7 @@ RaisedButton.propTypes = {
 };
 
 RaisedButton.defaultProps = {
+  shaddow: false,
   type: 'default',
   onClick: () => {}
 };

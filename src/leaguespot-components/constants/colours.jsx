@@ -14,7 +14,9 @@ export default {
   darkBackgroundPrimary: '#1c1c1f',
   darkBackgroundSecondary: '#121314',
   darkBackgroundContainer: '#222326',
-  lightBackgroundPrimary: '#ffffff',
+  lightBackgroundPrimary: '#f0f0f0',
+  lightBackgroundSecondary: '#ffffff',
+  lightBackgroundContainer: '#f8f8f8',
 
   // TEXT COLOURS
   darkTextPrimary: '#0f0f0f',

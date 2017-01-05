@@ -59,7 +59,7 @@ export default class List extends React.Component {
                   rowCount={that.props.items.length}
                   rowHeight={58}
                   rowRenderer={that.renderItem}
-                  overscanRowCount={50}
+                  overscanRowCount={100}
                   width={width}
                 />
               )}

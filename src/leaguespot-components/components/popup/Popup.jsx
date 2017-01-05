@@ -15,7 +15,7 @@ import Announcement from 'material-ui/svg-icons/action/announcement';
 import CheckCircle from 'material-ui/svg-icons/action/check-circle';
 
 /* Material UI Theme */
-import customTheme from '../../constants/CustomTheme';
+import LightTheme from '../../constants/LightTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
@@ -34,7 +34,7 @@ export default class Popup extends React.Component {
   }
 
   getTypeColour() {
-    let colour = colours.lightTextPrimary;
+    let colour = colours.darkTextPrimary;
 
     switch (this.props.type.toUpperCase()) {
       case 'SUCCESS':
@@ -113,7 +113,7 @@ export default class Popup extends React.Component {
         contents = this.renderContents();
 
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme(customTheme)}>
+      <MuiThemeProvider muiTheme={getMuiTheme(LightTheme)}>
         <div className='rc-Popup'>
           <Dialog
             title={title}

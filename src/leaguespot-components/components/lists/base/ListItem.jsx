@@ -11,7 +11,7 @@ import FlatButton from '../../buttons/FlatButton';
 import RaisedButton from '../../buttons/RaisedButton';
 
 /* Material UI Theme */
-import customTheme from '../../../constants/CustomTheme';
+import LightTheme from '../../../constants/LightTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
@@ -67,7 +67,7 @@ export default class ListItem extends React.Component {
     }
 
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme(customTheme)}>
+      <MuiThemeProvider muiTheme={getMuiTheme(LightTheme)}>
         <div className={'rc-ListItem ' + this.props.itemClass}>
           {mediaLeft}
           {body}

@@ -4,6 +4,7 @@
 .rc-Header {
   padding: 0.5em;
   background-color: lighten(@darkBackgroundContainer, 4%);
+  color: @lightTextPrimary;
   padding-left: 4em;
   padding-right: 4em;
 
@@ -49,5 +50,18 @@
     float: right;
     vertical-align: middle;
     line-height: 50px;
+
+    .rc-FlatButton {
+      button {
+        &.default {
+          color: @lightTextPrimary;
+        }
+
+        &:hover {
+          background-color: @darkBackgroundSecondary;
+        }
+      }
+
+    }
   }
 }

@@ -12,7 +12,7 @@ import MuiDatePicker from 'material-ui/DatePicker';
 import moment from 'moment';
 
 /* Material UI Theme */
-import customTheme from '../../constants/CustomTheme';
+import LightTheme from '../../constants/LightTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
@@ -32,7 +32,7 @@ export default class DatePicker extends React.Component {
     // TODO: figure out a way to use our own button in the modal
 
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme(customTheme)}>
+      <MuiThemeProvider muiTheme={getMuiTheme(LightTheme)}>
         <div className='rc-DatePicker'>
           <MuiDatePicker
             disabled={this.props.disabled}

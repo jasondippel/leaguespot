@@ -11,7 +11,7 @@ import MuiCheckBox from 'material-ui/Checkbox';
 import _ from 'underscore';
 
 /* Material UI Theme */
-import customTheme from '../../../constants/CustomTheme';
+import LightTheme from '../../../constants/LightTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
@@ -51,7 +51,7 @@ export default class CheckBox extends React.Component {
     checkBoxProps.disableTouchRipple = true;    // removes ripple effect used by Material UI
 
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme(customTheme)}>
+      <MuiThemeProvider muiTheme={getMuiTheme(LightTheme)}>
         <div className='rc-CheckBox'>
           <MuiCheckBox {...checkBoxProps} />
         </div>

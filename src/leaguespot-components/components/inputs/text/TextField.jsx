@@ -11,8 +11,7 @@ import MuiTextField from 'material-ui/TextField';
 import _ from 'underscore';
 
 /* Material UI Theme */
-import darkTheme from '../../../constants/CustomTheme';
-import lightTheme from '../../../constants/LightTheme';
+import LightTheme from '../../../constants/LightTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
@@ -42,11 +41,9 @@ export default class TextField extends React.Component {
 
   render() {
     var textFieldProps = _.pick(this.props, 'defaultValue', 'disabled', 'errorText', 'floatingLabelFixed', 'floatingLabelText', 'fullWidth', 'hintText', 'multiLine', 'onChange', 'onKeyDown', 'type', 'underlineShow', 'value');
-    
-    let customTheme = this.props.lightTheme ? lightTheme : darkTheme;
 
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme(customTheme)}>
+      <MuiThemeProvider muiTheme={getMuiTheme(LightTheme)}>
         <div className='rc-TextField'>
           <MuiTextField {...textFieldProps}
             floatingLabelStyle={{color: '#aaa'}}
@@ -69,7 +66,6 @@ TextField.propTypes = {
   floatingLabelText: string,
   fullWidth: bool,
   hintText: string,
-  lightTheme: bool,
   multiLine: bool,
   onChange: func,
   onKeyDown: func,
@@ -83,7 +79,6 @@ TextField.defaultProps = {
   errorText: null,
   floatingLabelFixed: false,
   fullWidth: false,
-  lightTheme: false,
   multiLine: false,
   onChange: () => {},
   onKeyDown: () => {},
