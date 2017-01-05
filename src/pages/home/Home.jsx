@@ -7,6 +7,8 @@
 
  /* Script Dependencies */
  import React from 'react';
+ import { Link } from 'react-router';
+ import RaisedButton from '../../leaguespot-components/components/buttons/RaisedButton';
 
 export default class Home extends React.Component {
   constructor() {
@@ -22,12 +24,16 @@ export default class Home extends React.Component {
             LeagueSpot
           </div>
           <div className="subText">
-            Fantasy Sports for Real Social Change
+            <div>Fantasy Sports for Real Social Change</div>
+            <Link to='/dashboard'>
+              <RaisedButton
+                label='My Dashboard' />
+            </Link>
           </div>
         </div>
 
         <div className='infoBanner'>
-          We provide users with the power to setup a fantasy league that focuses on the sport. Users can create fantasy leagues containing multiple professional leagues from the same sport. This will both enriche the users experience while bringing attention to smaller sports leagues.
+          We provide users with the power to setup a fantasy league that focuses on the sport. Users can create fantasy leagues containing multiple professional leagues from the same sport. This will both enrich the users experience while bringing attention to smaller sports leagues.
         </div>
 
         <div className='content'>

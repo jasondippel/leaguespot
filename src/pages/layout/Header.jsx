@@ -61,7 +61,6 @@ export default class Header extends React.Component {
           </div>
         </Link>
 
-        {buttons}
         {accountInfo}
 
       </header>
