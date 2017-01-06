@@ -10,9 +10,13 @@ import React from 'react';
 import _ from 'underscore';
 import AccountCircle from 'material-ui/svg-icons/action/account-circle';
 import Add from 'material-ui/svg-icons/content/add';
-import ErrorCircle from 'material-ui/svg-icons/alert/error';
 import Announcement from 'material-ui/svg-icons/action/announcement';
+import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
+import Chat from 'material-ui/svg-icons/communication/chat';
 import CheckCircle from 'material-ui/svg-icons/action/check-circle';
+import Dashboard from 'material-ui/svg-icons/action/dashboard';
+import ErrorCircle from 'material-ui/svg-icons/alert/error';
+import Group from 'material-ui/svg-icons/social/group';
 
 /* Material UI Theme */
 import LightTheme from '../../constants/LightTheme';
@@ -50,6 +54,20 @@ export default class Icon extends React.Component {
           </span>
         );
         break;
+      case 'arrow-back':
+        icon = (
+          <span>
+            <ArrowBack color={this.props.color} hoverColor={this.props.hoverColor} />
+          </span>
+        );
+        break;
+      case 'chat':
+        icon = (
+          <span>
+            <Chat color={this.props.color} hoverColor={this.props.hoverColor} />
+          </span>
+        );
+        break;
       case 'check-circle':
         icon = (
           <span>
@@ -57,10 +75,24 @@ export default class Icon extends React.Component {
           </span>
         );
         break;
+      case 'dashboard':
+        icon = (
+          <span>
+            <Dashboard color={this.props.color} hoverColor={this.props.hoverColor} />
+          </span>
+        );
+        break;
       case 'error-circle':
         icon = (
           <span>
             <ErrorCircle color={this.props.color} hoverColor={this.props.hoverColor} />
+          </span>
+        );
+        break;
+      case 'group':
+        icon = (
+          <span>
+            <Group color={this.props.color} hoverColor={this.props.hoverColor} />
           </span>
         );
         break;

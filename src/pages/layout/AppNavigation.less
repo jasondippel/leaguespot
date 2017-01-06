@@ -7,7 +7,7 @@
     padding: 0.2em;
     background-color: lighten(@darkBackgroundContainer, 4%);
     color: @lightTextPrimary;
-    padding-left: 2em;
+    padding-left: 1em;
     padding-right: 2em;
     vertical-align: middle;
 
@@ -27,7 +27,7 @@
 
     .buttons {
       display: inline-block;
-      padding-left: 2em;
+      padding-left: 3em;
 
       a {
         color: @lightTextPrimary;
@@ -76,8 +76,130 @@
       .accountIcon {
         display: inline-block;
       }
+    }
+  }
 
+  .container {
+    background-color: lighten(@darkBackgroundContainer, 4%);
+    color: @lightTextPrimary;
+    min-height: calc(~"100vh - 36.6px");
+    vertical-align: top;
+
+    .sideNav {
+      padding-top: 1em;
+      font-size: 1em;
+      width: 150px;
+      display: inline-block;
+      box-sizing: border-box;
+      vertical-align: top;
+
+      .subNav {
+        background-color: lighten(@darkBackgroundContainer, 8%);
+        padding-bottom: 0.5em;
+        padding-top: 0.25em;
+        display: none;
+
+        a.item {
+          padding-left: 2em;
+        }
+      }
+
+      a.item {
+        box-sizing: border-box;
+        display: block;
+        padding-left: 0.25em;
+        width: 150px;
+        display: inline-block;
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+        text-overflow: ellipsis;
+        -webkit-transition: color 0.2s; /* For Safari 3.1 to 6.0 */
+        transition: color 0.2s;
+
+        .icon {
+          display: inline-block;
+
+          svg {
+            color: @lightTextPrimary !important;
+            height: 1.3em !important;
+          }
+        }
+
+        .text {
+          display: inline-block;
+        }
+
+        &:hover {
+          cursor: pointer;
+          color: @lightTextSecondary;
+
+          .icon {
+            svg {
+              color: @lightTextSecondary !important;
+            }
+          }
+        }
+
+        .arrow {
+          -webkit-transition: border-right-color 0.2s; /* For Safari 3.1 to 6.0 */
+          transition: border-right-color 0.2s;
+
+          &:hover {
+            border-right:  8px solid lighten(@darkBackgroundContainer, 4%);
+          }
+        }
+      }
+
+      a.item.active {
+        font-weight: 400;
+
+        &:hover {
+          color: @lightTextPrimary;
+
+          .icon {
+            svg {
+              color: @lightTextPrimary !important;
+            }
+          }
+        }
+
+        .arrow {
+          border-top: 8px solid lighten(@darkBackgroundContainer, 4%);
+          border-bottom: 8px solid lighten(@darkBackgroundContainer, 4%);
+          border-right:  8px solid @lightBackgroundPrimary;
+          box-sizing: border-box;
+          display: inline-block;
+          float: right;
+          height: 16px;
+          width: 16px;
+        }
+      }
+
+      .bottom {
+        box-sizing: border-box;
+        vertical-align: bottom;
+        padding-bottom: 0.5em;
+        position: absolute;
+        bottom: 0;
+        width: 150px;
+
+        .signOut {
+          font-weight: 400;
+        }
+      }
     }
 
+    .content {
+      background-color: @lightBackgroundPrimary;
+      color: @darkTextPrimary;
+      display: inline-block;
+      min-height: calc(~"100vh - 36.6px");
+      max-height: calc(~"100vh - 36.6px");
+      min-width: calc(~"100% - 150px");
+      box-sizing: border-box;
+      vertical-align: top;
+      overflow-y: auto;
+    }
   }
+
 }
