@@ -23,7 +23,7 @@ export default class Header extends React.Component {
   renderButtons() {
     return (
       <div className='buttons'>
-        <Link>
+        <Link to='/new-fantasy-league'>
           <span className='icon'>+</span>
           <span className='text'>New League</span>
         </Link>
@@ -46,14 +46,14 @@ export default class Header extends React.Component {
     return (
       <div className='sideNav'>
         <div className='top'>
-          <Link className='item active'>
+          <Link className='item active' to='/dashboard'>
             <div className='icon'>
               <Icon type='dashboard' paddingLeft='0' paddingRight='0.25em'/>
             </div>
             <div className='text'>Dashboard</div>
             <div className='arrow'></div>
           </Link>
-          <Link className='item'>
+          <Link className='item' to='/fantasy-leagues'>
             <div className='icon'>
               <Icon type='group' paddingLeft='0' paddingRight='0.25em'/>
             </div>
@@ -65,7 +65,7 @@ export default class Header extends React.Component {
             <Link className='item'>League 2</Link>
             <Link className='item'>League 3</Link>
           </div>
-          <Link className='item'>
+          <Link className='item' to='/inbox'>
             <div className='icon'>
               <Icon type='chat' paddingLeft='0' paddingRight='0.25em'/>
             </div>
@@ -74,14 +74,14 @@ export default class Header extends React.Component {
           </Link>
         </div>
         <div className='bottom'>
-          <Link className='item'>
+          <Link className='item' to='/my-account'>
             <div className='icon'>
               <Icon type='account-circle' paddingLeft='0' paddingRight='0.25em'/>
             </div>
             <div className='text'>My Account</div>
             <div className='arrow'></div>
           </Link>
-          <Link className='item signOut'>
+          <Link className='item signOut' to='/sign-out'>
             <div className='icon'>
               <Icon type='arrow-back' paddingLeft='0' paddingRight='0.25em'/>
             </div>

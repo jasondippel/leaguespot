@@ -18,19 +18,6 @@ export default class Header extends React.Component {
     super();
   }
 
-  renderButtons() {
-    return (
-      <div className='buttons'>
-        <Link to='/dashboard'>
-          Dashboard
-        </Link>
-        <Link>
-          Inbox
-        </Link>
-      </div>
-    );
-  }
-
   renderAccountInfo() {
     return (
       <div className='accountInfo'>
@@ -50,8 +37,7 @@ export default class Header extends React.Component {
   }
 
   render() {
-    let buttons = this.renderButtons(),
-        accountInfo = this.renderAccountInfo();
+    let accountInfo = this.renderAccountInfo();
 
     return (
       <header className='rc-Header'>

@@ -1,10 +1,9 @@
 /**
- * Dashboard used as the homepage once a user access the app. Should be a
- * summary of what the user has going on.
+ * Form to create a new fantasy league
  */
 
 /* Style Dependencies */
-import './Dashboard.less';
+import './NewFantasyLeague.less';
 
 /* Script Dependencies */
 import React from 'react';
@@ -14,21 +13,20 @@ import RaisedButton from '../../leaguespot-components/components/buttons/RaisedB
 import SmallBanner from '../../components/banners/SmallBanner';
 
 
-export default class Dashboard extends React.Component {
+export default class NewFantasyLeague extends React.Component {
   constructor() {
     super();
   }
 
   render() {
     return (
-      <div className='rc-Dashboard'>
+      <div className='rc-NewFantasyLeague'>
         <SmallBanner
-          title='My Dashboard'
+          title='New Fantasy League'
           />
 
         <div className='content'>
-          unread messages<br/>
-          my fleagues and current position within league <br/>
+          stepper like in old design
         </div>
       </div>
     );

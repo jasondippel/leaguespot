@@ -115,6 +115,7 @@
         text-overflow: ellipsis;
         -webkit-transition: color 0.2s; /* For Safari 3.1 to 6.0 */
         transition: color 0.2s;
+        color: @lightTextPrimary;
 
         .icon {
           display: inline-block;
@@ -151,7 +152,8 @@
       }
 
       a.item.active {
-        font-weight: 400;
+        // font-weight: 400;
+        background-color: @leaguespotGreenSecondary;
 
         &:hover {
           color: @lightTextPrimary;
@@ -164,9 +166,10 @@
         }
 
         .arrow {
-          border-top: 8px solid lighten(@darkBackgroundContainer, 4%);
-          border-bottom: 8px solid lighten(@darkBackgroundContainer, 4%);
+          border-top: 8px solid @leaguespotGreenSecondary;
+          border-bottom: 8px solid @leaguespotGreenSecondary;
           border-right:  8px solid @lightBackgroundPrimary;
+          background-color: @leaguespotGreenSecondary;
           box-sizing: border-box;
           display: inline-block;
           float: right;

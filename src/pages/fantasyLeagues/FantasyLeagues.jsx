@@ -1,10 +1,10 @@
 /**
- * Dashboard used as the homepage once a user access the app. Should be a
- * summary of what the user has going on.
+ * Summary of fantasy leagues a user belongs to. Can be used as a place to
+ * to search for fantasy leagues or create a new one.
  */
 
 /* Style Dependencies */
-import './Dashboard.less';
+import './FantasyLeagues.less';
 
 /* Script Dependencies */
 import React from 'react';
@@ -14,21 +14,21 @@ import RaisedButton from '../../leaguespot-components/components/buttons/RaisedB
 import SmallBanner from '../../components/banners/SmallBanner';
 
 
-export default class Dashboard extends React.Component {
+export default class FantasyLeagues extends React.Component {
   constructor() {
     super();
   }
 
   render() {
     return (
-      <div className='rc-Dashboard'>
+      <div className='rc-FantasyLeagues'>
         <SmallBanner
-          title='My Dashboard'
+          title='Fantasy Leagues'
           />
 
         <div className='content'>
-          unread messages<br/>
-          my fleagues and current position within league <br/>
+          list of my leagues<br/>
+          grey blurb at top to create a new league or select existing one<br/>
         </div>
       </div>
     );

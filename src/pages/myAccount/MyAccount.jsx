@@ -1,10 +1,9 @@
 /**
- * Dashboard used as the homepage once a user access the app. Should be a
- * summary of what the user has going on.
+ * User account management page
  */
 
 /* Style Dependencies */
-import './Dashboard.less';
+import './MyAccount.less';
 
 /* Script Dependencies */
 import React from 'react';
@@ -14,21 +13,22 @@ import RaisedButton from '../../leaguespot-components/components/buttons/RaisedB
 import SmallBanner from '../../components/banners/SmallBanner';
 
 
-export default class Dashboard extends React.Component {
+export default class MyAccount extends React.Component {
   constructor() {
     super();
   }
 
   render() {
     return (
-      <div className='rc-Dashboard'>
+      <div className='rc-MyAccount'>
         <SmallBanner
-          title='My Dashboard'
+          title='My Account'
           />
 
         <div className='content'>
-          unread messages<br/>
-          my fleagues and current position within league <br/>
+          edit user info (show summary) <br/>
+          upload picture (future) <br/>
+          change password <br/>
         </div>
       </div>
     );
