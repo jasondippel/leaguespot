@@ -13,6 +13,22 @@ export function fetchUser() {
   }
 }
 
+export function setUser(sessionId, user) {
+  return {
+    type: 'SET_USER',
+    payload: {
+      sessionId: sessionId,
+      user: user
+    }
+  }
+}
+
+export function removeUser() {
+  return {
+    type: 'REMOVE_USER'
+  }
+}
+
 export function setUserName(name) {
   return {
     type: 'SET_USER_NAME',

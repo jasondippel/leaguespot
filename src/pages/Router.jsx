@@ -27,13 +27,13 @@ import ErrorPage404 from './errorPages/ErrorPage404';
 
 let requireAuth = (nextState, replace) => {
   if (!auth.loggedIn()) {
-    replace({ nextPathname: nextState.location.pathname }, '/login', nextState.location.query);
+    replace('/login');
   }
 };
 
 let requireNotAuth = (nextState, replace) => {
   if (auth.loggedIn()) {
-    replace({ nextPathname: nextState.location.pathname }, '/dashboard', nextState.location.query);
+    replace('/dashboard');
   }
 };
 

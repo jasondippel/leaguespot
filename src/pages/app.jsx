@@ -17,7 +17,7 @@ import Store from './Store';
 
 const app = document.getElementById('app');
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={Store}>
     { Router }
   </Provider>
 , app);

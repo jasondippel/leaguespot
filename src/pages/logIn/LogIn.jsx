@@ -24,8 +24,6 @@ export default class LogIn extends React.Component {
 
   handleLogIn() {
     // TODO: make call to backend
-
-    console.log('login this', this);
     this.context.router.push('/dashboard');
   }
 
