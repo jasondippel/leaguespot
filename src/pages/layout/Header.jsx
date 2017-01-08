@@ -21,12 +21,12 @@ export default class Header extends React.Component {
   renderAccountInfo() {
     return (
       <div className='accountInfo'>
-        <Link to="/login">
+        <Link to='/login'>
           <FlatButton
             label='Log In'
             />
         </Link>
-        <Link to="/sign-up">
+        <Link to='/sign-up'>
           <RaisedButton
             label='Sign Up'
             type='primary'

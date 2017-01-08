@@ -16,8 +16,8 @@ export default class ErrorPage404 extends React.Component {
 
   render() {
     return (
-      <div className="rc-ErrorPage">
-        <div className="title">
+      <div className='rc-ErrorPage'>
+        <div className='title'>
           404
         </div>
 

@@ -29,7 +29,7 @@ export default class SignUp extends React.Component {
 
   render() {
     return (
-      <div className="rc-SignUp">
+      <div className='rc-SignUp'>
 
         <div className='infoBanner'>
           <div className='title'>Sign Up</div>

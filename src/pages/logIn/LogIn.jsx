@@ -31,7 +31,7 @@ export default class LogIn extends React.Component {
 
   render() {
     return (
-      <div className="rc-LogIn">
+      <div className='rc-LogIn'>
 
         <div className='infoBanner'>
           <div className='title'>Login</div>

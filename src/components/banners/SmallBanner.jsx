@@ -15,8 +15,8 @@ export default class SmallBanner extends React.Component {
 
   render() {
     return (
-      <div className="rc-SmallBanner">
-        <div className="title">
+      <div className='rc-SmallBanner'>
+        <div className='title'>
           {this.props.title}
         </div>
       </div>

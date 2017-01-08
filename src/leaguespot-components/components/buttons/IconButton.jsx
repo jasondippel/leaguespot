@@ -34,12 +34,12 @@ export default class IconButton extends React.Component {
     switch (this.props.type) {
       case 'addCircle':
         icon = (
-          <AddCircle data-tip="Add" />
+          <AddCircle data-tip='Add' />
         );
         break;
       case 'removeCircle':
         icon = (
-          <RemoveCircle data-tip="Remove" />
+          <RemoveCircle data-tip='Remove' />
         );
         break;
       default:
@@ -67,9 +67,9 @@ export default class IconButton extends React.Component {
             {icon}
           </button>
           <ReactTooltip
-            place="top"
-            type="dark"
-            effect="solid"
+            place='top'
+            type='dark'
+            effect='solid'
             delayShow={1000}
             disable={this.props.disabled ? true : false}
             />

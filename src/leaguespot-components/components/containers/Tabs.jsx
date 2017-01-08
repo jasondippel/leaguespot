@@ -32,7 +32,7 @@ export default class Tabs extends React.Component {
 
     let tabs = this.props.tabs.map(function(tabObj, key) {
       return (
-        <Tab label={tabObj.title} key={key} className="tab" style={tabTitleStyle}>
+        <Tab label={tabObj.title} key={key} className='tab' style={tabTitleStyle}>
           <div className='content'>{tabObj.content}</div>
         </Tab>
       );

@@ -6,6 +6,7 @@
 // Script Dependencies
 import React from 'react';
 import { Router, Route, hashHistory, IndexRoute, Redirect } from 'react-router';
+import * as auth from '../utils/PersistentUser';
 
 // Pages
 import Layout from './layout/Layout';
@@ -24,18 +25,33 @@ import SignOut from './signOut/SignOut';
 import ErrorPage404 from './errorPages/ErrorPage404';
 
 
+let requireAuth = (nextState, replace) => {
+  if (!auth.loggedIn()) {
+    replace({ nextPathname: nextState.location.pathname }, '/login', nextState.location.query);
+  }
+};
+
+let requireNotAuth = (nextState, replace) => {
+  if (auth.loggedIn()) {
+    replace({ nextPathname: nextState.location.pathname }, '/dashboard', nextState.location.query);
+  }
+};
+
 export default (
   <Router history={hashHistory}>
     <Route component={Layout}>
       <Route path='/'>
         <IndexRoute component={Home} />
-        <Route path='sign-up' component={SignUp} />
-        <Route path='sign-out' component={SignOut} />
-        <Route path='login' component={LogIn} />
+
+        <Route onEnter={requireNotAuth}>
+          <Route path='sign-up' component={SignUp} />
+          <Route path='sign-out' component={SignOut} />
+          <Route path='login' component={LogIn} />
+        </Route>
       </Route>
     </Route>
 
-    <Route component={AppLayout}>
+    <Route component={AppLayout} onEnter={requireAuth}>
       <Route path='/dashboard' component={Dashboard} />
       <Route path='/fantasy-leagues' component={FantasyLeagues} />
       <Route path='/new-fantasy-league' component={NewFantasyLeague} />
@@ -45,6 +61,6 @@ export default (
 
     <Route path='/404-page-not-found' component={ErrorPage404} />
 
-    <Redirect from="*" to="/404-page-not-found" />
+    <Redirect from='*' to='/404-page-not-found' />
   </Router>
 );

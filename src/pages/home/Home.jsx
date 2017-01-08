@@ -17,19 +17,21 @@ export default class Home extends React.Component {
 
   render() {
     return (
-      <div className="rc-Home">
+      <div className='rc-Home'>
 
         <div className='banner'>
-          <div className="title">
+          <div className='title'>
             LeagueSpot
           </div>
-          <div className="subText">
+          <div className='subText'>
             <div>Fantasy Sports for Real Social Change</div>
-            <Link to='/dashboard'>
-              <RaisedButton
-                label='My Dashboard'
-                shaddow={true} />
-            </Link>
+            <div className='_dashboardBtn'>
+              <Link to='/dashboard'>
+                <RaisedButton
+                  label='My Dashboard'
+                  shaddow={true} />
+              </Link>
+            </div>
           </div>
         </div>
 

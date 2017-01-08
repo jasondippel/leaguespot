@@ -36,7 +36,7 @@ export default class TimePicker extends React.Component {
         <div className='rc-TimePicker'>
           <MuiTimePicker
             disabled={this.props.disabled}
-            format="ampm"
+            format='ampm'
             hintText={this.props.hintText}
             onChange={this.handleChange}
           />
