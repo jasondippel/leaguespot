@@ -25,14 +25,16 @@ export default function reducer(state = initialState, action) {
         return {
           ...state,
           sessionId: action.payload.sessionId,
-          user: action.payload.user
+          user: action.payload.user,
+          loggedIn: true
         }
       }
       case 'REMOVE_USER': {
         return {
           ...state,
           sessionId: initialState.sessionId,
-          user: initialState.user
+          user: initialState.user,
+          loggedIn: initialState.loggedIn
         }
       }
       case 'SET_USER_NAME': {

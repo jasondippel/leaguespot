@@ -20,7 +20,7 @@ export default class AppLayout extends React.Component {
   render() {
     return (
       <div className='rc-AppLayout'>
-        <AppNavigation>
+        <AppNavigation location={this.props.location}>
           {this.props.children}
         </AppNavigation>
       </div>

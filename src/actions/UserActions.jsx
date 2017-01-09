@@ -16,13 +16,6 @@ export function setUser(sessionId, user) {
   }
 }
 
-export function removeUser() {
-  User.removeSessionId();
-  return {
-    type: 'REMOVE_USER'
-  }
-}
-
 export function setUserName(name) {
   return {
     type: 'SET_USER_NAME',
@@ -34,5 +27,12 @@ export function setUserEmail(email) {
   return {
     type: 'SET_USER_EMAIL',
     payload: email
+  }
+}
+
+export function removeUser() {
+  User.removeSessionId();
+  return {
+    type: 'REMOVE_USER'
   }
 }

@@ -2,17 +2,39 @@
  * Welcome/About standard page
  */
 
- /* Style Dependencies */
- import './Home.less';
+/* Style Dependencies */
+import './Home.less';
 
- /* Script Dependencies */
- import React from 'react';
- import { Link } from 'react-router';
- import RaisedButton from '../../leaguespot-components/components/buttons/RaisedButton';
+/* Script Dependencies */
+import React from 'react';
+import { Link } from 'react-router';
+import RaisedButton from '../../leaguespot-components/components/buttons/RaisedButton';
+import { connect } from 'react-redux';
+import store from '../store';
 
-export default class Home extends React.Component {
+class Home extends React.Component {
   constructor() {
     super();
+
+    this.state = {
+      loggedIn: false
+    };
+
+    store.subscribe(() => {
+      // When state will be updated(in our case, when items will be fetched), we will update local component state and force component to rerender with new data.
+      this.setState({
+        loggedIn: store.getState().user.loggedIn
+      });
+    });
+  }
+
+  componentWillMount() {
+    // Get current state from store. Initial render does not have this info yet.
+    // Any changes to this information while this component is rendered will be
+    // caught by subscription to store above and update this component's state.
+    this.setState({
+      loggedIn: store.getState().user.loggedIn
+    });
   }
 
   render() {
@@ -25,13 +47,19 @@ export default class Home extends React.Component {
           </div>
           <div className='subText'>
             <div>Fantasy Sports for Real Social Change</div>
-            <div className='_dashboardBtn'>
-              <Link to='/dashboard'>
-                <RaisedButton
-                  label='My Dashboard'
-                  shaddow={true} />
-              </Link>
-            </div>
+
+          {
+            this.state.loggedIn ? (
+              <div className='_dashboardBtn'>
+                <Link to='/dashboard'>
+                  <RaisedButton
+                    label='My Dashboard'
+                    shaddow={true} />
+                </Link>
+              </div>
+            ): ''
+          }
+
           </div>
         </div>
 
@@ -47,3 +75,7 @@ export default class Home extends React.Component {
     );
   }
 }
+
+export default connect(
+  (state) => ({})
+)(Home)
