@@ -74,31 +74,31 @@ class SignUp extends React.Component {
 
   handleFirstNameChange(e) {
     this.setState({
-      firstName : e.target.value
+      firstName: e.target.value
     });
   }
 
   handleLastNameChange(e) {
     this.setState({
-      lastName : e.target.value
+      lastName: e.target.value
     });
   }
 
   handleEmailChange(e) {
     this.setState({
-      email : e.target.value
+      email: e.target.value
     });
   }
 
   handlePasswordChange(e) {
     this.setState({
-      password : e.target.value
+      password: e.target.value
     });
   }
 
   handleConfirmPasswordChange(e) {
     this.setState({
-      confirmPassword : e.target.value
+      confirmPassword: e.target.value
     });
   }
 
@@ -122,7 +122,6 @@ class SignUp extends React.Component {
       }).then((resp) => {
         if(resp.success) {
           // update store and set sessionId in local storage
-          console.log('jason test');
           this.props.dispatch(setUser(resp.token, resp.user));
           this.context.router.push('/dashboard');
         } else {

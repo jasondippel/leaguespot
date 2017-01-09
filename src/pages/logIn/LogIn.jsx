@@ -2,16 +2,19 @@
  * Sign up page for new users
  */
 
- /* Style Dependencies */
- import './LogIn.less';
+/* Style Dependencies */
+import './LogIn.less';
 
- /* Script Dependencies */
- import React from 'react';
- import { Link } from 'react-router';
- import TextField from '../../leaguespot-components/components/inputs/text/TextField';
- import RaisedButton from '../../leaguespot-components/components/buttons/RaisedButton';
+/* Script Dependencies */
+import React from 'react';
+import { connect } from 'react-redux';
+import { setUser } from '../../actions/UserActions';
+import { Link } from 'react-router';
+import TextField from '../../leaguespot-components/components/inputs/text/TextField';
+import RaisedButton from '../../leaguespot-components/components/buttons/RaisedButton';
+import APIRequest from '../../utils/APIRequest';
 
-export default class LogIn extends React.Component {
+class LogIn extends React.Component {
   static contextTypes = {
     router: React.PropTypes.object.isRequired
   }
@@ -19,12 +22,55 @@ export default class LogIn extends React.Component {
   constructor() {
     super();
 
+    this.state = {
+      email    : '',
+      password : '',
+      errorMessage: ''
+    };
+
+    this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleLogIn = this.handleLogIn.bind(this);
   }
 
+  handleEmailChange(e) {
+    this.setState({
+      email: e.target.value
+    });
+  }
+
+  handlePasswordChange(e) {
+    this.setState({
+      password: e.target.value
+    });
+  }
+
   handleLogIn() {
-    // TODO: make call to backend
-    this.context.router.push('/dashboard');
+    let that = this;
+    APIRequest.post({
+      api: 'LeagueSpot',
+      apiExt: '/login',
+      data: {
+        email: this.state.email,
+        password: this.state.password
+      }
+    }).then((resp) => {
+      if (resp.success) {
+        // update store
+        this.props.dispatch(setUser(resp.token, resp.user));
+        this.context.router.push('/dashboard');
+      }
+      else {
+        that.setState({
+          errorMessage: 'Invalid email or password'
+        });
+      }
+    }).catch((error) => {
+      console.error(error);
+      that.setState({
+        errorMessage: 'Oops, something went wrong. Please try again later'
+      });
+    });
   }
 
   render() {
@@ -41,9 +87,12 @@ export default class LogIn extends React.Component {
           <div className='column3' />
 
           <div className='signUpForm column6'>
-            <div className='errorMessage'>
-                <span class='text'>This is a sample error message</span>
-            </div>
+            { this.state.errorMessage ? (
+                <div className='errorMessage'>
+                    <span class='text'>{this.state.errorMessage}</span>
+                </div>
+              ) : ''
+            }
 
             <div className='column12'>
               <TextField
@@ -53,6 +102,7 @@ export default class LogIn extends React.Component {
                 lightTheme={true}
                 type='email'
                 fullWidth={true}
+                onChange={this.handleEmailChange}
                 />
             </div>
             <div className='column12'>
@@ -63,6 +113,7 @@ export default class LogIn extends React.Component {
                 lightTheme={true}
                 type='password'
                 fullWidth={true}
+                onChange={this.handlePasswordChange}
                 />
             </div>
 
@@ -82,3 +133,7 @@ export default class LogIn extends React.Component {
     );
   }
 }
+
+export default connect(
+  (state) => ({})
+)(LogIn)
