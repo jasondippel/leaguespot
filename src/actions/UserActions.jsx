@@ -1,6 +1,7 @@
 /**
  * Functions used to modify user object in store
  */
+ import * as User from '../utils/PersistentUser';
 
 
 export function fetchUser() {
@@ -14,6 +15,7 @@ export function fetchUser() {
 }
 
 export function setUser(sessionId, user) {
+  User.setSessionId(sessionId);
   return {
     type: 'SET_USER',
     payload: {

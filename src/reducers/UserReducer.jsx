@@ -37,27 +37,30 @@ export default function reducer(state = initialState, action) {
       //   }
       // }
       case 'SET_USER': {
+        console.log('jason test');
         return {
           ...state,
-          user: action.payload,
+          sessionId: action.payload.sessionId,
+          user: action.payload.user
         }
       }
       case 'REMOVE_USER': {
         return {
           ...state,
-          user: initialState.user,
+          sessionId: initialState.sessionId,
+          user: initialState.user
         }
       }
       case 'SET_USER_NAME': {
         return {
           ...state,
-          user: {...state.user, name: action.payload},
+          user: {...state.user, name: action.payload}
         }
       }
       case 'SET_USER_EMAIL': {
         return {
           ...state,
-          user: {...state.user, email: action.payload},
+          user: {...state.user, email: action.payload}
         }
       }
     }

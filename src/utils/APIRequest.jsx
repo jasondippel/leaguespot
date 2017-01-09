@@ -59,7 +59,7 @@ class APIRequest {
       options.data.token = auth.getSessionId();
 
       $.post(url, options.data)
-      .success( (data) => {
+      .done( (data) => {
         resolve(data);
       })
       .fail( (err) => {
@@ -89,7 +89,7 @@ class APIRequest {
       options.data.token = auth.getSessionId();
 
       $.get(url, options.data)
-      .success( (data) => {
+      .done( (data) => {
         resolve(data);
       })
       .fail( (err) => {

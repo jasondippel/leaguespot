@@ -7,6 +7,8 @@
 import React from 'react';
 import { Router, Route, hashHistory, IndexRoute, Redirect } from 'react-router';
 import * as auth from '../utils/PersistentUser';
+import store from './store';
+import { Provider } from 'react-redux';
 
 // Pages
 import Layout from './layout/Layout';
@@ -38,29 +40,31 @@ let requireNotAuth = (nextState, replace) => {
 };
 
 export default (
-  <Router history={hashHistory}>
-    <Route component={Layout}>
-      <Route path='/'>
-        <IndexRoute component={Home} />
+  <Provider store={store}>
+    <Router history={hashHistory}>
+      <Route component={Layout}>
+        <Route path='/'>
+          <IndexRoute component={Home} />
 
-        <Route onEnter={requireNotAuth}>
-          <Route path='sign-up' component={SignUp} />
-          <Route path='sign-out' component={SignOut} />
-          <Route path='login' component={LogIn} />
+          <Route onEnter={requireNotAuth}>
+            <Route path='sign-up' component={SignUp} />
+            <Route path='sign-out' component={SignOut} />
+            <Route path='login' component={LogIn} />
+          </Route>
         </Route>
       </Route>
-    </Route>
 
-    <Route component={AppLayout} onEnter={requireAuth}>
-      <Route path='/dashboard' component={Dashboard} />
-      <Route path='/fantasy-leagues' component={FantasyLeagues} />
-      <Route path='/new-fantasy-league' component={NewFantasyLeague} />
-      <Route path='/inbox' component={Inbox} />
-      <Route path='/my-account' component={MyAccount} />
-    </Route>
+      <Route component={AppLayout} onEnter={requireAuth}>
+        <Route path='/dashboard' component={Dashboard} />
+        <Route path='/fantasy-leagues' component={FantasyLeagues} />
+        <Route path='/new-fantasy-league' component={NewFantasyLeague} />
+        <Route path='/inbox' component={Inbox} />
+        <Route path='/my-account' component={MyAccount} />
+      </Route>
 
-    <Route path='/404-page-not-found' component={ErrorPage404} />
+      <Route path='/404-page-not-found' component={ErrorPage404} />
 
-    <Redirect from='*' to='/404-page-not-found' />
-  </Router>
+      <Redirect from='*' to='/404-page-not-found' />
+    </Router>
+  </Provider>
 );

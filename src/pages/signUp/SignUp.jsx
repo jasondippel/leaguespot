@@ -2,15 +2,20 @@
  * Sign up page for new users
  */
 
- /* Style Dependencies */
- import './SignUp.less';
+/* Style Dependencies */
+import './SignUp.less';
 
- /* Script Dependencies */
- import React from 'react';
- import TextField from '../../leaguespot-components/components/inputs/text/TextField';
- import RaisedButton from '../../leaguespot-components/components/buttons/RaisedButton';
+/* Script Dependencies */
+import React from 'react';
+import { connect } from 'react-redux';
+import { setUser } from '../../actions/UserActions';
+import { validateEmail } from '../../utils/Validate';
+import TextField from '../../leaguespot-components/components/inputs/text/TextField';
+import RaisedButton from '../../leaguespot-components/components/buttons/RaisedButton';
+import APIRequest from '../../utils/APIRequest';
 
-export default class SignUp extends React.Component {
+
+class SignUp extends React.Component {
   static contextTypes = {
     router: React.PropTypes.object.isRequired
   }
@@ -18,13 +23,119 @@ export default class SignUp extends React.Component {
   constructor() {
     super();
 
+    this.state = {
+      firstName         : '',
+      lastName          : '',
+      email             : '',
+      password          : '',
+      confirmPassword   : '',
+      errorMessage    : ''
+    };
+
     this.handleSignUp = this.handleSignUp.bind(this);
+    this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
+    this.handleLastNameChange = this.handleLastNameChange.bind(this);
+    this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleConfirmPasswordChange = this.handleConfirmPasswordChange.bind(this);
+  }
+
+  verifyData() {
+    // make sure we have first/last name, email, password
+    if ( this.state.firstName   == '' ||
+         this.state.lastName    == '' ||
+         this.state.email       == '' ||
+         this.state.password    == '' ||
+         this.state.confirmPassword == ''
+       ) {
+      this.setState({
+        errorMessage: 'Please enter all fields'
+      });
+      return false;
+    }
+
+    // make sure email is valid format and passwords match
+    if ( !validateEmail(this.state.email) ) {
+      this.setState({
+        errorMessage: 'Please enter a valid email'
+      });
+      return false;
+    }
+
+    if ( !(this.state.password === this.state.confirmPassword) ) {
+      this.setState({
+        errorMessage: 'The passwords you entered do not match'
+      });
+      return false;
+    }
+
+    return true;
+  }
+
+  handleFirstNameChange(e) {
+    this.setState({
+      firstName : e.target.value
+    });
+  }
+
+  handleLastNameChange(e) {
+    this.setState({
+      lastName : e.target.value
+    });
+  }
+
+  handleEmailChange(e) {
+    this.setState({
+      email : e.target.value
+    });
+  }
+
+  handlePasswordChange(e) {
+    this.setState({
+      password : e.target.value
+    });
+  }
+
+  handleConfirmPasswordChange(e) {
+    this.setState({
+      confirmPassword : e.target.value
+    });
   }
 
   handleSignUp() {
-    // TODO: make call to backend
+    // verify information
+    if (!this.verifyData()) {
+      return;
+    }
 
-    this.context.router.push('/dashboard');
+    let that = this;
+    // make call to backend
+    APIRequest.post({
+        api: 'LeagueSpot',
+        apiExt: '/register',
+        data: {
+          first_name   : this.state.firstName,
+          last_name    : this.state.lastName,
+          email        : this.state.email,
+          password     : this.state.password
+        }
+      }).then((resp) => {
+        if(resp.success) {
+          // update store and set sessionId in local storage
+          console.log('jason test');
+          this.props.dispatch(setUser(resp.token, resp.user));
+          this.context.router.push('/dashboard');
+        } else {
+          that.setState({
+            errorMessage: resp.message
+          });
+        }
+      }).catch((error) => {
+        console.error(error);
+        that.setState({
+          errorMessage: 'Oops, something went wrong. Please try again later'
+        });
+      });
   }
 
   render() {
@@ -41,9 +152,12 @@ export default class SignUp extends React.Component {
           <div className='column3' />
 
           <div className='signUpForm column6'>
-            <div className='errorMessage'>
-                <span class='text'>This is a sample error message</span>
-            </div>
+            { this.state.errorMessage ? (
+                <div className='errorMessage'>
+                    <span class='text'>{this.state.errorMessage}</span>
+                </div>
+              ) : ''
+            }
 
             <div className='column6'>
               <TextField
@@ -52,6 +166,7 @@ export default class SignUp extends React.Component {
                 hintText='Your'
                 lightTheme={true}
                 fullWidth={true}
+                onChange={this.handleFirstNameChange}
                 />
             </div>
             <div className='column6'>
@@ -61,6 +176,7 @@ export default class SignUp extends React.Component {
                 hintText='Name'
                 lightTheme={true}
                 fullWidth={true}
+                onChange={this.handleLastNameChange}
                 />
             </div>
             <div className='column12'>
@@ -71,6 +187,7 @@ export default class SignUp extends React.Component {
                 lightTheme={true}
                 type='email'
                 fullWidth={true}
+                onChange={this.handleEmailChange}
                 />
             </div>
             <div className='column6'>
@@ -81,6 +198,7 @@ export default class SignUp extends React.Component {
                 lightTheme={true}
                 type='password'
                 fullWidth={true}
+                onChange={this.handlePasswordChange}
                 />
             </div>
             <div className='column6'>
@@ -91,6 +209,7 @@ export default class SignUp extends React.Component {
                 lightTheme={true}
                 type='password'
                 fullWidth={true}
+                onChange={this.handleConfirmPasswordChange}
                 />
             </div>
 
@@ -110,3 +229,7 @@ export default class SignUp extends React.Component {
     );
   }
 }
+
+export default connect(
+  (state) => ({})
+)(SignUp)

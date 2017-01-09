@@ -2,18 +2,17 @@
 @import '../../../node_modules/leaguespot-components/src/constants/fonts';
 
 .rc-LogIn {
-  background-color: @lightBackgroundPrimary;
   margin: 0px;
   color: @darkTextPrimary;
   font-size: 1.25em;
   min-height: calc(~'100vh - 64px');
 
   .infoBanner {
-    background-color: darken(@lightBackgroundPrimary, 6%);
     padding-top: 2em;
     padding-bottom: 3em;
     padding-left: 10em;
     padding-right: 10em;
+    background-color: @lightBackgroundPrimary;
 
     a {
       color: @leaguespotGreenPrimary;
@@ -33,6 +32,7 @@
 
   .content {
     padding: 2em;
+    box-sizing: border-box;
 
     .signUpForm {
       .errorMessage {

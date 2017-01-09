@@ -1,27 +1,28 @@
 /**
  * This file provides basic javascript functions for retrieving data stored
- * in localStorage.
- *
+ * in localStorage. Used primarily for user sessions.
  */
 
-import Store from '../pages/Store';
+import store from '../pages/store';
 import jwtDecode from 'jwt-decode';
 import APIRequest from './APIRequest';
 let LeagueSpotSessionIdKey = 'LeagueSpot-active-user-session-id';
 
 
-function setLoggerInUser (sessionId, user) {
-  setSessionId(sessionId, decodedJWT);
-  Store.dispatch({
+function setLoggedInUser (sessionId, user) {
+  setSessionId(sessionId, user);
+  store.dispatch({
     type: 'SET_USER',
-    sessionId: sessionId,
-    user: user
+    payload: {
+      sessionId: sessionId,
+      user: user
+    }
   });
 }
 
 function removeLoggedInUser() {
   removeSessionId();
-  Store.dispatch({
+  store.dispatch({
     type: 'REMOVE_USER'
   });
 }
@@ -30,7 +31,7 @@ export function getSessionId () {
  return localStorage.getItem(LeagueSpotSessionIdKey);
 }
 
-export function setSessionId (sessionId, user) {
+export function setSessionId (sessionId) {
  localStorage.setItem(LeagueSpotSessionIdKey, sessionId);
 }
 
@@ -40,19 +41,18 @@ export function removeSessionId () {
 
 export function loggedIn() {
   let sessionId = localStorage.getItem(LeagueSpotSessionIdKey);
-
-  console.log('jason test', Store);
+  let UserState = store.getState().user;
 
   if( !sessionId ) {
     return false;
   }
-  // else if( UserStore.getLoggedIn() ) {
-  //   return true;
-  // }
+  else if( UserState && UserState.loggedIn ) {
+    return true;
+  }
   else {
     // If we have the token, we're logged in still (don't have expiry set). The
     // decoded JWT has all the user info in it, so can just pass that to the
-    // UserStore.
+    // store.
     let decodedJWT = jwtDecode(sessionId);
     setLoggedInUser(sessionId, decodedJWT);
 
