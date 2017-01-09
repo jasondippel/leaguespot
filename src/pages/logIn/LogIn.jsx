@@ -31,6 +31,7 @@ class LogIn extends React.Component {
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleLogIn = this.handleLogIn.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
   handleEmailChange(e) {
@@ -43,6 +44,12 @@ class LogIn extends React.Component {
     this.setState({
       password: e.target.value
     });
+  }
+
+  handleKeyDown(e) {
+    if (e.keyCode === 13) {
+      this.handleLogIn();
+    }
   }
 
   handleLogIn() {
@@ -67,8 +74,11 @@ class LogIn extends React.Component {
       }
     }).catch((error) => {
       console.error(error);
+
+      // TODO: Fix this once backend is fixed. Error message should be "Oops,
+      //       something went wrong. Please try again later"
       that.setState({
-        errorMessage: 'Oops, something went wrong. Please try again later'
+        errorMessage: 'Invalid email or password'
       });
     });
   }
@@ -114,6 +124,7 @@ class LogIn extends React.Component {
                 type='password'
                 fullWidth={true}
                 onChange={this.handlePasswordChange}
+                onKeyDown={this.handleKeyDown}
                 />
             </div>
 

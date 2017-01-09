@@ -1,18 +1,9 @@
 /**
  * Functions used to modify user object in store
  */
- import * as User from '../utils/PersistentUser';
 
+import * as User from '../utils/PersistentUser';
 
-export function fetchUser() {
-  return {
-    type: 'FETCH_USER_FULFILLED',
-    payload: {
-      name: 'Will',
-      email: 'test@test.ca'
-    }
-  }
-}
 
 export function setUser(sessionId, user) {
   User.setSessionId(sessionId);
@@ -26,6 +17,7 @@ export function setUser(sessionId, user) {
 }
 
 export function removeUser() {
+  User.removeSessionId();
   return {
     type: 'REMOVE_USER'
   }

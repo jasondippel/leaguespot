@@ -48,7 +48,6 @@ export default (
 
           <Route onEnter={requireNotAuth}>
             <Route path='sign-up' component={SignUp} />
-            <Route path='sign-out' component={SignOut} />
             <Route path='login' component={LogIn} />
           </Route>
         </Route>
@@ -60,6 +59,7 @@ export default (
         <Route path='/new-fantasy-league' component={NewFantasyLeague} />
         <Route path='/inbox' component={Inbox} />
         <Route path='/my-account' component={MyAccount} />
+        <Route path='/sign-out' component={SignOut} />
       </Route>
 
       <Route path='/404-page-not-found' component={ErrorPage404} />

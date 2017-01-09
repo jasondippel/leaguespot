@@ -4,10 +4,11 @@
 
 /* Script Dependencies */
 import React from 'react';
-import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import { removeUser } from '../../actions/UserActions';
 
 
-export default class SignOut extends React.Component {
+class SignOut extends React.Component {
   static contextTypes = {
     router: React.PropTypes.object.isRequired
   }
@@ -16,14 +17,16 @@ export default class SignOut extends React.Component {
     super();
   }
 
+  componentWillMount() {
+    this.handleSignOut();
+  }
+
   handleSignOut() {
-    // TODO: actually handle sign out
+    this.props.dispatch(removeUser());
     this.context.router.push('/');
   }
 
   render() {
-    this.handleSignOut();
-
     // This should never actually be shown
     return (
       <div className='rc-SignOut' style={{textAlign: 'center', paddingTop: '25vh'}}>
@@ -32,3 +35,7 @@ export default class SignOut extends React.Component {
     );
   }
 }
+
+export default connect(
+  (state) => ({})
+)(SignOut)

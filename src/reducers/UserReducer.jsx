@@ -13,31 +13,15 @@ const initialState = {
     state: null,
     city: null
   },
+  sessionId: null,
   loggedIn: false,
-  fetching: false,
-  fetched: false,
   error: null
 };
 
 export default function reducer(state = initialState, action) {
 
     switch (action.type) {
-      // case 'FETCH_USER': {
-      //   return {...state, fetching: true}
-      // }
-      // case 'FETCH_USER_REJECTED': {
-      //   return {...state, fetching: false, error: action.payload}
-      // }
-      // case 'FETCH_USER_FULFILLED': {
-      //   return {
-      //     ...state,
-      //     fetching: false,
-      //     fetched: true,
-      //     user: action.payload,
-      //   }
-      // }
       case 'SET_USER': {
-        console.log('jason test');
         return {
           ...state,
           sessionId: action.payload.sessionId,
@@ -54,13 +38,13 @@ export default function reducer(state = initialState, action) {
       case 'SET_USER_NAME': {
         return {
           ...state,
-          user: {...state.user, name: action.payload}
+          user: {...state.user, name: action.payload.name}
         }
       }
       case 'SET_USER_EMAIL': {
         return {
           ...state,
-          user: {...state.user, email: action.payload}
+          user: {...state.user, email: action.payload.email}
         }
       }
     }

@@ -36,6 +36,7 @@ export function setSessionId (sessionId) {
 }
 
 export function removeSessionId () {
+  console.log('remove session Id');
  localStorage.removeItem(LeagueSpotSessionIdKey);
 }
 
