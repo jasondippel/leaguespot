@@ -24,6 +24,15 @@ export default class FantasyLeagues extends React.Component {
       <div className='rc-FantasyLeagues'>
         <SmallBanner
           title='Fantasy Leagues'
+          showButton={true}
+          button={(
+            <Link to='/fantasy-leagues/new-fantasy-league'>
+              <RaisedButton
+                label='New League'
+                type='primary'
+                />
+            </Link>
+          )}
           />
 
         <div className='content'>

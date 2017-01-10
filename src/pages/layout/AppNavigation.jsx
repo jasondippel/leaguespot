@@ -60,8 +60,15 @@ class AppNavigation extends React.Component {
     );
   }
 
+  renderFantasyLeagues() {
+    return (
+      <span className='noLeagues'>No leagues</span>
+    );
+  }
+
   renderSideNav() {
-    console.log('location', this.props.location);
+    let leagueLinks = this.renderFantasyLeagues();
+
     return (
       <div className='sideNav'>
         <div className='top'>
@@ -79,11 +86,13 @@ class AppNavigation extends React.Component {
             <div className='text'>Fantasy Leagues</div>
             <div className='arrow'></div>
           </Link>
-          <div className='subNav'>
-            <Link className='item' activeClassName="active">League 1</Link>
-            <Link className='item' activeClassName="active">League 2</Link>
-            <Link className='item' activeClassName="active">League 3</Link>
-          </div>
+          {
+            this.props.location.pathname.startsWith('/fantasy-leagues') ? (
+              <div className='subNav'>
+                { leagueLinks }
+              </div>
+            ) : ''
+          }
           <Link className='item' activeClassName="active" to='/inbox'>
             <div className='icon'>
               <Icon type='chat' paddingLeft='0' paddingRight='0.25em'/>
@@ -133,7 +142,7 @@ class AppNavigation extends React.Component {
 
         <div className='container'>
           {sideNav}
-          <div className='content'>
+          <div className='main-content'>
             {this.props.children}
           </div>
         </div>

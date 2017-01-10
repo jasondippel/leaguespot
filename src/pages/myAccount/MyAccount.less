@@ -1,8 +1,50 @@
 @import '../../../node_modules/leaguespot-components/src/constants/colours';
 @import '../../../node_modules/leaguespot-components/src/constants/fonts';
 
+.passwordPopupContent,
+.editPopupContent {
+  .errorMessage {
+    color: @danger;
+    font-size: 0.9em;
+  }
+}
+
 .rc-MyAccount {
   .content {
     padding: 1em;
+
+    .accountCircle {
+      text-align: center;
+      svg {
+        height: 100 !important;
+      }
+    }
+
+    .generalInfo {
+      padding-top: 18px;
+      margin-right: 2em;
+      display: inline-block;
+
+      .userName {
+        font-size: 2em;
+      }
+      .email {
+        color: @lightTextSecondary;
+      }
+    }
+
+    .editButton {
+      padding-top: 24px;
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .passwordButton {
+      padding-top: 1em;
+
+      .rc-FlatButton {
+        margin-left: 0;
+      }
+    }
   }
 }

@@ -7,18 +7,36 @@ import './SmallBanner.less';
 
 /* Script Dependencies */
 import React from 'react';
+import { Link } from 'react-router';
+import RaisedButton from '../../leaguespot-components/components/buttons/RaisedButton';
 
 export default class SmallBanner extends React.Component {
   constructor() {
     super();
   }
 
+  renderButton() {
+    if (!this.props.showButton) {
+      return;
+    }
+
+    return (
+      <div className='buttons'>
+        { this.props.button }
+      </div>
+    )
+  }
+
   render() {
+    let button = this.renderButton();
+
     return (
       <div className='rc-SmallBanner'>
         <div className='title'>
           {this.props.title}
         </div>
+
+        { button }
       </div>
     );
   }
@@ -30,8 +48,10 @@ const {any, bool, func, number, string} = React.PropTypes;
 
 SmallBanner.propTypes = {
   title: string,
-  backgroundImage: string
+  backgroundImage: string,
+  showButton: bool,
 };
 
 SmallBanner.defaultProps = {
+  showButton: false
 };

@@ -8,6 +8,7 @@ import './Icon.less';
 /* Script Dependencies */
 import React from 'react';
 import _ from 'underscore';
+import AccountBox from 'material-ui/svg-icons/action/account-box';
 import AccountCircle from 'material-ui/svg-icons/action/account-circle';
 import Add from 'material-ui/svg-icons/content/add';
 import Announcement from 'material-ui/svg-icons/action/announcement';
@@ -31,68 +32,83 @@ export default class Icon extends React.Component {
 
   renderIcon() {
     let icon;
+    let style = {};
+
+    if(this.props.height) {
+      style['height'] = this.props.height;
+    }
+    if(this.props.width) {
+      style['width'] = this.props.width;
+    }
 
     switch (this.props.type) {
+      case 'account-box':
+        icon = (
+          <span>
+            <AccountBox style={style} color={this.props.color} hoverColor={this.props.hoverColor} />
+          </span>
+        );
+        break;
       case 'account-circle':
         icon = (
           <span>
-            <AccountCircle color={this.props.color} hoverColor={this.props.hoverColor} />
+            <AccountCircle style={style} color={this.props.color} hoverColor={this.props.hoverColor} />
           </span>
         );
         break;
       case 'add':
         icon = (
           <span>
-            <Add color={this.props.color} hoverColor={this.props.hoverColor} />
+            <Add style={style} color={this.props.color} hoverColor={this.props.hoverColor} />
           </span>
         );
         break;
       case 'announcement':
         icon = (
           <span>
-            <Announcement color={this.props.color} hoverColor={this.props.hoverColor} />
+            <Announcement style={style} color={this.props.color} hoverColor={this.props.hoverColor} />
           </span>
         );
         break;
       case 'arrow-back':
         icon = (
           <span>
-            <ArrowBack color={this.props.color} hoverColor={this.props.hoverColor} />
+            <ArrowBack style={style} color={this.props.color} hoverColor={this.props.hoverColor} />
           </span>
         );
         break;
       case 'chat':
         icon = (
           <span>
-            <Chat color={this.props.color} hoverColor={this.props.hoverColor} />
+            <Chat style={style} color={this.props.color} hoverColor={this.props.hoverColor} />
           </span>
         );
         break;
       case 'check-circle':
         icon = (
           <span>
-            <CheckCircle color={this.props.color} hoverColor={this.props.hoverColor} />
+            <CheckCircle style={style} color={this.props.color} hoverColor={this.props.hoverColor} />
           </span>
         );
         break;
       case 'dashboard':
         icon = (
           <span>
-            <Dashboard color={this.props.color} hoverColor={this.props.hoverColor} />
+            <Dashboard style={style} color={this.props.color} hoverColor={this.props.hoverColor} />
           </span>
         );
         break;
       case 'error-circle':
         icon = (
           <span>
-            <ErrorCircle color={this.props.color} hoverColor={this.props.hoverColor} />
+            <ErrorCircle style={style} color={this.props.color} hoverColor={this.props.hoverColor} />
           </span>
         );
         break;
       case 'group':
         icon = (
           <span>
-            <Group color={this.props.color} hoverColor={this.props.hoverColor} />
+            <Group style={style} color={this.props.color} hoverColor={this.props.hoverColor} />
           </span>
         );
         break;

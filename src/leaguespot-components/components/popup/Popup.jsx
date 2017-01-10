@@ -136,7 +136,7 @@ const {any, array, bool, func, number, string} = React.PropTypes;
 
 Popup.propTypes = {
   open: bool.isRequired,
-  message: string.isRequired,
+  message: any.isRequired,
   title: string,
   buttons: array,
   type: React.PropTypes.oneOf(['SUCCESS', 'ERROR', 'CONFIRM', 'DEFAULT']),

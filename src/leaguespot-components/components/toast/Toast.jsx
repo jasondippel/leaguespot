@@ -78,7 +78,7 @@ export default class Toast extends React.Component {
             message={contents}
             autoHideDuration={6000}
             onRequestClose={this.handleRequestClose}
-            className='container'
+            className='rc-Toast-container'
           />
         </div>
       </MuiThemeProvider>
@@ -93,10 +93,11 @@ const {any, bool, func, number, string} = React.PropTypes;
 Toast.propTypes = {
   open: bool.isRequired,
   message: string.isRequired,
-  type: React.PropTypes.oneOf(['SUCCESS', 'ERROR', 'DEFAULT']),
+  type: React.PropTypes.oneOf(['SUCCESS', 'ERROR', 'DEFAULT', '', undefined]),
   onClose: func.isRequired
 };
 
 Toast.defaultProps = {
-  open: false
+  open: false,
+  type: 'DEFAULT'
 };

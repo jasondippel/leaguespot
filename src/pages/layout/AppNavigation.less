@@ -94,10 +94,15 @@
       vertical-align: top;
 
       .subNav {
-        background-color: lighten(@darkBackgroundContainer, 8%);
+        background-color: lighten(@darkBackgroundContainer, 10%);
         padding-bottom: 0.5em;
         padding-top: 0.25em;
-        display: none;
+
+        .noLeagues {
+          padding-left: 2em;
+          font-style: italic;
+          font-size: 0.9em;
+        }
 
         a.item {
           padding-left: 2em;
@@ -192,11 +197,11 @@
       }
     }
 
-    .content {
+    .main-content {
       background-color: @lightBackgroundPrimary;
       color: @darkTextPrimary;
       display: inline-block;
-      min-height: calc(~'100vh - 36.6px - 170px');
+      min-height: calc(~'100vh - 36.6px');
       max-height: calc(~'100vh - 36.6px');
       min-width: calc(~'100% - 150px');
       box-sizing: border-box;
