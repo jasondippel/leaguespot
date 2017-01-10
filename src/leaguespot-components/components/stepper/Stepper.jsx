@@ -63,7 +63,7 @@ export default class LsStepper extends React.Component {
               {this.renderSteps()}
             </Stepper>
           </div>
-          <div className='content'>
+          <div className='rc-Stepper-Content'>
             {this.renderStepContent()}
           </div>
           <div className='buttons'>
@@ -89,7 +89,7 @@ LsStepper.displayName = 'Stepper';
 const {any, array, bool, func, number, string} = React.PropTypes;
 
 LsStepper.propTypes = {
-  currentStep: number.isRequired,   // NOTE: steps should be 1 indexed
+  currentStep: number.isRequired,   // NOTE: steps should be 0 indexed
   getStepContent: func.isRequired,
   handleNext: func.isRequired,
   handlePrev: func.isRequired,
