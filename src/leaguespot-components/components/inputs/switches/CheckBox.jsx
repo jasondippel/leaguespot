@@ -9,6 +9,7 @@ import './CheckBox.less';
 import React from 'react';
 import MuiCheckBox from 'material-ui/Checkbox';
 import _ from 'underscore';
+import colours from '../../../constants/colours';
 
 /* Material UI Theme */
 import LightTheme from '../../../constants/LightTheme';
@@ -49,10 +50,22 @@ export default class CheckBox extends React.Component {
     checkBoxProps.onCheck = this.handleChange;
     checkBoxProps.checked = this.state.checked;
     checkBoxProps.disableTouchRipple = true;    // removes ripple effect used by Material UI
+    checkBoxProps.iconStyle = {
+      color: colours.darkTextSecondary,
+      borderColor: colours.darkTextSecondary
+    }
+
+    let styles = {};
+    if (this.props.marginRight) {
+      styles['marginRight'] = this.props.marginRight;
+    }
+    if (this.props.marginLeft) {
+      styles['marginLeft'] = this.props.marginLeft;
+    }
 
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(LightTheme)}>
-        <div className='rc-CheckBox'>
+        <div className='rc-CheckBox' style={styles}>
           <MuiCheckBox {...checkBoxProps} />
         </div>
       </MuiThemeProvider>
@@ -73,11 +86,14 @@ CheckBox.propTypes = {
     'left',
     'right',
   ]),
-  onChange: func
+  onChange: func,
+  marginRight: string,
+  marginLeft: string
 };
 
 CheckBox.defaultProps = {
   checked: false,
   labelPosition: 'right',
+  marginRight: '1.25em',
   onChange: () => {}
 };

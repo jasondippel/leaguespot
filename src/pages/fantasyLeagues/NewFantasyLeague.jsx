@@ -12,7 +12,9 @@ import FlatButton from '../../leaguespot-components/components/buttons/FlatButto
 import RaisedButton from '../../leaguespot-components/components/buttons/RaisedButton';
 import Stepper from '../../leaguespot-components/components/stepper/Stepper';
 import Section from '../../leaguespot-components/components/containers/Section';
+import Option from '../../leaguespot-components/components/inputs/selectors/Option';
 import SmallBanner from '../../components/banners/SmallBanner';
+import * as leagueInfo from '../../utils/ProLeagues';
 
 /* Steps */
 import SetupBasics from './NewFantasyLeagueSteps/SetupBasics';
@@ -31,7 +33,12 @@ export default class NewFantasyLeague extends React.Component {
           'Setup league basics',
           'Modify league rules',
           'Invite users'
-        ]
+        ],
+        fantasyLeague: {
+          name: '',
+          sport: '',
+          proLeagues: []
+        }
       }
     };
 
@@ -45,7 +52,12 @@ export default class NewFantasyLeague extends React.Component {
 
     switch (this.state.stepper.currentStep) {
       case 0:
-        stepContent = ( <SetupBasics /> );
+        let sportsOptions = this.renderSportOptions();
+        stepContent = (
+          <SetupBasics
+            sportsOptions={sportsOptions}
+            />
+        );
         break;
       case 1:
         stepContent = ( <ModifySettings /> );
@@ -68,7 +80,7 @@ export default class NewFantasyLeague extends React.Component {
   }
 
   handleNext() {
-    if(this.state.stepper.currentStep === 2) {
+    if (this.state.stepper.currentStep === this.state.stepper.stepNames.length) {
       alert('You\'re at the final step already!');
     } else {
       this.setState({
@@ -78,13 +90,26 @@ export default class NewFantasyLeague extends React.Component {
   }
 
   handlePrev() {
-    if(this.state.stepper.currentStep === 0) {
+    if (this.state.stepper.currentStep === 0) {
       alert('You\'re at the first step already!');
     } else {
       this.setState({
         stepper: {...this.state.stepper, currentStep: this.state.stepper.currentStep - 1}
       });
     }
+  }
+
+  renderSportOptions() {
+    let sports = leagueInfo.getSports();
+    let sportsItems = [];
+
+    sportsItems = sports.map((sport, key) => {
+      return (
+        <Option key={key} value={sport} primaryText={sport} />
+      );
+    });
+
+    return sportsItems;
   }
 
   render() {

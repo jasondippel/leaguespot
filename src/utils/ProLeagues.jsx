@@ -4,20 +4,34 @@
  *
  */
 
-const sports = ['Basketball'];
+const sports = ['Basketball', 'Hockey'];
 
 const proLeaguesInSport = {
-  Basketball: ['nba', 'wnba', 'ncaambd1']
+  Basketball: ['nba', 'wnba', 'ncaambd1'],
+  Hockey: ['nhl', 'ohl', 'nwhl']
 }
 
 const rosterSizeBySport = {
-  Basketball: 15
+  Basketball: 15,
+  Hockey: 20
 }
 
 const leagueNames = {
   nba: 'NBA',
   wnba: 'WNBA',
-  ncaambd1: 'NCAA MB'
+  ncaambd1: 'NCAA MB',
+  nhl: 'NHL',
+  ohl: 'OHL',
+  nwhl: 'NWHL'
+}
+
+const fullLeagueNames = {
+  nba: 'National Basketball Association',
+  wnba: 'Womens National Basketball Association',
+  ncaambd1: 'NCAA Mens Basketball',
+  nhl: 'National Hockey League',
+  ohl: 'Ontario Hockey League',
+  nwhl: 'National Womens Hockey League'
 }
 
 

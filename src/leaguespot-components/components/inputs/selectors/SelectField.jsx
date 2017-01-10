@@ -9,6 +9,7 @@ import './SelectField.less';
 import React from 'react';
 import MuiSelectField from 'material-ui/SelectField';
 import _ from 'underscore';
+import colours from '../../../constants/colours';
 
 /* Material UI Theme */
 import LightTheme from '../../../constants/LightTheme';
@@ -44,10 +45,14 @@ export default class SelectField extends React.Component {
   }
 
   render() {
-    const selectFieldProps = _.pick(this.props, 'disabled', 'errorText', 'floatingLabelFixed', 'floatingLabelText',' fullWidth', 'hintText', 'id', 'onChange');
+    const selectFieldProps = _.pick(this.props, 'disabled', 'errorText', 'floatingLabelFixed', 'floatingLabelText',' fullWidth', 'hintText', 'id', 'onChange', 'selectedMenuItemStyle');
 
     selectFieldProps.onChange = this.handleChange;
     selectFieldProps.value = this.state.value;
+    selectFieldProps.selectedMenuItemStyle = {
+      ...selectFieldProps.selectedMenuItemStyle,
+      color: colours.leaguespotGreenPrimary
+    };
 
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(LightTheme)}>
