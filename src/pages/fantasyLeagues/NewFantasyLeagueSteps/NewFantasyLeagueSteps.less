@@ -8,11 +8,51 @@
         margin-top: 1em;
 
         .proLeaguesTitle {
-          margin-top: 1.1em;
+          margin-top: 1.5em;
           margin-bottom: 0.3em;
           color: rgb(170, 170, 170);
           transform-origin: left top 0px;
           transform: scale(0.86);
+        }
+
+        .geosuggest__input-wrapper {
+          .geosuggest__input {
+            // width: 100%;
+            display: inline-block;
+          }
+        }
+
+        .geosuggest__suggests-wrapper {
+          display: inline-block;
+
+          .geosuggest__suggests--hidden {
+            max-height: 0;
+            overflow: hidden;
+            border-width: 0;
+          }
+
+          .geosuggest__suggests {
+            list-style: none;
+            list-style-type: none;
+            padding-left: 0;
+            background-color: lighten(@lightBackgroundSecondary, 10%);
+            box-shadow: 0px 0px 3px 0px rgba(174,174,174,0.9);
+
+            .geosuggest__item {
+              cursor: pointer;
+              padding: 0.5em;
+
+              &:hover {
+                background-color: lighten(@lightBackgroundSecondary, 2%);;
+              }
+            }
+
+            .geosuggest__item--active {
+              color: @leaguespotGreenPrimary;
+            }
+
+          }
+
         }
       }
     }

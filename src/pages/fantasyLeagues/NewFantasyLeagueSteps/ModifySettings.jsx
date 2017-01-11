@@ -7,6 +7,7 @@ import './NewFantasyLeagueSteps.less';
 
 /* Script Dependencies */
 import React from 'react';
+import Geosuggest from 'react-geosuggest';
 import Section from '../../../leaguespot-components/components/containers/Section';
 import TextField from '../../../leaguespot-components/components/inputs/text/TextField';
 import SmallBanner from '../../../components/banners/SmallBanner';
@@ -21,11 +22,23 @@ export default class ModifySettings extends React.Component {
     };
   }
 
+  onSuggestSelect(location) {
+    console.log('selected location:', location);
+  }
+
   render() {
     return (
       <div className='stepContent'>
         <Section>
-          Modify settings content...
+          <p>
+            draft cutoff, roster size, league hometown
+          </p>
+
+          <Geosuggest
+            onSuggestSelect={this.onSuggestSelect}
+            types={['(cities)']}
+            />
+
         </Section>
       </div>
     );

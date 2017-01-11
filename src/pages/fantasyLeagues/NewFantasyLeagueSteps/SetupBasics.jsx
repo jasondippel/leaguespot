@@ -11,7 +11,6 @@ import Section from '../../../leaguespot-components/components/containers/Sectio
 import TextField from '../../../leaguespot-components/components/inputs/text/TextField';
 import SmallBanner from '../../../components/banners/SmallBanner';
 import SelectField from '../../../leaguespot-components/components/inputs/selectors/SelectField';
-
 import CheckBox from '../../../leaguespot-components/components/inputs/switches/CheckBox';
 
 export default class SetupBasics extends React.Component {
@@ -22,6 +21,7 @@ export default class SetupBasics extends React.Component {
   render() {
     return (
       <div className='stepContent'>
+        <Section>
           <div className='column6'>
             <TextField
               floatingLabelFixed={true}
@@ -31,7 +31,7 @@ export default class SetupBasics extends React.Component {
               />
           </div>
           <div className='column6'></div>
-          <div className='column12'>
+          <div className='column4'>
             <SelectField
               items={this.props.sportsOptions}
               hintText='Select a sport...'
@@ -39,7 +39,7 @@ export default class SetupBasics extends React.Component {
               floatingLabelText='Sport'
               />
           </div>
-          <div className='column12'>
+          <div className='column8'>
             <div className='proLeaguesTitle'>
               Professional Leagues
             </div>
@@ -47,6 +47,7 @@ export default class SetupBasics extends React.Component {
             <CheckBox label='OHL' checked={true} />
             <CheckBox label='NWHL' checked={true} />
           </div>
+        </Section>
       </div>
     );
   }
