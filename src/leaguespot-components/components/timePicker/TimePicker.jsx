@@ -39,6 +39,8 @@ export default class TimePicker extends React.Component {
             format='ampm'
             hintText={this.props.hintText}
             onChange={this.handleChange}
+            floatingLabelFixed={this.props.floatingLabelFixed}
+            floatingLabelText={this.props.floatingLabelText}
           />
         </div>
       </MuiThemeProvider>

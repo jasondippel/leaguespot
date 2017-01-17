@@ -15,12 +15,6 @@ import LightTheme from '../../../constants/LightTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-/* The following import and function call is needed to surpress a warning
- * from MaterialUI
- */
-import injectTapEventPlugin from 'react-tap-event-plugin';
-injectTapEventPlugin();
-
 
 export default class TextField extends React.Component {
   constructor(props) {

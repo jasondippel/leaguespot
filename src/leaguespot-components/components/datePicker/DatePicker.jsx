@@ -41,6 +41,8 @@ export default class DatePicker extends React.Component {
             locale='en-US'
             minDate={this.props.minDate}
             mode='landscape'
+            floatingLabelFixed={this.props.floatingLabelFixed}
+            floatingLabelText={this.props.floatingLabelText}
             />
         </div>
       </MuiThemeProvider>
