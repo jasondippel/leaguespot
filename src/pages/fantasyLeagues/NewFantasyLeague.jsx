@@ -80,7 +80,7 @@ export default class NewFantasyLeague extends React.Component {
   }
 
   handleNext() {
-    if (this.state.stepper.currentStep === this.state.stepper.stepNames.length) {
+    if (this.state.stepper.currentStep === this.state.stepper.stepNames.length - 1) {
       alert('You\'re at the final step already!');
     } else {
       this.setState({
