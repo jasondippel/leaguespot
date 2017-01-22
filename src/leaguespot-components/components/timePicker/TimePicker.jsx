@@ -25,7 +25,7 @@ export default class TimePicker extends React.Component {
   }
 
   handleChange(e, date) {
-    this.props.onChange();
+    this.props.onChange(date);
   }
 
   render() {
@@ -41,6 +41,7 @@ export default class TimePicker extends React.Component {
             onChange={this.handleChange}
             floatingLabelFixed={this.props.floatingLabelFixed}
             floatingLabelText={this.props.floatingLabelText}
+            value={this.props.value}
           />
         </div>
       </MuiThemeProvider>
@@ -55,11 +56,13 @@ const {any, array, bool, func, number, object, string} = React.PropTypes;
 TimePicker.propTypes = {
   disabled: bool,
   hintText: string,
-  onChange: func
+  onChange: func,
+  value: any
 };
 
 TimePicker.defaultProps = {
   disabled: false,
   hintText: 'Choose a time...',
-  onChange: () => {}
+  onChange: () => {},
+  value: undefined
 };

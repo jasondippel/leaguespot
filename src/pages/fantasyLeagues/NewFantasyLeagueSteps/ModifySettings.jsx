@@ -19,16 +19,16 @@ export default class ModifySettings extends React.Component {
   constructor() {
     super();
 
-    this.state = {
-
-    };
+    this.onSuggestSelect = this.onSuggestSelect.bind(this);
   }
 
   onSuggestSelect(location) {
-    console.log('selected location:', location);
+    this.props.handleHometownChange(location.label);
   }
 
   render() {
+    console.log('hometown: ', this.props.hometown);
+
     return (
       <div className='stepContent'>
         <Section>
@@ -41,12 +41,16 @@ export default class ModifySettings extends React.Component {
               <DatePicker
                 floatingLabelFixed={true}
                 floatingLabelText='Cutoff date'
+                value={this.props.cutOffDate}
+                onChange={this.props.handleCutOffDateChange}
                 />
             </div>
             <div className='column6'>
               <TimePicker
                 floatingLabelFixed={true}
                 floatingLabelText='Cutoff time'
+                value={this.props.cutOffDate}
+                onChange={this.props.handleCutoffTimeChange}
                 />
             </div>
           </div>
@@ -59,6 +63,8 @@ export default class ModifySettings extends React.Component {
               floatingLabelFixed={true}
               floatingLabelText='Max roster size'
               hintText='name'
+              value={this.props.maxRosterSize}
+              onChange={this.props.handleMaxRosterSizeChange}
               />
           </div>
           <div className='column12 dataSection'>
@@ -71,6 +77,8 @@ export default class ModifySettings extends React.Component {
               floatingLabelText='Hometown'
               onSuggestSelect={this.onSuggestSelect}
               types={['(cities)']}
+              initialValue={this.props.hometown}
+              value={this.props.hometown}
               />
           </div>
 

@@ -41,7 +41,7 @@ export default class SelectField extends React.Component {
       value: value
     });
 
-    this.props.onChange();
+    this.props.onChange(event, index, value);
   }
 
   render() {

@@ -25,7 +25,8 @@ export default class DatePicker extends React.Component {
   }
 
   handleChange(e, date) {
-    this.props.onChange();
+    console.log('handle change');
+    this.props.onChange(date);
   }
 
   render() {
@@ -41,8 +42,10 @@ export default class DatePicker extends React.Component {
             locale='en-US'
             minDate={this.props.minDate}
             mode='landscape'
+            onChange={this.handleChange}
             floatingLabelFixed={this.props.floatingLabelFixed}
             floatingLabelText={this.props.floatingLabelText}
+            value={this.props.value}
             />
         </div>
       </MuiThemeProvider>
@@ -58,12 +61,14 @@ DatePicker.propTypes = {
   disabled: bool,
   hintText: string,
   minDate: object,
-  onChange: func
+  onChange: func,
+  value: any
 };
 
 DatePicker.defaultProps = {
   disabled: false,
   hintText: 'Choose a date...',
   minDate: new Date(),
-  onChange: () => {}
+  onChange: () => {},
+  value: undefined
 };

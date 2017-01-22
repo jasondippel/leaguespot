@@ -65,7 +65,7 @@ TextField.propTypes = {
   onKeyDown: func,
   type: string,                     // All input types; 'text', 'email', etc.
   underlineShow: bool,
-  value: string
+  value: any
 };
 
 TextField.defaultProps = {

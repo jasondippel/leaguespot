@@ -117,8 +117,6 @@ class Input extends React.Component {
         this.props.className
       );
 
-      console.log('jason test', this.props.floatingLabelText);
-
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(LightTheme)}>
         <TextField

@@ -8,12 +8,22 @@ const sports = ['Basketball', 'Hockey'];
 
 const proLeaguesInSport = {
   Basketball: ['nba', 'wnba', 'ncaambd1'],
-  Hockey: ['nhl', 'ohl', 'nwhl']
+  Hockey: ['nhl', 'ohl', 'qmjhl', 'whl', 'nwhl', 'cwhl']
 }
 
-const rosterSizeBySport = {
+const maxRosterSizeBySport = {
   Basketball: 15,
-  Hockey: 20
+  Hockey: 23
+}
+
+const minRosterSizeBySport = {
+  BasketBall: 5,
+  Hockey: 5
+}
+
+const activeRosterSizeBySport = {
+  BasketBall: 5,
+  Hockey: 6
 }
 
 const leagueNames = {
@@ -22,6 +32,9 @@ const leagueNames = {
   ncaambd1: 'NCAA MB',
   nhl: 'NHL',
   ohl: 'OHL',
+  qmjhl: 'QMJHL',
+  whl: 'WHL',
+  cwhl: 'CWHL',
   nwhl: 'NWHL'
 }
 
@@ -31,7 +44,10 @@ const fullLeagueNames = {
   ncaambd1: 'NCAA Mens Basketball',
   nhl: 'National Hockey League',
   ohl: 'Ontario Hockey League',
-  nwhl: 'National Womens Hockey League'
+  qmjhl: 'Quebec Major Junior Hockey League',
+  whl: 'Western Hockey League',
+  nwhl: 'National Womens Hockey League',
+  cwhl: 'Canadian Womens Hockey League'
 }
 
 
@@ -40,7 +56,10 @@ export function getSports() {
 }
 
 export function getLeaguesInSport(sport) {
-  if(proLeaguesInSport[sport]) return proLeaguesInSport[sport];
+  if (proLeaguesInSport[sport]) {
+    // return SHALLOW COPY of array
+    return proLeaguesInSport[sport].slice(0);
+  }
 
   console.error('Error: cannot find sport \"' + sport + '\" in list of sports');
   return [];
@@ -50,9 +69,16 @@ export function getLeagueName(leagueId) {
   return leagueNames[leagueId];
 }
 
-export function getRosterSize(sport) {
-  if(rosterSizeBySport[sport]) return rosterSizeBySport[sport];
+export function getMaxRosterSize(sport) {
+  if(maxRosterSizeBySport[sport]) return maxRosterSizeBySport[sport];
 
-  console.error('Error: roster size not defined for ' + sport);
+  console.error('Error: max roster size not defined for ' + sport);
+  return 0;
+}
+
+export function getMinRosterSize(sport) {
+  if(minRosterSizeBySport[sport]) return minRosterSizeBySport[sport];
+
+  console.error('Error: min roster size not defined for ' + sport);
   return 0;
 }

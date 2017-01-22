@@ -20,7 +20,6 @@ export default class InviteUsers extends React.Component {
     super();
 
     this.state = {
-      userEmails: [],
       currentEmail: '',
       inputError: undefined
     };
@@ -45,22 +44,15 @@ export default class InviteUsers extends React.Component {
       return;
     }
 
-    let emails = this.state.userEmails;
-    emails.push(this.state.currentEmail);
-
+    this.props.addEmailAddress(this.state.currentEmail);
     this.setState({
-      userEmails: emails,
       currentEmail: '',
       inputError: undefined
     });
   }
 
   removeEmailAddress(index) {
-    let emails = this.state.userEmails;
-    emails.splice(index, 1);
-    this.setState({
-      userEmails: emails
-    });
+    this.props.removeEmailAddress(index);
   }
 
   handleKeyDown(e) {
@@ -72,7 +64,7 @@ export default class InviteUsers extends React.Component {
   renderChip(email, index) {
     return (
       <Chip
-        chipKey={index}
+        key={index}
         onRequestDelete={() => this.removeEmailAddress(index)}
       >
         {email}
@@ -95,7 +87,7 @@ export default class InviteUsers extends React.Component {
         <Section>
           <p>Enter the emails of users you would like to include in your league. If an email you entered does not currently have an account, we will send them an email.</p>
           <div className='existingEmails'>
-            {this.state.userEmails.map(this.renderChip, this)}
+            {this.props.userEmails.map(this.renderChip, this)}
           </div>
 
           <div className='column4'>

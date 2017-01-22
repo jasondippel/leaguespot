@@ -152,7 +152,6 @@ class MyAccount extends React.Component {
   }
 
   handleSaveEditPopup() {
-    console.log('jason test');
     if (this.state.modifiedUser.first_name === '') {
       this.setState({
         errorMessage: 'You must have a first name'

@@ -45,7 +45,7 @@ export default class CheckBox extends React.Component {
   }
 
   render() {
-    const checkBoxProps = _.pick(this.props, 'checkedIcon', 'disabled', 'label', 'labelPosition');
+    const checkBoxProps = _.pick(this.props, 'checkedIcon', 'disabled', 'label', 'labelPosition', 'value');
 
     checkBoxProps.onCheck = this.handleChange;
     checkBoxProps.checked = this.state.checked;
@@ -88,7 +88,8 @@ CheckBox.propTypes = {
   ]),
   onChange: func,
   marginRight: string,
-  marginLeft: string
+  marginLeft: string,
+  value: any
 };
 
 CheckBox.defaultProps = {
