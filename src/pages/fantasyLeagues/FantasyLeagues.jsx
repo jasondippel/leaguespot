@@ -21,6 +21,10 @@ class FantasyLeagues extends React.Component {
   constructor() {
     super();
 
+    this.state = {
+      fantasyLeague: null
+    }
+
     store.subscribe(() => {
       this.setState({
         fantasyLeague: store.getState().fantasyLeague
@@ -34,11 +38,70 @@ class FantasyLeagues extends React.Component {
     this.props.dispatch(fetchMyFantasyLeagues());
   }
 
+  getBackgroundImageLink(sport) {
+    switch (sport) {
+      case 'Basketball':{
+        return 'src/img/basketball_court.jpg'
+      }
+      case 'Hockey': {
+        return 'src/img/hockey_rink.jpg';
+      }
+      default:
+        return 'src/img/stadium-bw.jpg';
+    }
+  }
+
+  renderFantasyLeagueCard(fantasyLeague, key) {
+    let imageLink = this.getBackgroundImageLink(fantasyLeague.sport);
+
+    return (
+      <div className='card column4' key={key}>
+        <div className='rc-FantasyLeagueCard'>
+          <div className='banner'>
+            <img className='bannerImage' src={imageLink} />
+            <span className='title'>{fantasyLeague.fleague_name}</span>
+            <div className='buttons'>
+              <RaisedButton
+                label='Enter'
+                shaddow={true}
+                />
+            </div>
+          </div>
+
+          <div className='content'>
+            <div className='column6'>
+              <span className='title'>Sport: </span>{fantasyLeague.sport}
+            </div>
+            <div className='column6'>
+              <span className='title'>Status: </span><span className={fantasyLeague.status + ' status'}>{fantasyLeague.status}</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    );
+  }
+
   render() {
+    // this.state.fantasyLeague.myFantasyLeagues.map(this.renderFantasyLeagueCard, this)
+    let fantasyLeagueCards;
+    if (!this.state.fantasyLeague || this.state.fantasyLeague.isLoading) {
+      fantasyLeagueCards = (
+        <div>
+          Loading...
+        </div>
+      )
+    } else {
+      fantasyLeagueCards = (
+        <div>
+          {this.state.fantasyLeague.myFantasyLeagues.map(this.renderFantasyLeagueCard, this)}
+        </div>
+      );
+    }
     return (
       <div className='rc-FantasyLeagues'>
         <SmallBanner
-          title='Fantasy Leagues'
+          title='My Fantasy Leagues'
           showButton={true}
           button={(
             <Link to='/fantasy-leagues/new-fantasy-league'>
@@ -51,7 +114,7 @@ class FantasyLeagues extends React.Component {
           />
 
         <div className='content'>
-          list of my leagues (cards: name, teams, position, image)<br/>
+          { fantasyLeagueCards }
         </div>
       </div>
     );

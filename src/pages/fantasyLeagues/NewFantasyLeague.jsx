@@ -391,7 +391,6 @@ class NewFantasyLeague extends React.Component {
     }).then((resp) => {
       if (resp.success) {
         // send invites
-        console.log('jason test');
         this.sendInvites(resp.league.fleague_id);
 
         resp.league.invited_users = this.state.fantasyLeague.userEmails;
