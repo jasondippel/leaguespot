@@ -85,7 +85,6 @@ class FantasyLeagues extends React.Component {
   }
 
   render() {
-    // this.state.fantasyLeague.myFantasyLeagues.map(this.renderFantasyLeagueCard, this)
     let fantasyLeagueCards;
     if (!this.state.fantasyLeague || this.state.fantasyLeague.isLoading) {
       fantasyLeagueCards = (
@@ -106,6 +105,7 @@ class FantasyLeagues extends React.Component {
         </div>
       );
     }
+
     return (
       <div className='rc-FantasyLeagues'>
         <SmallBanner

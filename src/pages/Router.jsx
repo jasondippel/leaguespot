@@ -19,6 +19,7 @@ import LogIn from './logIn/LogIn';
 import Dashboard from './dashboard/Dashboard';
 import FantasyLeagues from './fantasyLeagues/FantasyLeagues';
 import NewFantasyLeague from './fantasyLeagues/NewFantasyLeague';
+import FantasyLeagueDashboard from './fantasyLeagues/fantasyLeague/Dashboard';
 import Inbox from './inbox/Inbox';
 import MyAccount from './myAccount/MyAccount';
 import SignOut from './signOut/SignOut';
@@ -65,6 +66,7 @@ export default (
           <Route path='/fantasy-leagues' >
             <IndexRoute component={FantasyLeagues} />
             <Route path='/fantasy-leagues/new-fantasy-league' component={NewFantasyLeague} />
+            <Route path='/fantasy-leagues/:id' component={FantasyLeagueDashboard} />
           </Route>
           <Route path='/inbox' component={Inbox} />
           <Route path='/my-account' component={MyAccount} />

@@ -18,7 +18,8 @@ const initialState = {
     status: null,
     settings: {},
     users: {},
-    invited_users: {}
+    invited_users: {},
+    fantasy_teams: []
   },
   loading: false,
   errorMessage: null
@@ -41,6 +42,22 @@ export default function reducer(state = initialState, action) {
           ...state,
           loading: false,
           myFantasyLeagues: action.payload.myFantasyLeagues,
+        }
+      }
+      case 'FETCH_ACTIVE_FANTASY_LEAGUE': {
+        return {...state, loading: true}
+      }
+      case 'FETCH_ACTIVE_FANTASY_LEAGUE_REJECTED': {
+        return {...state, loading: false, errorMessage: action.payload.errorMessage}
+      }
+      case 'FETCH_ACTIVE_FANTASY_LEAGUE_ERROR': {
+        return {...state, loading: false, errorMessage: action.payload.errorMessage}
+      }
+      case 'FETCH_ACTIVE_FANTASY_LEAGUE_FULFILLED': {
+        return {
+          ...state,
+          loading: false,
+          activeFantasyLeague: action.payload.activeFantasyLeague,
         }
       }
       case 'SET_FANTASY_LEAGUE': {

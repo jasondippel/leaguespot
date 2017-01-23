@@ -39,6 +39,40 @@ export function fetchMyFantasyLeagues() {
   }
 }
 
+export function fetchActiveFantasyLeague(fantasyLeagueId) {
+  return function(dispatch) {
+    APIRequest.get({
+        api: 'LeagueSpot',
+        apiExt: '/fantasy_leagues/view/'+fantasyLeagueId
+      })
+      .then((resp) => {
+        if (resp.success) {
+          dispatch({
+            type: 'FETCH_ACTIVE_FANTASY_LEAGUE_FULFILLED',
+            payload: {
+              activeFantasyLeague: resp.league
+            }
+          });
+        } else {
+          dispatch({
+            type: 'FETCH_ACTIVE_FANTASY_LEAGUE_REJECTED',
+            payload: {
+              errorMessage: resp.message
+            }
+          });
+        }
+      })
+      .catch((error) => {
+        dispatch({
+          type: 'FETCH_ACTIVE_FANTASY_LEAGUE_ERROR',
+          payload: {
+            errorMessage: 'Error occurred while fetching active fantasy league'
+          }
+        });
+      });
+  }
+}
+
 export function setActiveFantasyLeague(fantasyLeague) {
   return {
     type: 'SET_ACTIVE_FANTASY_LEAGUE',
