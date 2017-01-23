@@ -17,6 +17,13 @@
       box-sizing: padding-box;
       display: inline-block;
       width: 100%;
+      transition: box-shadow 0.125s ease-in-out;
+      color: @darkTextPrimary;
+
+      &:hover {
+        box-shadow: 0px 0px 12px 0px rgba(64, 64, 64, 0.7);
+        cursor: pointer;
+      }
 
       .banner {
         position: relative;

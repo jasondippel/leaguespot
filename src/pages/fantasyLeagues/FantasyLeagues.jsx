@@ -56,28 +56,30 @@ class FantasyLeagues extends React.Component {
 
     return (
       <div className='card column4' key={key}>
-        <div className='rc-FantasyLeagueCard'>
-          <div className='banner'>
-            <img className='bannerImage' src={imageLink} />
-            <span className='title'>{fantasyLeague.fleague_name}</span>
-            <div className='buttons'>
-              <RaisedButton
-                label='Enter'
-                shaddow={true}
-                />
+        <Link to={'/fantasy-leagues/' + fantasyLeague.fleague_id}>
+          <div className='rc-FantasyLeagueCard'>
+            <div className='banner'>
+              <img className='bannerImage' src={imageLink} />
+              <span className='title'>{fantasyLeague.fleague_name}</span>
+              <div className='buttons'>
+                <RaisedButton
+                  label='Enter'
+                  shaddow={true}
+                  />
+              </div>
             </div>
-          </div>
 
-          <div className='content'>
-            <div className='column6'>
-              <span className='title'>Sport: </span>{fantasyLeague.sport}
+            <div className='content'>
+              <div className='column6'>
+                <span className='title'>Sport: </span>{fantasyLeague.sport}
+              </div>
+              <div className='column6'>
+                <span className='title'>Status: </span><span className={fantasyLeague.status + ' status'}>{fantasyLeague.status}</span>
+              </div>
             </div>
-            <div className='column6'>
-              <span className='title'>Status: </span><span className={fantasyLeague.status + ' status'}>{fantasyLeague.status}</span>
-            </div>
-          </div>
 
-        </div>
+          </div>
+        </Link>
       </div>
     );
   }
@@ -91,6 +93,12 @@ class FantasyLeagues extends React.Component {
           Loading...
         </div>
       )
+    } else if (this.state.fantasyLeague.myFantasyLeagues.length === 0) {
+      fantasyLeagueCards = (
+        <div className='noFantasyLeagues'>
+          You don't belong to any fantasy leagues yet! Create one above
+        </div>
+      );
     } else {
       fantasyLeagueCards = (
         <div>

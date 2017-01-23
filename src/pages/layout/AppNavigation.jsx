@@ -9,11 +9,12 @@ import colours from '../../leaguespot-components/constants/colours';
 /* Script Dependencies */
 import React from 'react';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import store from '../store';
+import { fetchMyFantasyLeagues } from '../../actions/FantasyLeagueActions';
 import FlatButton from '../../leaguespot-components/components/buttons/FlatButton';
 import RaisedButton from '../../leaguespot-components/components/buttons/RaisedButton';
 import Icon from '../../leaguespot-components/components/icons/Icon';
-import { connect } from 'react-redux';
-import store from '../store';
 import { Sanitize } from '../../utils/Sanitize';
 
 
@@ -26,15 +27,21 @@ class AppNavigation extends React.Component {
     };
 
     store.subscribe(() => {
+      let storeState = store.getState();
       this.setState({
-        user: store.getState().user.user
+        user: storeState.user.user,
+        fantasyLeague: storeState.fantasyLeague
       });
     });
   }
 
   componentWillMount() {
+    this.props.dispatch(fetchMyFantasyLeagues());
+    let storeState = store.getState();
+
     this.setState({
-      user: store.getState().user.user
+      user: storeState.user.user,
+      fantasyLeague: storeState.fantasyLeague
     });
   }
 
@@ -60,10 +67,36 @@ class AppNavigation extends React.Component {
     );
   }
 
-  renderFantasyLeagues() {
+  renderFantasyLeagueListItem(fantasyLeague, index) {
     return (
-      <span className='noLeagues'>No leagues</span>
+      <Link className='fantasyLeagueLink' activeClassName="active" to={'/fantasy-leagues/' + fantasyLeague.fleague_id}>
+        <span className='text'>{fantasyLeague.fleague_name}</span>
+      </Link>
     );
+  }
+
+  renderFantasyLeagues() {
+    let result;
+
+    if (!this.state.fantasyLeague || this.state.fantasyLeague.isLoading) {
+      result = (
+        <div>
+          Loading...
+        </div>
+      );
+    } else if (this.state.fantasyLeague.myFantasyLeagues.length === 0) {
+      result = (
+        <span className='noLeagues'>No leagues</span>
+      );
+    } else {
+      result = (
+        <div>
+          {this.state.fantasyLeague.myFantasyLeagues.map(this.renderFantasyLeagueListItem, this)}
+        </div>
+      );
+    }
+
+    return result;
   }
 
   renderSideNav() {

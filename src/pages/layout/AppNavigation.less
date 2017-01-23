@@ -95,14 +95,44 @@
 
       .subNav {
         background-color: lighten(@darkBackgroundContainer, 10%);
-        padding-bottom: 0.5em;
-        padding-top: 0.25em;
+        max-height: 50vh;
+        overflow-y: auto;
 
         .noLeagues {
           padding-left: 2em;
           font-style: italic;
           font-size: 0.9em;
+          padding-bottom: 0.5em;
+          padding-top: 0.25em;
         }
+
+        .fantasyLeagueLink {
+          color: @lightTextPrimary;
+          text-decoration: none;
+          box-sizing: border-box;
+          padding-top: 0.3em;
+          padding-bottom: 0.5em;
+          display: inline-block;
+          width: 100%;
+          transition: background-color 0.125s ease-in-out;
+
+          &:hover{
+            background-color: lighten(@darkBackgroundContainer, 20%);
+          }
+
+          &.active {
+            color: @leaguespotGreenSecondary;
+          }
+
+          .text {
+            padding-left: 1em;
+            font-size: 0.9em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+
 
         a.item {
           padding-left: 2em;
