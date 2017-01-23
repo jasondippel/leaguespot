@@ -69,7 +69,12 @@ class AppNavigation extends React.Component {
 
   renderFantasyLeagueListItem(fantasyLeague, index) {
     return (
-      <Link className='fantasyLeagueLink' activeClassName="active" to={'/fantasy-leagues/' + fantasyLeague.fleague_id}>
+      <Link
+        className='fantasyLeagueLink'
+        activeClassName="active"
+        to={'/fantasy-leagues/' + fantasyLeague.fleague_id}
+        key={index}
+        >
         <span className='text'>{fantasyLeague.fleague_name}</span>
       </Link>
     );
