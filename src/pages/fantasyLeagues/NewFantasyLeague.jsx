@@ -9,6 +9,9 @@ import './NewFantasyLeague.less';
 import React from 'react';
 import { Link } from 'react-router';
 import moment from 'moment';
+import { connect } from 'react-redux';
+import store from '../store';
+import { setActiveFantasyLeague, addToMyFantasyLeagues } from '../../actions/FantasyLeagueActions';
 import FlatButton from '../../leaguespot-components/components/buttons/FlatButton';
 import RaisedButton from '../../leaguespot-components/components/buttons/RaisedButton';
 import Stepper from '../../leaguespot-components/components/stepper/Stepper';
@@ -16,6 +19,7 @@ import Section from '../../leaguespot-components/components/containers/Section';
 import Toast from '../../leaguespot-components/components/toast/Toast';
 import SmallBanner from '../../components/banners/SmallBanner';
 import * as leagueInfo from '../../utils/ProLeagues';
+import APIRequest from '../../utils/APIRequest';
 
 /* Steps */
 import SetupBasics from './NewFantasyLeagueSteps/SetupBasics';
@@ -23,7 +27,11 @@ import ModifySettings from './NewFantasyLeagueSteps/ModifySettings';
 import InviteUsers from './NewFantasyLeagueSteps/InviteUsers';
 
 
-export default class NewFantasyLeague extends React.Component {
+class NewFantasyLeague extends React.Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  }
+
   constructor() {
     super();
 
@@ -51,6 +59,15 @@ export default class NewFantasyLeague extends React.Component {
       errorMessage: '',
       toastOpen: false
     };
+
+    store.subscribe(() => {
+      this.setState({
+        fantasyLeague: {
+          ...this.state.fantasyLeague,
+          adminEmail: store.getState().user.user.email
+        }
+      });
+    });
 
     this.getStepContent = this.getStepContent.bind(this);
     this.handleNext = this.handleNext.bind(this);
@@ -218,7 +235,9 @@ export default class NewFantasyLeague extends React.Component {
 
   handleNext() {
     if (this.state.stepper.currentStep === this.state.stepper.stepNames.length - 1) {
-      alert('You\'re at the final step already!');
+      if(confirm('Create new fantasy league?')) {
+        this.submitNewFantasyLeague();
+      }
     } else {
       if (this.verifyStepCompletion()) {
         this.setState({
@@ -349,6 +368,80 @@ export default class NewFantasyLeague extends React.Component {
     });
   }
 
+  submitNewFantasyLeague() {
+    let fantasyLeague = this.state.fantasyLeague;
+    let adminEmail = {};
+    adminEmail[fantasyLeague.adminEmail] = 'admin';
+
+    APIRequest.post({
+      api: 'LeagueSpot',
+      apiExt: '/fantasy_leagues/create',
+      data: {
+        fleague_name          : fantasyLeague.name,
+        fleague_admins        : adminEmail,
+        sport                 : fantasyLeague.sport,
+        pro_leagues           : fantasyLeague.proLeagues,
+        contest_type          : 'league',
+        privacy_mode          : 'private',
+        league_size_limit     : 100,
+        league_start_dateTime : fantasyLeague.cutOffDate,
+        status                : 'in progress',            // TODO: should probably be set on the server side
+        settings              : { draft_mode : 'auto' }   // TODO: figure out what this is for
+      }
+    }).then((resp) => {
+      if (resp.success) {
+        // send invites
+        console.log('jason test');
+        this.sendInvites(resp.league.fleague_id);
+
+        resp.league.invited_users = this.state.fantasyLeague.userEmails;
+        this.props.dispatch(setActiveFantasyLeague(resp.league));
+        this.props.dispatch(addToMyFantasyLeagues(resp.league));
+
+        this.context.router.push('/fantasyLeague/' + resp.league.fleague_id + '/dashboard');
+      }
+      else {
+        this.setState({
+          errorMessage: 'Failed to create fantasy league',
+          toastOpen: true
+        });
+        console.error('creation failed', resp);
+      }
+    }).catch((error) => {
+      this.setState({
+        errorMessage: 'Error creating fantasy league',
+        toastOpen: true
+      });
+      console.error('creation errored', error);
+    });
+  }
+
+  sendInvites(fantasyLeagueId) {
+    if(this.state.fantasyLeague.userEmails.length === 0) {
+      return;
+    }
+
+    APIRequest.post({
+      api: 'LeagueSpot',
+      apiExt: '/fantasy_leagues/invite',
+      data: {
+        fleague_id  : fantasyLeagueId,
+        emails      : this.state.fantasyLeague.userEmails
+      }
+    }).then((resp) => {
+      if (resp.success) {
+        // do nothing
+      }
+      else {
+        alert('Failed to invite users');
+        console.error('Failed to invite users', resp);
+      }
+    }).catch((error) => {
+      alert('Error occurred inviting users');
+      console.error('Error occurred inviting users', error);
+    });
+  }
+
   render() {
     return (
       <div className='rc-NewFantasyLeague'>
@@ -379,3 +472,7 @@ export default class NewFantasyLeague extends React.Component {
     );
   }
 }
+
+export default connect(
+  (state) => ({})
+)(NewFantasyLeague)

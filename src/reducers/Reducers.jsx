@@ -6,8 +6,10 @@ import { combineReducers } from 'redux';
 
 // Reducers
 import UserReducer from './UserReducer';
+import FantasyLeagueReducer from './FantasyLeagueReducer';
 
 
 export default combineReducers({
-  user: UserReducer
+  user: UserReducer,
+  fantasyLeague: FantasyLeagueReducer
 });

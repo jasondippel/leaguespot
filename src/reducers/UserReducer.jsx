@@ -14,8 +14,7 @@ const initialState = {
     city: null
   },
   sessionId: null,
-  loggedIn: false,
-  error: null
+  loggedIn: false
 };
 
 export default function reducer(state = initialState, action) {
