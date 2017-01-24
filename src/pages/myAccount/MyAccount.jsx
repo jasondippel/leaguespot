@@ -19,8 +19,11 @@ import Toast from '../../leaguespot-components/components/toast/Toast';
 import SmallBanner from '../../components/banners/SmallBanner';
 import { connect } from 'react-redux';
 import store from '../store';
+import { setUser } from '../../actions/UserActions';
 import { Sanitize } from '../../utils/Sanitize';
 import { validateEmail } from '../../utils/Validate';
+import APIRequest from '../../utils/APIRequest';
+import * as User from '../../utils/PersistentUser';
 
 
 class MyAccount extends React.Component {
@@ -167,15 +170,35 @@ class MyAccount extends React.Component {
     }
 
     // make call to backend
-    // update store on success
-    this.setState({
-      toastOpen: true,
-      toastType: 'success',
-      toastMessage: 'User info updated'
-    })
+    let that = this;
+    APIRequest.post({
+        api: 'LeagueSpot',
+        apiExt: '/users/update/'+this.state.user.id,
+        data: {
+          first_name  : this.state.modifiedUser.first_name,
+          last_name   : this.state.modifiedUser.last_name,
+          email       : this.state.modifiedUser.email
+        }
+      })
+      .then((resp) => {
+        if (resp.success) {
+          let sessionId = User.getSessionId();
+          that.props.dispatch(setUser(sessionId, that.state.modifiedUser));
 
-    this.handleOpenToast('error', 'Backend not hooked up yet');
-    this.handleCloseEditPopup();
+          that.setState({
+            user: {...that.state.modifiedUser}
+          });
+          that.handleOpenToast('success', 'User information updated');
+          that.handleCloseEditPopup();
+        } else {
+          that.handleOpenToast('error', 'Failed to updated user information');
+          console.error('Failed to update user information', resp.message);
+        }
+      })
+      .catch((error) => {
+        that.handleOpenToast('error', 'Error updating user information');
+        console.error('Error updating user information', error);;
+      });
   }
 
   handleUpdatePasswordPopup() {

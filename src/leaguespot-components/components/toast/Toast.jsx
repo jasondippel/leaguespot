@@ -93,7 +93,7 @@ const {any, bool, func, number, string} = React.PropTypes;
 Toast.propTypes = {
   open: bool.isRequired,
   message: string.isRequired,
-  type: React.PropTypes.oneOf(['SUCCESS', 'ERROR', 'DEFAULT', '', undefined]),
+  type: React.PropTypes.oneOf(['SUCCESS', 'ERROR', 'DEFAULT', '', 'success', 'error', 'default', undefined]),
   onClose: func.isRequired
 };
 
