@@ -112,8 +112,13 @@
           box-sizing: border-box;
           padding-top: 0.3em;
           padding-bottom: 0.5em;
+          padding-left: 1em;
+          padding-right: 0.1em;
           display: inline-block;
-          width: 100%;
+          width: 150px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
           transition: background-color 0.125s ease-in-out;
 
           &:hover{
@@ -125,11 +130,7 @@
           }
 
           .text {
-            padding-left: 1em;
             font-size: 0.9em;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
           }
         }
 

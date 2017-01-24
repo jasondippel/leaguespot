@@ -17,6 +17,7 @@ import { fetchActiveFantasyLeague } from '../../../actions/FantasyLeagueActions'
 import FlatButton from '../../../leaguespot-components/components/buttons/FlatButton';
 import RaisedButton from '../../../leaguespot-components/components/buttons/RaisedButton';
 import SmallBanner from '../../../components/banners/SmallBanner';
+import MenuBar from '../../../components/menuBar/MenuBar';
 
 
 class Dashboard extends React.Component {
@@ -41,7 +42,6 @@ class Dashboard extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    console.log('new props', newProps);
     if(this.state.fantasyLeague && this.state.fantasyLeague.fleague_id === newProps.params.id) {
       return;
     }
@@ -63,6 +63,7 @@ class Dashboard extends React.Component {
         <SmallBanner
           title={this.state.fantasyLeague.fleague_name}
           />
+        <MenuBar />
 
         <div className='content'>
           stuff goes here...

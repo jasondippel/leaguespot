@@ -15,6 +15,7 @@ import { fetchMyFantasyLeagues } from '../../actions/FantasyLeagueActions';
 import FlatButton from '../../leaguespot-components/components/buttons/FlatButton';
 import RaisedButton from '../../leaguespot-components/components/buttons/RaisedButton';
 import SmallBanner from '../../components/banners/SmallBanner';
+import { Sanitize } from '../../utils/Sanitize';
 
 
 class FantasyLeagues extends React.Component {
@@ -60,7 +61,7 @@ class FantasyLeagues extends React.Component {
           <div className='rc-FantasyLeagueCard'>
             <div className='banner'>
               <img className='bannerImage' src={imageLink} />
-              <span className='title'>{fantasyLeague.fleague_name}</span>
+              <span className='title'>{Sanitize(fantasyLeague.fleague_name)}</span>
               <div className='buttons'>
                 <RaisedButton
                   label='Enter'

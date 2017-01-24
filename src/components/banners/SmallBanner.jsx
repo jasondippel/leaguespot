@@ -9,6 +9,7 @@ import './SmallBanner.less';
 import React from 'react';
 import { Link } from 'react-router';
 import RaisedButton from '../../leaguespot-components/components/buttons/RaisedButton';
+import { Sanitize } from '../../utils/Sanitize';
 
 export default class SmallBanner extends React.Component {
   constructor() {
@@ -33,7 +34,7 @@ export default class SmallBanner extends React.Component {
     return (
       <div className='rc-SmallBanner'>
         <div className='title'>
-          {this.props.title}
+          {Sanitize(this.props.title)}
         </div>
 
         { button }

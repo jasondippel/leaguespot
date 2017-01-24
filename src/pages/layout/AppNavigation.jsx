@@ -75,7 +75,7 @@ class AppNavigation extends React.Component {
         to={'/fantasy-leagues/' + fantasyLeague.fleague_id}
         key={index}
         >
-        <span className='text'>{fantasyLeague.fleague_name}</span>
+        <span className='text'>{Sanitize(fantasyLeague.fleague_name)}</span>
       </Link>
     );
   }
