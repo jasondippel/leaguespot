@@ -18,7 +18,26 @@ export default class Inbox extends React.Component {
     super();
   }
 
+  renderMessagesList() {
+    return (
+      <div className='rc-MessageList'>
+        <div className='emptyMessage'>Empty</div>
+      </div>
+    );
+  }
+
+  renderActiveMessage() {
+    return (
+      <div className='rc-MessageViewer'>
+        <div className='emptyMessage'>No message to view</div>
+      </div>
+    );
+  }
+
   render() {
+    let messagesList = this.renderMessagesList();
+    let messageViewer = this.renderActiveMessage();
+
     return (
       <div className='rc-Inbox'>
         <SmallBanner
@@ -26,7 +45,8 @@ export default class Inbox extends React.Component {
           />
 
         <div className='content'>
-          messages with filter bar (future)
+          {messagesList}
+          {messageViewer}
         </div>
       </div>
     );
