@@ -183,6 +183,8 @@ class MyAccount extends React.Component {
       .then((resp) => {
         if (resp.success) {
           let sessionId = User.getSessionId();
+
+          // TODO: update cookie; waiting on backend implementation
           that.props.dispatch(setUser(sessionId, that.state.modifiedUser));
 
           that.setState({
@@ -191,7 +193,7 @@ class MyAccount extends React.Component {
           that.handleOpenToast('success', 'User information updated');
           that.handleCloseEditPopup();
         } else {
-          that.handleOpenToast('error', 'Failed to updated user information');
+          that.handleOpenToast('error', 'Failed to update user information');
           console.error('Failed to update user information', resp.message);
         }
       })
@@ -219,10 +221,28 @@ class MyAccount extends React.Component {
     }
 
     // make call to backend
-    // update store on success
-
-    this.handleOpenToast('error', 'Backend not hooked up yet');
-    this.handleClosePasswordPopup();
+    let that = this;
+    APIRequest.post({
+        api: 'LeagueSpot',
+        apiExt: '/users/'+this.state.user.id+'/password',
+        data: {
+          old_password  : this.state.oldPassword,
+          new_password   : this.state.newPassword
+        }
+      })
+      .then((resp) => {
+        if (resp.success) {
+          that.handleOpenToast('success', 'Password updated');
+          this.handleClosePasswordPopup();
+        } else {
+          that.handleOpenToast('error', 'Failed to update password');
+          console.error('Failed to update password', resp.message);
+        }
+      })
+      .catch((error) => {
+        that.handleOpenToast('error', 'Error updating password');
+        console.error('Error updating password', error);;
+      });
   }
 
   renderEditPopupContents() {
