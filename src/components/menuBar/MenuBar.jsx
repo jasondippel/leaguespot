@@ -1,5 +1,5 @@
 /**
- * MenuBar component; Meant for use with individual fantasy league page
+ * MenuBar component. Renders a horizontal bar consisting of the items passed in.
  *
  */
 
@@ -8,7 +8,6 @@ import './MenuBar.less';
 
 /* Script Dependencies */
 import React from 'react';
-import { Link } from 'react-router';
 
 
 export default class MenuBar extends React.Component {
@@ -16,21 +15,18 @@ export default class MenuBar extends React.Component {
     super();
   }
 
+  renderMenuItem(item, key) {
+    return(
+      <div key={key}>
+        {item}
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className='rc-MenuBar'>
-        <Link to='#'>
-          Standings
-        </Link>
-        <Link to='#'>
-          My Roster
-        </Link>
-        <Link to='#'>
-          Free Agents
-        </Link>
-        <Link to='#'>
-          Rules & Info
-        </Link>
+        {this.props.items.map(this.renderMenuItem)}
       </div>
     );
   }

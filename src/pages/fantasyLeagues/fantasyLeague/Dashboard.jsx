@@ -49,6 +49,31 @@ class Dashboard extends React.Component {
     this.props.dispatch(fetchActiveFantasyLeague(newProps.params.id));
   }
 
+  getMenuBarItems() {
+    return [
+      (
+        <Link to='#'>
+          My Roster
+        </Link>
+      ),
+      (
+        <Link to='#'>
+          Standings
+        </Link>
+      ),
+      (
+        <Link to='#'>
+          Free Agents
+        </Link>
+      ),
+      (
+        <Link to='#'>
+          Rules & Info
+        </Link>
+      )
+    ];
+  }
+
   render() {
     if (!this.state.fantasyLeague || this.state.fantasyLeague.loading) {
       return (
@@ -58,12 +83,14 @@ class Dashboard extends React.Component {
       );
     }
 
+    let menuItems = this.getMenuBarItems();
+
     return (
       <div className='rc-Dashobard'>
         <SmallBanner
           title={this.state.fantasyLeague.fleague_name}
           />
-        <MenuBar />
+        <MenuBar items={menuItems}/>
 
         <div className='content'>
           stuff goes here...

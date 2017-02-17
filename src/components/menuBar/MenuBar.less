@@ -5,7 +5,12 @@
 .rc-MenuBar {
   background-color: lighten(@lightBackgroundContainer, 50%);
 
-  a {
+  div {
+    display: inline-block;
+  }
+
+  a,
+  .actionButton {
     background-color: lighten(@lightBackgroundContainer, 50%);
     color: @darkTextPrimary;
     text-decoration: none;
@@ -19,6 +24,7 @@
 
     &:hover {
       background-color: @lightBackgroundContainer;
+      cursor: pointer;
     }
 
     &.active {
