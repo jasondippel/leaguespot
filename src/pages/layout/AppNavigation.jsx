@@ -83,23 +83,23 @@ class AppNavigation extends React.Component {
   renderFantasyLeagues() {
     let result;
 
-    if (!this.state.fantasyLeague || this.state.fantasyLeague.isLoading) {
-      result = (
-        <div>
-          Loading...
-        </div>
-      );
-    } else if (this.state.fantasyLeague.myFantasyLeagues.length === 0) {
-      result = (
-        <span className='noLeagues'>No leagues</span>
-      );
-    } else {
-      result = (
-        <div>
-          {this.state.fantasyLeague.myFantasyLeagues.map(this.renderFantasyLeagueListItem, this)}
-        </div>
-      );
-    }
+    // if (!this.state.fantasyLeague || this.state.fantasyLeague.isLoading) {
+    //   result = (
+    //     <div>
+    //       Loading...
+    //     </div>
+    //   );
+    // } else if (this.state.fantasyLeague.myFantasyLeagues.length === 0) {
+    //   result = (
+    //     <span className='noLeagues'>No leagues</span>
+    //   );
+    // } else {
+    //   result = (
+    //     <div>
+    //       {this.state.fantasyLeague.myFantasyLeagues.map(this.renderFantasyLeagueListItem, this)}
+    //     </div>
+    //   );
+    // }
 
     return result;
   }
@@ -110,13 +110,6 @@ class AppNavigation extends React.Component {
     return (
       <div className='sideNav'>
         <div className='top'>
-          <Link className='item' activeClassName="active" to='/dashboard'>
-            <div className='icon'>
-              <Icon type='dashboard' paddingLeft='0' paddingRight='0.25em'/>
-            </div>
-            <div className='text'>Dashboard</div>
-            <div className='arrow'></div>
-          </Link>
           <Link className='item' activeClassName="active" to='/fantasy-leagues'>
             <div className='icon'>
               <Icon type='group' paddingLeft='0' paddingRight='0.25em'/>

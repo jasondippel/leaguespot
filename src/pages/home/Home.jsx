@@ -51,9 +51,10 @@ class Home extends React.Component {
           {
             this.state.loggedIn ? (
               <div className='_dashboardBtn'>
-                <Link to='/dashboard'>
+                <Link to='/fantasy-leagues'>
                   <RaisedButton
-                    label='My Dashboard'
+                    label='My Fantasy Leagues'
+                    type='primary'
                     shaddow={true} />
                 </Link>
               </div>

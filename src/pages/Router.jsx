@@ -16,7 +16,7 @@ import AppLayout from './layout/AppLayout';
 import Home from './home/Home';
 import SignUp from './signUp/SignUp';
 import LogIn from './logIn/LogIn';
-import Dashboard from './dashboard/Dashboard';
+// import Dashboard from './dashboard/Dashboard'; // TODO: once more info collected, this may be useful
 import FantasyLeagues from './fantasyLeagues/FantasyLeagues';
 import NewFantasyLeague from './fantasyLeagues/NewFantasyLeague';
 import FantasyLeagueDashboard from './fantasyLeagues/fantasyLeague/Dashboard';
@@ -62,7 +62,6 @@ export default (
         </Route>
 
         <Route component={AppLayout} onEnter={requireAuth}>
-          <Route path='/dashboard' component={Dashboard} />
           <Route path='/fantasy-leagues' >
             <IndexRoute component={FantasyLeagues} />
             <Route path='/fantasy-leagues/new-fantasy-league' component={NewFantasyLeague} />

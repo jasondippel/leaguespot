@@ -20,7 +20,7 @@ export default class MenuBar extends React.Component {
     return (
       <div className='rc-MenuBar'>
         <Link to='#'>
-          Dashboard
+          Standings
         </Link>
         <Link to='#'>
           My Roster

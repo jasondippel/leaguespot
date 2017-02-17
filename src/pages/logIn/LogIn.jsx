@@ -65,7 +65,7 @@ class LogIn extends React.Component {
       if (resp.success) {
         // update store
         this.props.dispatch(setUser(resp.token, resp.user));
-        this.context.router.push('/dashboard');
+        this.context.router.push('/fantasy-leagues');
       }
       else {
         that.setState({
@@ -75,10 +75,8 @@ class LogIn extends React.Component {
     }).catch((error) => {
       console.error(error);
 
-      // TODO: Fix this once backend is fixed. Error message should be "Oops,
-      //       something went wrong. Please try again later"
       that.setState({
-        errorMessage: 'Invalid email or password'
+        errorMessage: 'Oops, something went wrong. Please try again later'
       });
     });
   }

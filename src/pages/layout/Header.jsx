@@ -50,9 +50,9 @@ class Header extends React.Component {
               label='Sign Out'
               />
           </Link>
-          <Link to='/dashboard'>
+          <Link to='/fantasy-leagues'>
             <RaisedButton
-              label='My Dashboard'
+              label='My Fantasy Leagues'
               type='primary'
               />
           </Link>

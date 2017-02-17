@@ -32,6 +32,10 @@ module.exports = {
         test: /\.less?$/,
         exclude: /(node_modules)/,
         loader: 'style!css!less'
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loader: 'file-loader?name=/public/images/[name].[ext]'
       }
     ]
   },

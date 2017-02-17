@@ -123,7 +123,7 @@ class SignUp extends React.Component {
         if(resp.success) {
           // update store and set sessionId in local storage
           this.props.dispatch(setUser(resp.token, resp.user));
-          this.context.router.push('/dashboard');
+          this.context.router.push('/fantasy-leagues');
         } else {
           that.setState({
             errorMessage: resp.message
