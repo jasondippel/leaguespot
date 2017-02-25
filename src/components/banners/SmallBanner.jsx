@@ -35,6 +35,7 @@ export default class SmallBanner extends React.Component {
       <div className='rc-SmallBanner'>
         <div className='title'>
           {Sanitize(this.props.title)}
+          <span className='subTitle'>{Sanitize(this.props.subTitle)}</span>
         </div>
 
         { button }

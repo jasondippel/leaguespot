@@ -69,7 +69,16 @@ class Home extends React.Component {
         </div>
 
         <div className='content'>
-          Add content here...
+          <div>
+            <div className='leagueBanner'>
+              <img className='leagueLogo' src='src/img/leagues/hockey/nhl.png' />
+              <img className='leagueLogo' src='src/img/leagues/hockey/cwhl.png' />
+              <img className='leagueLogo' src='src/img/leagues/hockey/ohl.png' />
+              <img className='leagueLogo' src='src/img/leagues/hockey/whl.png' />
+              <img className='leagueLogo' src='src/img/leagues/hockey/qmjhl.png' />
+              <img className='leagueLogo' src='src/img/leagues/hockey/nwhl.png' />
+            </div>
+          </div>
         </div>
 
       </div>

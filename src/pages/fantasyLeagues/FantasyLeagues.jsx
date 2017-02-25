@@ -96,7 +96,15 @@ class FantasyLeagues extends React.Component {
     } else if (this.state.fantasyLeague.myFantasyLeagues.length === 0) {
       fantasyLeagueCards = (
         <div className='noFantasyLeagues'>
-          You don't belong to any fantasy leagues yet! Create one above
+          <div className='box'>
+            <div className='mainText'>You don't belong to any fantasy leagues yet!</div>
+            <Link to='/fantasy-leagues/new-fantasy-league'>
+              <RaisedButton
+                label='Create a League'
+                type='primary'
+                />
+            </Link>
+          </div>
         </div>
       );
     } else {

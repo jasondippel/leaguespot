@@ -397,7 +397,7 @@ class NewFantasyLeague extends React.Component {
         this.props.dispatch(setActiveFantasyLeague(resp.league));
         this.props.dispatch(addToMyFantasyLeagues(resp.league));
 
-        this.context.router.push('/fantasyLeague/' + resp.league.fleague_id + '/dashboard');
+        this.context.router.push('/fantasy-leagues/' + resp.league.fleague_id);
       }
       else {
         this.setState({
