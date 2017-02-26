@@ -20,6 +20,9 @@ import LogIn from './logIn/LogIn';
 import FantasyLeagues from './fantasyLeagues/FantasyLeagues';
 import NewFantasyLeague from './fantasyLeagues/NewFantasyLeague';
 import FantasyLeagueDashboard from './fantasyLeagues/fantasyLeague/Dashboard';
+import FantasyLeagueStandings from './fantasyLeagues/fantasyLeague/Standings';
+import FantasyLeagueRoster from './fantasyLeagues/fantasyLeague/Roster';
+import FantasyLeagueInfo from './fantasyLeagues/fantasyLeague/Info';
 import Inbox from './inbox/Inbox';
 import MyAccount from './myAccount/MyAccount';
 import SignOut from './signOut/SignOut';
@@ -65,7 +68,12 @@ export default (
           <Route path='/fantasy-leagues' >
             <IndexRoute component={FantasyLeagues} />
             <Route path='/fantasy-leagues/new-fantasy-league' component={NewFantasyLeague} />
-            <Route path='/fantasy-leagues/:id' component={FantasyLeagueDashboard} />
+            <Route path='/fantasy-leagues/:id' component={FantasyLeagueDashboard}>
+              <IndexRoute component={FantasyLeagueStandings} />
+              <Route path='/fantasy-leagues/:id/standings' component={FantasyLeagueStandings} />
+              <Route path='/fantasy-leagues/:id/roster' component={FantasyLeagueRoster} />
+              <Route path='/fantasy-leagues/:id/info' component={FantasyLeagueInfo} />
+            </Route>
           </Route>
           <Route path='/inbox' component={Inbox} />
           <Route path='/my-account' component={MyAccount} />

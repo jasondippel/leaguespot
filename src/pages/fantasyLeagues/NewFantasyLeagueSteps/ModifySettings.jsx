@@ -27,8 +27,6 @@ export default class ModifySettings extends React.Component {
   }
 
   render() {
-    console.log('hometown: ', this.props.hometown);
-
     return (
       <div className='stepContent'>
         <Section>
@@ -64,6 +62,7 @@ export default class ModifySettings extends React.Component {
               floatingLabelText='Max roster size'
               hintText='name'
               value={this.props.maxRosterSize}
+              multiLine={true}
               onChange={this.props.handleMaxRosterSizeChange}
               />
           </div>
@@ -79,6 +78,21 @@ export default class ModifySettings extends React.Component {
               types={['(cities)']}
               initialValue={this.props.hometown}
               value={this.props.hometown}
+              />
+          </div>
+          <div className='column12 dataSection'>
+            <div className='dataDetails'>
+              <span className='title'>Other Rules</span>
+              You may enter a paragraph below outlining other rules to be followed in your fantasy league. It is each players responsibility to ensure they follow these rules.
+            </div>
+            <TextField
+              floatingLabelFixed={true}
+              floatingLabelText='Other rules'
+              hintText='eg. Must have at least 1 male and 1 female on active roster, ...'
+              value={this.props.socialRules}
+              fullWidth={true}
+              multiLine={true}
+              onChange={this.props.handleSocialRulesChange}
               />
           </div>
 

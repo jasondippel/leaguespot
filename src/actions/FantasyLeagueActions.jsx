@@ -40,7 +40,19 @@ export function fetchMyFantasyLeagues() {
 }
 
 export function fetchActiveFantasyLeague(fantasyLeagueId) {
-  return function(dispatch) {
+  return function(dispatch, getState) {
+    let state = getState();
+
+    // check if already set as active league...
+    if (state.fantasyLeague.activeFantasyLeague.fleague_id === fantasyLeagueId) {
+      dispatch({
+        type: 'FETCH_ACTIVE_FANTASY_LEAGUE_FULFILLED',
+        payload: {
+          activeFantasyLeague: state.fantasyLeague.activeFantasyLeague
+        }
+      });
+    }
+
     APIRequest.get({
         api: 'LeagueSpot',
         apiExt: '/fantasy_leagues/view/'+fantasyLeagueId

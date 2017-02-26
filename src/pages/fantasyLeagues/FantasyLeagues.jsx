@@ -57,7 +57,7 @@ class FantasyLeagues extends React.Component {
 
     return (
       <div className='card column4' key={key}>
-        <Link to={'/fantasy-leagues/' + fantasyLeague.fleague_id}>
+        <Link to={'/fantasy-leagues/' + fantasyLeague.fleague_id + '/standings'}>
           <div className='rc-FantasyLeagueCard'>
             <div className='banner'>
               <img className='bannerImage' src={imageLink} />

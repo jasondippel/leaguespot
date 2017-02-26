@@ -54,7 +54,8 @@ class NewFantasyLeague extends React.Component {
         cutOffDate: cutOffDate,
         maxRosterSize: 0,
         hometown: undefined,
-        userEmails: []
+        userEmails: [],
+        socialRules: ''
       },
       errorMessage: '',
       toastOpen: false
@@ -83,6 +84,7 @@ class NewFantasyLeague extends React.Component {
     this.handleCutoffTimeChange = this.handleCutoffTimeChange.bind(this);
     this.handleMaxRosterSizeChange = this.handleMaxRosterSizeChange.bind(this);
     this.handleHometownChange = this.handleHometownChange.bind(this);
+    this.handleSocialRulesChange = this.handleSocialRulesChange.bind(this);
     this.addEmailAddress = this.addEmailAddress.bind(this);
     this.removeEmailAddress = this.removeEmailAddress.bind(this);
     this.handleCloseToast = this.handleCloseToast.bind(this);
@@ -110,10 +112,12 @@ class NewFantasyLeague extends React.Component {
             cutOffDate={this.state.fantasyLeague.cutOffDate}
             maxRosterSize={this.state.fantasyLeague.maxRosterSize}
             hometown={this.state.fantasyLeague.hometown}
+            socialRules={this.state.fantasyLeague.socialRules}
             handleCutOffDateChange={this.handleCutOffDateChange}
             handleCutoffTimeChange={this.handleCutoffTimeChange}
             handleMaxRosterSizeChange={this.handleMaxRosterSizeChange}
-            handleHometownChange={this.handleHometownChange} />
+            handleHometownChange={this.handleHometownChange}
+            handleSocialRulesChange={this.handleSocialRulesChange} />
         );
         break;
       case 2:
@@ -362,6 +366,15 @@ class NewFantasyLeague extends React.Component {
     });
   }
 
+  handleSocialRulesChange(e, socialRules) {
+    this.setState({
+      fantasyLeague: {
+        ...this.state.fantasyLeague,
+        socialRules: socialRules
+      }
+    });
+  }
+
   handleCloseToast() {
     this.setState({
       toastOpen: false
@@ -385,8 +398,9 @@ class NewFantasyLeague extends React.Component {
         privacy_mode          : 'private',
         league_size_limit     : 100,
         league_start_dateTime : fantasyLeague.cutOffDate,
-        status                : 'in progress',            // TODO: should probably be set on the server side
-        settings              : { draft_mode : 'auto' }   // TODO: figure out what this is for
+        status                : 'in progress',             // TODO: should probably be set on the server side
+        settings              : { draft_mode : 'auto' },   // TODO: figure out what this is for
+        social_rules          : fantasyLeague.socialRules
       }
     }).then((resp) => {
       if (resp.success) {

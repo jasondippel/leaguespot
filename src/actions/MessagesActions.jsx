@@ -31,33 +31,33 @@ export function fetchInboxContents() {
 
   return function(dispatch) {
     APIRequest.get({
-        api: 'LeagueSpot',
-        apiExt: '/fantasy_leagues/my_invited_leagues' // TODO: use proper endpoint to get inbox contents
-      })
-      .then((resp) => {
-        if (resp.success) {
-          dispatch({
-            type: 'FETCH_INBOX_CONTENTS_FULFILLED',
-            payload: {
-              messages: generateInviteMessages(resp.leagues)
-            }
-          });
-        } else {
-          dispatch({
-            type: 'FETCH_INBOX_CONTENTS_REJECTED',
-            payload: {
-              errorMessage: resp.message
-            }
-          });
-        }
-      })
-      .catch((error) => {
+      api: 'LeagueSpot',
+      apiExt: '/fantasy_leagues/my_invited_leagues' // TODO: use proper endpoint to get inbox contents
+    })
+    .then((resp) => {
+      if (resp.success) {
         dispatch({
-          type: 'FETCH_INBOX_CONTENTS_ERROR',
+          type: 'FETCH_INBOX_CONTENTS_FULFILLED',
           payload: {
-            errorMessage: 'Error occurred while fetching inbox contents'
+            messages: generateInviteMessages(resp.leagues)
           }
         });
+      } else {
+        dispatch({
+          type: 'FETCH_INBOX_CONTENTS_REJECTED',
+          payload: {
+            errorMessage: resp.message
+          }
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: 'FETCH_INBOX_CONTENTS_ERROR',
+        payload: {
+          errorMessage: 'Error occurred while fetching inbox contents'
+        }
       });
+    });
   }
 }

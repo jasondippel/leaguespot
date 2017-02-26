@@ -13,6 +13,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import store from '../../store';
+import { Sanitize } from '../../../utils/Sanitize';
 import { fetchActiveFantasyLeague } from '../../../actions/FantasyLeagueActions';
 import FlatButton from '../../../leaguespot-components/components/buttons/FlatButton';
 import RaisedButton from '../../../leaguespot-components/components/buttons/RaisedButton';
@@ -52,22 +53,26 @@ class Dashboard extends React.Component {
   getMenuBarItems() {
     return [
       (
-        <Link to='#'>
-          My Roster
-        </Link>
-      ),
-      (
-        <Link to='#'>
+        <Link
+          to={'/fantasy-leagues/' + this.props.params.id + '/standings'}
+          activeClassName="active"
+          >
           Standings
         </Link>
       ),
       (
-        <Link to='#'>
-          Free Agents
+        <Link
+          to={'/fantasy-leagues/' + this.props.params.id + '/roster'}
+          activeClassName="active"
+          >
+          My Roster
         </Link>
       ),
       (
-        <Link to='#'>
+        <Link
+          to={'/fantasy-leagues/' + this.props.params.id + '/info'}
+          activeClassName="active"
+          >
           Rules & Info
         </Link>
       )
@@ -75,15 +80,22 @@ class Dashboard extends React.Component {
   }
 
   render() {
+    let menuItems = this.getMenuBarItems();
+
     if (!this.state.fantasyLeague || this.state.fantasyLeague.loading) {
       return (
-        <div>
-          Loading...
+        <div className='rc-Dashobard'>
+          <SmallBanner
+            title='Loading fantasy league info...'
+            />
+          <MenuBar items={menuItems}/>
+
+          <div className='content'>
+            {this.props.children}
+          </div>
         </div>
       );
     }
-
-    let menuItems = this.getMenuBarItems();
 
     return (
       <div className='rc-Dashobard'>
@@ -93,7 +105,7 @@ class Dashboard extends React.Component {
         <MenuBar items={menuItems}/>
 
         <div className='content'>
-          stuff goes here...
+          {this.props.children}
         </div>
       </div>
     );

@@ -19,7 +19,8 @@ const initialState = {
     settings: {},
     users: {},
     invited_users: {},
-    fantasy_teams: []
+    fantasy_teams: [],
+    social_rules: null
   },
   loading: false,
   errorMessage: null
