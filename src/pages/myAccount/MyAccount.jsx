@@ -405,7 +405,7 @@ class MyAccount extends React.Component {
             onClose={this.handleCloseToast}
             />
 
-          <Section>
+          <Section showBackground={true}>
             <div className='accountCircle column3'>
               <Icon type='account-box' color={colours.darkTextSecondary} paddingLeft='0.5em' paddingRight='0.5em' height={150} width={150} />
             </div>
