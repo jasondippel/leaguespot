@@ -182,14 +182,9 @@ class MyAccount extends React.Component {
       })
       .then((resp) => {
         if (resp.success) {
-          let sessionId = User.getSessionId();
-
-          // TODO: update cookie; waiting on backend implementation
+          let sessionId = resp.token;
           that.props.dispatch(setUser(sessionId, that.state.modifiedUser));
-
-          that.setState({
-            user: {...that.state.modifiedUser}
-          });
+          
           that.handleOpenToast('success', 'User information updated');
           that.handleCloseEditPopup();
         } else {
