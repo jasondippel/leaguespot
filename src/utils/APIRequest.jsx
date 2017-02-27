@@ -12,6 +12,7 @@ class APIRequest {
     this.sportRadarAPI = 'Sports Radar API';
     this.sportRadarKey = '1234abc';
     this.leagueSpotAPI = 'http://localhost:3000';
+    // this.leagueSpotAPI = "http://ec2-52-25-225-99.us-west-2.compute.amazonaws.com:3000";
   }
 
 

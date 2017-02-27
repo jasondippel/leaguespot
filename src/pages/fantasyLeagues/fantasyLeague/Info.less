@@ -27,14 +27,17 @@
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
+      max-width: calc(~'100% - 10em');
+      padding-bottom: 0.5em;
 
       &.full {
         display: block;
+        max-width: 100%;
       }
 
       &.multiline {
-        white-space: normal;
-        text-overflow: inherit;
+        white-space: pre-wrap;
+        text-overflow: inherit;;
         overflow: visible;
       }
     }

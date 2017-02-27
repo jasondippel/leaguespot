@@ -48,6 +48,14 @@ class Info extends React.Component {
     this.props.dispatch(fetchActiveFantasyLeague(newProps.params.id));
   }
 
+  handleDeleteLeague() {
+
+  }
+
+  handleLeaveLeague() {
+
+  }
+
   renderDeleteButton() {
     let component = '';
 
@@ -56,6 +64,16 @@ class Info extends React.Component {
         <div className='column12' style={{marginTop: '1em'}}>
           <RaisedButton
             label='Delete League'
+            type='warning'
+            noPadding={true}
+            />
+        </div>
+      );
+    } else {
+      component = (
+        <div className='column12' style={{marginTop: '1em'}}>
+          <RaisedButton
+            label='Leave League'
             type='warning'
             noPadding={true}
             />
@@ -85,6 +103,8 @@ class Info extends React.Component {
         leagueList += ', ' + leagueName;
       }
     });
+    let hometown = this.state.fantasyLeague.hometown ? this.state.fantasyLeague.hometown : 'n/a';
+    let socialRules = this.state.fantasyLeague.social_rules ? this.state.fantasyLeague.social_rules : 'n/a';
 
     return (
       <div className='rc-Info'>
@@ -121,7 +141,7 @@ class Info extends React.Component {
               >
               <div className='column12'>
                 <div className='labelTitle'>Hometown</div>
-                <div className='labelValue'>TODO</div>
+                <div className='labelValue'>{Sanitize(hometown)}</div>
               </div>
               <div className='column12'>
                 <div className='labelTitle'>Max Roster Size</div>
@@ -133,7 +153,7 @@ class Info extends React.Component {
               </div>
               <div className='column12'>
                 <div className='labelTitle full'>Social Rules</div>
-                <div className='labelValue full multiline'>{Sanitize(this.state.fantasyLeague.social_rules)}</div>
+                <div className='labelValue full multiline'>{Sanitize(socialRules)}</div>
               </div>
             </Section>
           </Section>
