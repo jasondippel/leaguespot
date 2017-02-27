@@ -11,9 +11,11 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import store from '../../store';
 import { Sanitize } from '../../../utils/Sanitize';
+import * as leagueInfo from '../../../utils/ProLeagues';
 import { fetchActiveFantasyLeague } from '../../../actions/FantasyLeagueActions';
 import FlatButton from '../../../leaguespot-components/components/buttons/FlatButton';
 import RaisedButton from '../../../leaguespot-components/components/buttons/RaisedButton';
+import Section from '../../../leaguespot-components/components/containers/Section';
 
 
 class Info extends React.Component {
@@ -26,7 +28,8 @@ class Info extends React.Component {
 
     store.subscribe(() => {
       this.setState({
-        fantasyLeague: store.getState().fantasyLeague.activeFantasyLeague
+        fantasyLeague: store.getState().fantasyLeague.activeFantasyLeague,
+        user: store.getState().user.user
       });
     });
 
@@ -45,6 +48,24 @@ class Info extends React.Component {
     this.props.dispatch(fetchActiveFantasyLeague(newProps.params.id));
   }
 
+  renderDeleteButton() {
+    let component = '';
+
+    if (this.state.fantasyLeague && this.state.fantasyLeague.fleague_creator === this.state.user.id) {
+      component = (
+        <div className='column12' style={{marginTop: '1em'}}>
+          <RaisedButton
+            label='Delete League'
+            type='warning'
+            noPadding={true}
+            />
+        </div>
+      );
+    }
+
+    return component;
+  }
+
   render() {
     if (!this.state.fantasyLeague || this.state.fantasyLeague.loading) {
       return (
@@ -54,11 +75,69 @@ class Info extends React.Component {
       );
     }
 
+    let button = this.renderDeleteButton();
+    let leagueList = '';
+    this.state.fantasyLeague.pro_leagues.map((league, index) => {
+      let leagueName = leagueInfo.getLeagueName(league);
+      if (index === 0) {
+        leagueList += leagueName;
+      } else {
+        leagueList += ', ' + leagueName;
+      }
+    });
+
     return (
       <div className='rc-Info'>
 
         <div className='content'>
-          <h2>Info</h2>
+          <Section>
+            <Section
+              title='General Info'
+              width={4}
+              >
+              <div className='column12'>
+                <div className='labelTitle'>League Name</div>
+                <div className='labelValue'>{Sanitize(this.state.fantasyLeague.fleague_name)}</div>
+              </div>
+              <div className='column12'>
+                <div className='labelTitle'>Sport</div>
+                <div className='labelValue'>{Sanitize(this.state.fantasyLeague.sport)}</div>
+              </div>
+              <div className='column12'>
+                <div className='labelTitle'>Leagues</div>
+                <div className='labelValue multiline'>{Sanitize(leagueList)}</div>
+              </div>
+              <div className='column12'>
+                <div className='labelTitle'>Players</div>
+                <div className='labelValue'>{Object.keys(this.state.fantasyLeague.users).length + Object.keys(this.state.fantasyLeague.invited_users).length}</div>
+              </div>
+              {button}
+            </Section>
+
+
+            <Section className='section'
+              title='Rules'
+              width={8}
+              >
+              <div className='column12'>
+                <div className='labelTitle'>Hometown</div>
+                <div className='labelValue'>TODO</div>
+              </div>
+              <div className='column12'>
+                <div className='labelTitle'>Max Roster Size</div>
+                <div className='labelValue'>TODO</div>
+              </div>
+              <div className='column12'>
+                <div className='labelTitle'>Active Roster Size</div>
+                <div className='labelValue'>{leagueInfo.getActiveRosterSize(this.state.fantasyLeague.sport)}</div>
+              </div>
+              <div className='column12'>
+                <div className='labelTitle full'>Social Rules</div>
+                <div className='labelValue full multiline'>{Sanitize(this.state.fantasyLeague.social_rules)}</div>
+              </div>
+            </Section>
+          </Section>
+
         </div>
       </div>
     );

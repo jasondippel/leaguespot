@@ -28,8 +28,16 @@ export default class RaisedButton extends React.Component {
       };
     }
 
+    let masterStyle = {};
+    if (this.props.noPadding) {
+      masterStyle = {
+        marginLeft: '0',
+        marginRight: '0'
+      };
+    }
+
     return (
-      <div className='rc-RaisedButton'>
+      <div className='rc-RaisedButton' style={masterStyle}>
         <button
           className={this.props.type}
           onClick={this.handleOnClick}
@@ -50,6 +58,7 @@ const {any, bool, func, number, string} = React.PropTypes;
 RaisedButton.propTypes = {
   disabled: bool,
   label: string,
+  noPadding: bool,
   onClick: func,
   shaddow: bool,
   type: React.PropTypes.oneOf([

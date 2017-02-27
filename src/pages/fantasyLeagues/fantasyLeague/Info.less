@@ -2,5 +2,42 @@
 @import '../../../../node_modules/leaguespot-components/src/constants/fonts';
 
 .rc-Info {
+  .content {
 
+    .labelTitle {
+      width: 9em;
+      vertical-align:top;
+      display: inline-block;
+      box-sizing: border-box;
+      padding-bottom: 0.5em;
+      padding-right: 1em;
+      font-weight: 400;
+      color: lighten(@darkTextPrimary, 25%);
+
+      &.full {
+        width: 100%;
+        display: block;
+        padding-top: 0.5em;
+      }
+    }
+    .labelValue {
+      display: inline-block;
+      box-sizing: border-box;
+      padding-right: 1em;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+
+      &.full {
+        display: block;
+      }
+
+      &.multiline {
+        white-space: normal;
+        text-overflow: inherit;
+        overflow: visible;
+      }
+    }
+
+  }
 }

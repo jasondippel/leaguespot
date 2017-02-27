@@ -18,7 +18,7 @@ const maxRosterSizeBySport = {
 
 const minRosterSizeBySport = {
   BasketBall: 5,
-  Hockey: 5
+  Hockey: 6
 }
 
 const activeRosterSizeBySport = {
@@ -80,5 +80,12 @@ export function getMinRosterSize(sport) {
   if(minRosterSizeBySport[sport]) return minRosterSizeBySport[sport];
 
   console.error('Error: min roster size not defined for ' + sport);
+  return 0;
+}
+
+export function getActiveRosterSize(sport) {
+  if(activeRosterSizeBySport[sport]) return activeRosterSizeBySport[sport];
+
+  console.error('Error: active roster size not defined for ' + sport);
   return 0;
 }

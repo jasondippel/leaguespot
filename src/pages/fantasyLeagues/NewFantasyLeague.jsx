@@ -463,7 +463,9 @@ class NewFantasyLeague extends React.Component {
           />
 
         <div className='content'>
-          <Section>
+          <Section
+            showBackground={true}
+            >
             <Stepper
                 currentStep={this.state.stepper.currentStep}
                 getStepContent={this.getStepContent}

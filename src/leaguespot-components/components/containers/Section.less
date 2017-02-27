@@ -2,11 +2,15 @@
 @import '../../constants/fonts';
 
 .rc-Section {
-  background-color: @lightBackgroundContainer;
+  background-color: @lightBackgroundPrimary;
   border-radius: 2px;
   margin-top: 1em;
   margin-bottom:1em;
   box-sizing: border-box;
+
+  &.backgroundColor {
+    background-color: @lightBackgroundContainer;
+  }
 
   .columnSpacing {
     margin-left: 0.5em;
@@ -96,8 +100,8 @@
   }
 
   .title {
-    font-size: 1em !important;
-    font-weight: 300 !important;
+    font-size: 0.85em !important;
+    font-weight: 400 !important;
     border: none !important;
     box-sizing: border-box;
     padding-top: 0.8em;
@@ -130,10 +134,9 @@
   }
 
   .content {
-    padding-top: 1em;
-    padding-left: 1em;
-    padding-right: 1em;
-    padding-bottom: 1em;
+    padding-left: 1em !important;
+    padding-right: 1em !important;
+    padding-bottom: 1em !important;
   }
 
   .rc-Section {
