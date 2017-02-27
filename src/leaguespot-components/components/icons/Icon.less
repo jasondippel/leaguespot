@@ -1,0 +1,22 @@
+@import '../../constants/colours';
+@import '../../constants/fonts';
+
+.rc-Icon {
+  display: inline-block;
+
+  svg {
+    vertical-align: text-bottom;
+  }
+
+  &.success {
+    svg {
+      color: @leaguespotGreenPrimary !important;
+    }
+  }
+  &.error {
+    svg {
+      color: @danger !important;
+    }
+
+  }
+}

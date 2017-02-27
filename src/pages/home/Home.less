@@ -1,0 +1,63 @@
+@import '../../../node_modules/leaguespot-components/src/constants/colours';
+@import '../../../node_modules/leaguespot-components/src/constants/fonts';
+
+.rc-Home {
+  margin: 0px;
+  color: @darkTextPrimary;
+  font-size: 1.25em;
+
+  .banner {
+    // background-color: @leaguespotGreenPrimary;
+    color: @lightTextPrimary;
+    padding-top: 5em;
+    padding-bottom: 3em;
+    background-image: url("../../img/stadium_lights.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    .title {
+      font-family: 'Lobster', sans-serif;
+      color: @lightTextPrimary;
+      text-decoration: none;
+      font-size: 4.55em;
+      text-shadow: 2px 0px 3px #000;
+      text-align: center;
+    }
+
+    .subText {
+      text-align: center;
+      font-size: 2em;
+      line-height: 2.5em;
+      // color: @lightTextSecondary;
+    }
+
+    .rc-RaisedButton button {
+      padding: 0.75em;
+      padding-left: 1em;
+      padding-right: 1em;
+    }
+  }
+
+  .infoBanner {
+    background-color: @lightBackgroundPrimary;
+    padding-top: 4em;
+    padding-bottom: 3em;
+    padding-left: 10em;
+    padding-right: 10em;
+  }
+
+  .content {
+    padding: 2em;
+
+    .leagueBanner {
+      text-align: center;
+
+      .leagueLogo {
+          height: 5em;
+          padding: 1.5em;
+      }
+
+    }
+
+  }
+}

@@ -8,20 +8,23 @@ The web application for Team 13's FYDP project for the Software Engineering clas
 4. Open up the `index.html` file in your browser
 5. In order for any calls to the backend to work, you must have the [server](https://github.com/xKTSE/leaguespot-server) running.
 
+## Dev Setup
+1. Run `npm install` and ensure `webpack` works (see above setup for trouble shooting)
+2. Run `npm run dev`
+3. Visit http://localhost:8080
+
+## Testing
+TODO
+
 ## Folder Layout
-The majority of the folders are kept under `src`, with the exception of `package.json`, `webpack.config.json`, and the generated `prod` folder from running webpack. These files likely won't need manual editing very often and as such, should not be touched without consulting all group members.
+The majority of the folders are kept under `src`, with the exception of `package.json`, `webpack.config.json`, and the generated `prod` folder. These files likely won't need manual editing very often and as such, should not be touched without consulting the owner of this repo.
 
-Within the `src` folder, we have a `js` and `css` folder where each contains their respective type of code, separated into logical files depending on what component/page the files affect. You will also find the `index.html` file which is the only html file and the main entry file of the web application.
+Within the `src` folder, we have various javascript files. Each contains their respective type of code, separated into logical folders depending on what component/page it affects. Most javascript files should have an accompanying LESS file that contains any styling specific to it.
 
-When committing, please make sure you only commit necessary files. If you add garbage to this repo, clean it up.
+## Running in Production
+Getting this website up and running in production is very simple. Once this repo is put on the server, you can run `npm run build` to build the necessary javascript and css files. Once this is done, you can simply access `index.html` to access the website.
 
-## Resources
-https://github.com/reactjs/react-router-tutorial/tree/master/lessons/01-setting-up
+## Committing Procedure
+> Note: When committing, please make sure you only commit necessary files. If you add garbage to this repo, please clean it up.
 
-## Modules
-
-### Material UI
-http://www.material-ui.com/#/
-
-### React Custom Scrollbar
-http://malte-wessel.github.io/react-custom-scrollbars/
+Work that you do should be done on a branch. When ready to merge, create a pull request and DO NOT merge until you get a :+1: from the owner of this repo.

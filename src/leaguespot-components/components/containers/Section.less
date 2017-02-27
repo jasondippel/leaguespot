@@ -1,0 +1,157 @@
+@import '../../constants/colours';
+@import '../../constants/fonts';
+
+.rc-Section {
+  background-color: @lightBackgroundPrimary;
+  border-radius: 2px;
+  margin-top: 1em;
+  margin-bottom:1em;
+  box-sizing: border-box;
+
+  &.backgroundColor {
+    background-color: @lightBackgroundContainer;
+  }
+
+  .columnSpacing {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+
+    &.column1 {
+     width: calc(100% * (1/12) - 1em);
+    }
+    &.column2 {
+     width: calc(100% * (2/12) - 1em);
+    }
+    &.column3 {
+     width: calc(100% * (3/12) - 1em);
+    }
+    &.column4 {
+     width: calc(100% * (4/12) - 1em);
+    }
+    &.column5 {
+     width: calc(100% * (5/12) - 1em);
+    }
+    &.column6 {
+     width: calc(100% * (6/12) - 1em);
+    }
+    &.column7 {
+     width: calc(100% * (7/12) - 1em);
+    }
+    &.column8 {
+     width: calc(100% * (8/12) - 1em);
+    }
+    &.column9 {
+     width: calc(100% * (9/12) - 1em);
+    }
+    &.column10 {
+     width: calc(100% * (10/12) - 1em);
+    }
+    &.column11 {
+     width: calc(100% * (11/12) - 1em);
+    }
+    &.column12 {
+     width: calc(100% * (12/12) - 1em);
+    }
+  }
+
+  &:first-child {
+    margin-left: 0px;
+
+    &.column1 {
+     width: calc(100% * (1/12) - 0.5em);
+    }
+    &.column2 {
+     width: calc(100% * (2/12) - 0.5em);
+    }
+    &.column3 {
+     width: calc(100% * (3/12) - 0.5em);
+    }
+    &.column4 {
+     width: calc(100% * (4/12) - 0.5em);
+    }
+    &.column5 {
+     width: calc(100% * (5/12) - 0.5em);
+    }
+    &.column6 {
+     width: calc(100% * (6/12) - 0.5em);
+    }
+    &.column7 {
+     width: calc(100% * (7/12) - 0.5em);
+    }
+    &.column8 {
+     width: calc(100% * (8/12) - 0.5em);
+    }
+    &.column9 {
+     width: calc(100% * (9/12) - 0.5em);
+    }
+    &.column10 {
+     width: calc(100% * (10/12) - 0.5em);
+    }
+    &.column11 {
+     width: calc(100% * (11/12) - 0.5em);
+    }
+    &.column12 {
+     width: calc(100% * (12/12) - 0.5em);
+    }
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  .title {
+    font-size: 0.85em !important;
+    font-weight: 400 !important;
+    border: none !important;
+    box-sizing: border-box;
+    padding-top: 0.8em;
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-bottom: 0.7em;
+
+    &.coloured {
+        background-color: @leaguespotGreenPrimary;
+        border-bottom: 2px solid #FFF !important;
+        border-top-right-radius: 2px;
+        border-top-left-radius: 2px;
+        box-sizing: border-box;
+        color: @lightTextPrimary;
+
+        .subTitle {
+          opacity: 0.7;
+        }
+    }
+
+    .text {
+      font-size: 1.75em !important;
+    }
+    .subTitle {
+      font-size: 1.25em;
+      font-style: italic;
+      opacity: 0.5;
+      padding-left: 1em;
+    }
+  }
+
+  .content {
+    padding-left: 1em !important;
+    padding-right: 1em !important;
+    padding-bottom: 1em !important;
+  }
+
+  .rc-Section {
+    background-color: lighten(@lightBackgroundContainer, 4%);
+    margin-top: 0;
+    margin-bottom: 0;
+
+    .title {
+
+      .text {
+        font-size: 1.5em !important;
+      }
+      .subTitle {
+        font-size: 1.1em;
+      }
+    }
+  }
+}

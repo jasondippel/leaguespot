@@ -1,0 +1,39 @@
+@import '../../../node_modules/leaguespot-components/src/constants/colours';
+@import '../../../node_modules/leaguespot-components/src/constants/fonts';
+
+
+.rc-MenuBar {
+  background-color: @darkBackgroundPrimary;
+  padding-left: 5px;
+  padding-right: 5px;
+
+  div {
+    display: inline-block;
+  }
+
+  a,
+  .actionButton {
+    // background-color: lighten(@lightBackgroundContainer, 50%);
+    border-bottom: 3px solid @darkBackgroundPrimary;
+    color: @lightTextSecondary;
+    text-decoration: none;
+    display: inline-block;
+    padding-left: 1.25em;
+    padding-right: 1.25em;
+    padding-top: 0.75em;
+    padding-bottom: 0.4em;
+    margin-bottom: 0.35em;
+    transition: color 0.125s ease-in-out, border-bottom 0.125s ease-in-out;
+    font-weight: 400;
+
+    &:hover {
+      color: @lightTextPrimary;
+      cursor: pointer;
+    }
+
+    &.active {
+      border-bottom: 3px solid @leaguespotGreenPrimary;
+      color: @lightTextPrimary;
+    }
+  }
+}

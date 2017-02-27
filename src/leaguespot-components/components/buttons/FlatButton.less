@@ -1,0 +1,56 @@
+@import '../../constants/colours';
+@import '../../constants/fonts';
+
+.rc-FlatButton {
+  display: inline-block;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+
+  button {
+    padding: 8px;
+    border: 0px;
+    border-radius: 2px;
+    background-color: transparent;
+    cursor: pointer;
+    font-family: @leaguespotDefaultFontFamily;
+    font-size: @leaguespotDefaultFontSize;
+    font-weight: @leaguespotDefaultFontWeight;
+    outline: none;
+    transition: color 0.125s ease-in-out;
+    transition: background-color 0.125s ease-in-out;
+
+    &.default {
+      color: @darkTextPrimary;
+    }
+    &.primary {
+      color: @leaguespotGreenPrimary;
+    }
+    &.secondary {
+      color: lighten(@darkTextPrimary, 20%);
+    }
+    &.warning {
+      color: @danger;
+    }
+    &.disabled {
+      cursor: auto;
+      color: darken(@lightTextSecondary, 20%);
+    }
+
+  }
+  button:active,
+  button:hover {
+    background-color: @lightBackgroundSecondary;
+
+    &.default {
+    }
+    &.primary {
+    }
+    &.secondary {
+    }
+    &.warning {
+    }
+    &.disabled {
+      background-color: transparent;
+    }
+  }
+}

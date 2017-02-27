@@ -1,0 +1,21 @@
+@import '../../constants/colours';
+@import '../../constants/fonts';
+
+.rc-Tabs {
+  box-sizing: border-box;
+
+// disable Material UI ripple animation
+  button.tab > div > span {
+    display: none
+  }
+
+  .tab {
+    text-transform: none;
+    color: #f00;
+  }
+  .content {
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    background-color: lighten(@lightBackgroundContainer, 4%);
+  }
+}

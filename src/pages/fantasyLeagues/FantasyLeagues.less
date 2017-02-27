@@ -1,0 +1,101 @@
+@import '../../../node_modules/leaguespot-components/src/constants/colours';
+@import '../../../node_modules/leaguespot-components/src/constants/fonts';
+
+.rc-FantasyLeagues {
+  .content {
+    padding: 0.5em;
+
+    .card {
+      padding: 0.75em;
+      box-sizing: border-box;
+    }
+
+    .noFantasyLeagues {
+      text-align: center;
+      margin-top: 3em;
+
+      .box {
+        border-radius: 2px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+        background-color: #FFF;
+        padding: 1.5em;
+
+        .mainText {
+          font-size: 1.25em;
+          padding-bottom: 0.5em;
+        }
+      }
+
+    }
+
+    .rc-FantasyLeagueCard {
+      background-color: lighten(@lightBackgroundContainer, 10%);
+      border-radius: 2px;
+      box-shadow: 0px 0px 5px 0px rgba(64, 64, 64, 0.15);
+      box-sizing: padding-box;
+      display: inline-block;
+      width: 100%;
+      transition: box-shadow 0.125s ease-in-out;
+      color: @darkTextPrimary;
+
+      &:hover {
+        box-shadow: 0px 0px 12px 0px rgba(64, 64, 64, 0.7);
+        cursor: pointer;
+      }
+
+      .banner {
+        position: relative;
+
+        img {
+          width: 100%;
+          border-top-left-radius: 2px;
+          border-top-right-radius: 2px;
+        }
+        .title {
+          color: @lightTextPrimary;
+          font-size: 1.5em;
+          font-weight: 400;
+          width: 100%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          padding: 0.4em;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          text-shadow: 2px 0px 2px #111;
+        }
+
+        .buttons {
+          text-align: right;
+          position: absolute;
+          right: 0;
+          top: 0;
+          padding-top: 0.4em;
+          padding-right: 0.1em;
+        }
+      }
+
+      .content {
+        padding: 0.75em;
+        text-transform: capitalize;
+
+        .title {
+          color: @lightTextSecondary;
+          font-size: 0.9em;
+          font-weight: 400;
+        }
+
+        .status {
+          font-weight: 400;
+
+          &.open {
+            color: @leaguespotGreenPrimary;
+          }
+        }
+      }
+    }
+  }
+}

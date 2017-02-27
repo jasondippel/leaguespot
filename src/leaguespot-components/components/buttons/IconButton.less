@@ -1,0 +1,71 @@
+@import '../../constants/colours';
+@import '../../constants/fonts';
+
+.rc-IconButton {
+  display: inline-block;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+
+  .__react_component_tooltip {
+    &.place-top {
+      margin-top: -3px !important;
+    }
+    &.type-dark {
+      background-color: rgba(15, 15, 15, 0.25) !important;
+
+      &:after {
+        border-top-color: rgba(15, 15, 15, 0.25) !important;
+      }
+    }
+  }
+
+  button {
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    box-sizing: border-box;
+    border-radius: 36px;
+    background-color: transparent;
+    cursor: pointer;
+    font-family: @leaguespotDefaultFontFamily;
+    font-size: @leaguespotDefaultFontSize;
+    font-weight: @leaguespotDefaultFontWeight;
+    outline: none;
+    transition: color 0.125s ease-in-out;
+    transition: background-color 0.125s ease-in-out;
+    height: 36px;
+
+    svg {
+      width: 36px !important;
+      height: 36px !important;
+      border-radius: 36px;
+    }
+
+    &.addCircle > svg {
+      color: @leaguespotGreenPrimary !important;
+    }
+    &.removeCircle > svg {
+      color: @danger !important;
+    }
+    &.disabled,
+    &.disabled > svg {
+      cursor: auto !important;
+      color: @darkTextSecondary !important;
+    }
+
+  }
+  button:active,
+  button:hover {
+
+    &.addCircle > svg {
+      color: @leaguespotGreenSecondary !important;
+    }
+    &.removeCircle > svg {
+      color: darken(@danger, 15%) !important;
+    }
+
+    &.disabled {
+      background-color: transparent !important;
+    }
+  }
+}

@@ -1,0 +1,141 @@
+@import '../../constants/colours';
+@import '../../constants/fonts';
+
+// TODO: figure out why import of react-virtualized/styles.css fails
+// This is a temporary fix to the problem. (contents of styles.css)
+
+/* Collection default theme */
+.ReactVirtualized__Collection {
+}
+
+.ReactVirtualized__Collection__innerScrollContainer {
+}
+
+/* Grid default theme */
+.ReactVirtualized__Grid {
+}
+
+.ReactVirtualized__Grid__innerScrollContainer {
+}
+
+.ReactVirtualized__List {
+  outline: none;
+}
+
+/* Table default theme */
+.ReactVirtualized__Table {
+}
+
+.ReactVirtualized__Table__Grid {
+}
+
+.ReactVirtualized__Table__headerRow {
+  font-weight: 700;
+  text-transform: uppercase;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.ReactVirtualized__Table__row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.ReactVirtualized__Table__headerTruncatedText {
+  display: inline-block;
+  max-width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.ReactVirtualized__Table__headerColumn,
+.ReactVirtualized__Table__rowColumn {
+  margin-right: 10px;
+  min-width: 0px;
+}
+.ReactVirtualized__Table__rowColumn {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ReactVirtualized__Table__headerColumn:first-of-type,
+.ReactVirtualized__Table__rowColumn:first-of-type {
+  margin-left: 10px;
+}
+.ReactVirtualized__Table__sortableHeaderColumn {
+  cursor: pointer;
+}
+
+.ReactVirtualized__Table__sortableHeaderIconContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.ReactVirtualized__Table__sortableHeaderIcon {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 24px;
+          flex: 0 0 24px;
+  height: 1em;
+  width: 1em;
+  fill: currentColor;
+}
+
+/* List default theme */
+.ReactVirtualized__List {
+}
+
+.rc-List {
+  border-radius: 2px;
+  margin: 5px;
+  box-sizing: border-box;
+  // NOTE: bug when rendering with scrollbar, causes width to be wider than actually is; Need this to fix it
+  overflow-x: hidden;
+
+  .header {
+    background-color: @leaguespotGreenPrimary;
+    border-bottom: 2px solid @lightTextPrimary !important;
+    border-top-right-radius: 2px;
+    border-top-left-radius: 2px;
+    box-sizing: border-box;
+    padding-top: 0.8em;
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-bottom: 0.7em;
+
+    .title {
+      border: none !important;
+      font-size: 1.5em !important;
+      font-weight: 300 !important;
+      color: @lightTextPrimary;
+    }
+  }
+
+  .content {
+    min-height: 100px;
+    height: 60vh;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border: 0px !important;
+    background-color: darken(@lightBackgroundContainer, 8%);
+  }
+
+}
