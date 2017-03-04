@@ -157,13 +157,13 @@ class Info extends React.Component {
 
     let inviteEmails = this.state.inviteEmails;
     let memberEmails = Object.keys(this.state.fantasyLeague.users);
-    let existingInviteList = Object.keys(state.activeFantasyLeague.invited_users);
+    let existingInviteList = Object.keys(this.state.fantasyLeague.invited_users);
 
     inviteEmails.filter((inviteEmail) => {
       let keep = true;
 
       // if existing member
-      if (memberList.includes(inviteEmail)) {
+      if (memberEmails.includes(inviteEmail)) {
         keep = false;
       }
       // if already in invite list
