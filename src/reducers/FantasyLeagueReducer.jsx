@@ -80,23 +80,29 @@ export default function reducer(state = initialState, action) {
         }
       }
       case 'UPDATE_INVITED_ACTIVE_FANTASY_LEAGUE': {
-        let inviteList = state.activeFantasyLeague.invited_users.keys();
-        let memberList = state.activeFantasyLeague.users.keys();
+        let inviteList = Object.keys(state.activeFantasyLeague.invited_users);
+        let memberList = Object.keys(state.activeFantasyLeague.users);
         let newInvites = action.payload.invitedEmails;
 
         newInvites.filter((inviteEmail) => {
-          return !(memberList.includes(inviteEmail));
-        });
+          let keep = true;
+          // if existing member
+          if (memberList.includes(inviteEmail)) {
+            keep = false;
+          }
+          // if already in invite list
+          else if (inviteList.indexOf(inviteEmail) >= 0) {
+            keep = false;
+          }
 
-        newInvites.map((inviteEmail) => {
-          inviteList[inviteEmail] = inviteEmail;
+          return keep;
         });
 
         return {
           ...state,
           activeFantasyLeague: {
             ...state.activeFantasyLeague,
-            invited_users: inviteList
+            invited_users: inviteList.concat(newInvites)
           }
         }
       }

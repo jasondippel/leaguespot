@@ -10,6 +10,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import store from '../../store';
+import APIRequest from '../../../utils/APIRequest';
 import { Sanitize } from '../../../utils/Sanitize';
 import * as leagueInfo from '../../../utils/ProLeagues';
 import { fetchActiveFantasyLeague, addInvitedEmails } from '../../../actions/FantasyLeagueActions';
@@ -110,6 +111,22 @@ class Info extends React.Component {
       return;
     }
 
+    console.log('jaso test');
+
+    if(Object.keys(this.state.fantasyLeague.invited_users).indexOf(this.state.currentEmail) >= 0) {
+      this.setState({
+        inputError: 'User has already been invited'
+      });
+      return;
+    }
+
+    if(Object.keys(this.state.fantasyLeague.users).indexOf(this.state.currentEmail) >= 0) {
+      this.setState({
+        inputError: 'User is already a member'
+      });
+      return;
+    }
+
     this.addEmailAddress(this.state.currentEmail);
     this.setState({
       currentEmail: '',
@@ -139,10 +156,22 @@ class Info extends React.Component {
     }
 
     let inviteEmails = this.state.inviteEmails;
-    let memberEmails = this.state.fantasyLeague.users.keys();
+    let memberEmails = Object.keys(this.state.fantasyLeague.users);
+    let existingInviteList = Object.keys(state.activeFantasyLeague.invited_users);
 
     inviteEmails.filter((inviteEmail) => {
-      return !(memberEmails.includes(inviteEmail));
+      let keep = true;
+
+      // if existing member
+      if (memberList.includes(inviteEmail)) {
+        keep = false;
+      }
+      // if already in invite list
+      else if (existingInviteList.indexOf(inviteEmail) >= 0) {
+        keep = false;
+      }
+
+      return keep;
     });
 
     APIRequest.post({
@@ -276,8 +305,8 @@ class Info extends React.Component {
               <div className='labelValue multiline'>{Sanitize(leagueList)}</div>
             </div>
             <div className='column12'>
-              <div className='labelTitle'>Players</div>
-              <div className='labelValue'>{Object.keys(this.state.fantasyLeague.users).length + Object.keys(this.state.fantasyLeague.invited_users).length}</div>
+              <div className='labelTitle'>Members</div>
+              <div className='labelValue'>{Object.keys(this.state.fantasyLeague.users).length + ' (' +  Object.keys(this.state.fantasyLeague.invited_users).length + ' invited)'}</div>
             </div>
             {button}
           </Section>
