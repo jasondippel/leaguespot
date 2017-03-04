@@ -20,7 +20,7 @@ function setLoggedInUser (sessionId, user) {
   });
 }
 
-function removeLoggedInUser() {
+export function removeLoggedInUser() {
   removeSessionId();
   store.dispatch({
     type: 'REMOVE_USER'
@@ -50,7 +50,9 @@ export function loggedIn() {
     return true;
   }
   else {
-    // If we have the token, we're logged in still (don't have expiry set). The
+    // TODO: add check for token expiry date
+
+    // If we have the token and it's still valid, we're logged in still. The
     // decoded JWT has all the user info in it, so can just pass that to the
     // store.
     let decodedJWT = jwtDecode(sessionId);

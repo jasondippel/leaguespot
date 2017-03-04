@@ -61,6 +61,12 @@ class APIRequest {
 
       $.post(url, options.data)
       .done( (data) => {
+        // TODO: find a nicer way to handle invalid tokens
+        // check for invalid token response
+        if (data.message && data.message === 'Failed to authenticate token.') {
+          auth.removeLoggedInUser();
+          window.location.reload();
+        }
         resolve(data);
       })
       .fail( (err) => {
@@ -91,6 +97,12 @@ class APIRequest {
 
       $.get(url, options.data)
       .done( (data) => {
+        // TODO: find a nicer way to handle invalid tokens
+        // check for invalid token response
+        if (data.message && data.message === 'Failed to authenticate token.') {
+          auth.removeLoggedInUser();
+          window.location.reload();
+        }
         resolve(data);
       })
       .fail( (err) => {
