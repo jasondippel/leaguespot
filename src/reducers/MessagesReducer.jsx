@@ -30,10 +30,10 @@ export default function reducer(state = initialState, action) {
       case 'REMOVE_MESSAGE_FROM_INBOX': {
         let messages = state.messages;
 
-        if (action.payload.index > -1 && action.payload.index < messages.length) {
-          messages.splice(action.payload.index, 1);
+        if (action.payload.messageIndex > -1 && action.payload.messageIndex < messages.length) {
+          messages.splice(action.payload.messageIndex, 1);
         }
-        
+
         return {
           ...state,
           messages: messages,

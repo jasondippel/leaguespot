@@ -133,7 +133,7 @@ class Inbox extends React.Component {
         that.props.dispatch(removeMessage(index));
 
         // update active index
-        if (index === numMessages - 1) {
+        if (index === numMessages - 1 && index > 0) {
           index--;
         }
 
