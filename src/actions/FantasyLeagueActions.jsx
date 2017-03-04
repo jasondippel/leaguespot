@@ -102,3 +102,12 @@ export function addToMyFantasyLeagues(fantasyLeague) {
     }
   }
 }
+
+export function addInvitedEmails(invitedEmails) {
+  return {
+    type: 'UPDATE_INVITED_ACTIVE_FANTASY_LEAGUE',
+    payload: {
+      invitedEmails: invitedEmails
+    }
+  }
+}

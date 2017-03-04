@@ -11,11 +11,13 @@ import $ from 'jquery';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import store from '../store';
-import { fetchInboxContents } from '../../actions/MessagesActions';
+import { fetchInboxContents, removeMessage } from '../../actions/MessagesActions';
 import FlatButton from '../../leaguespot-components/components/buttons/FlatButton';
 import RaisedButton from '../../leaguespot-components/components/buttons/RaisedButton';
+import Toast from '../../leaguespot-components/components/toast/Toast';
 import SmallBanner from '../../components/banners/SmallBanner';
 import { Sanitize } from '../../utils/Sanitize';
+import APIRequest from '../../utils/APIRequest';
 
 
 class Inbox extends React.Component {
@@ -24,18 +26,25 @@ class Inbox extends React.Component {
 
     this.state = {
       messages: null,
-      activeMessage: 0
+      activeMessageIndex: 0,
+      toastOpen: false,
+      toastMessage: '',
+      toastType: 'DEFAULT',
+      toastOnClose: () => {},
     }
 
     store.subscribe(() => {
       this.setState({
-        messages: store.getState().messages
+        messages: store.getState().messages,
+        user: store.getState().user.user
       });
     });
 
-    this.setActiveMessage = this.setActiveMessage.bind(this);
+    this.setActiveMessageIndex = this.setActiveMessageIndex.bind(this);
     this.joinInvitedLeague = this.joinInvitedLeague.bind(this);
     this.declineInvitedLeague = this.declineInvitedLeague.bind(this);
+    this.handleOpenToast = this.handleOpenToast.bind(this);
+    this.handleCloseToast = this.handleCloseToast.bind(this);
   }
 
   componentWillMount() {
@@ -43,10 +52,25 @@ class Inbox extends React.Component {
     this.props.dispatch(fetchInboxContents());
   }
 
-  setActiveMessage(e) {
+  setActiveMessageIndex(e) {
     let item = $(e.target.closest('[data-key]'));
     this.setState({
-      activeMessage: item.data('key')
+      activeMessageIndex: item.data('key')
+    });
+  }
+
+  handleOpenToast(type, message) {
+    this.setState({
+      toastOpen: true,
+      toastType: type,
+      toastMessage: message,
+      toastOnClose: this.handleCloseToast
+    });
+  }
+
+  handleCloseToast() {
+    this.setState({
+      toastOpen: false
     });
   }
 
@@ -87,9 +111,47 @@ class Inbox extends React.Component {
   }
 
   declineInvitedLeague(e) {
+    let index = this.state.activeMessageIndex;
+    let message = this.state.messages.messages[index];
+    let numMessages = this.state.messages.messages.length;
+    let fleagueId = message.fleagueId;
+    let uninviteEmail = this.state.user.email;
+
+    // make call to backend
     let that = this;
-    let index = $(e.target.closest('[data-key]'));
-    let fleagueId;
+    APIRequest.post({
+      api: 'LeagueSpot',
+      apiExt: '/fantasy_leagues/uninvite',
+      data: {
+        fleague_id: fleagueId,
+        email: uninviteEmail
+      }
+    })
+    .then((resp) => {
+      if (resp.success) {
+        // remove message from store
+        that.props.dispatch(removeMessage(index));
+
+        // update active index
+        if (index === numMessages - 1) {
+          index--;
+        }
+
+        that.setState({
+          activeMessageIndex: index
+        });
+
+        that.handleOpenToast('default', 'Invitation has been declined');
+
+      } else {
+        that.handleOpenToast('error', 'Failed to decline invitation, try again later');
+        console.error('Failed to decline invitation', resp.message);
+      }
+    })
+    .catch((error) => {
+      that.handleOpenToast('error', 'Error updating user information');
+      console.error('Error declining invitation', error);
+    });
 
   }
 
@@ -115,12 +177,12 @@ class Inbox extends React.Component {
       this.state.messages.messages.map((message, index) => {
         let key = index;
         let classes = 'item';
-        if (index === this.state.activeMessage) {
+        if (index === this.state.activeMessageIndex) {
           classes += ' active';
         };
 
         messageList.push((
-          <div className={classes} data-key={key} key={key} onClick={that.setActiveMessage}>
+          <div className={classes} data-key={key} key={key} onClick={that.setActiveMessageIndex}>
             <div className='title'>{Sanitize(message.title)}</div>
             <div className='message'>{Sanitize(message.body)}</div>
           </div>
@@ -142,7 +204,7 @@ class Inbox extends React.Component {
 
     if (this.state.messages) {
       if (this.state.messages.messages.length > 0) {
-        let message = this.state.messages.messages[this.state.activeMessage];
+        let message = this.state.messages.messages[this.state.activeMessageIndex];
         messageContent = (
           <div className='message'>
             <div className='title'>{Sanitize(message.title)}</div>

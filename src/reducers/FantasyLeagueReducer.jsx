@@ -73,6 +73,33 @@ export default function reducer(state = initialState, action) {
           myFantasyLeagues: [...state.myFantasyLeagues, action.payload.myFantasyLeague]
         }
       }
+      case 'JOIN_FANTASY_LEAGUE': {
+        return {
+          ...state,
+          myFantasyLeagues: [...state.myFantasyLeagues, action.payload.joinedFantasyLeague]
+        }
+      }
+      case 'UPDATE_INVITED_ACTIVE_FANTASY_LEAGUE': {
+        let inviteList = state.activeFantasyLeague.invited_users.keys();
+        let memberList = state.activeFantasyLeague.users.keys();
+        let newInvites = action.payload.invitedEmails;
+
+        newInvites.filter((inviteEmail) => {
+          return !(memberList.includes(inviteEmail));
+        });
+
+        newInvites.map((inviteEmail) => {
+          inviteList[inviteEmail] = inviteEmail;
+        });
+
+        return {
+          ...state,
+          activeFantasyLeague: {
+            ...state.activeFantasyLeague,
+            invited_users: inviteList
+          }
+        }
+      }
     }
 
     return state
