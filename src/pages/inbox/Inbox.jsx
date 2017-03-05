@@ -11,6 +11,7 @@ import $ from 'jquery';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import store from '../store';
+import { fetchMyFantasyLeagues } from '../../actions/FantasyLeagueActions';
 import { fetchInboxContents, removeMessage } from '../../actions/MessagesActions';
 import FlatButton from '../../leaguespot-components/components/buttons/FlatButton';
 import RaisedButton from '../../leaguespot-components/components/buttons/RaisedButton';
@@ -79,35 +80,37 @@ class Inbox extends React.Component {
     let index = $(e.target.closest('[data-key]'));
     let fleagueId;
 
-    // call action to join league
+    APIRequest.post({
+      api: 'LeagueSpot',
+      apiExt: '/fantasy_leagues/join',
+      data: {
+        fleague_id: fleagueId
+      }
+    }).then((resp) => {
+      if (resp.success) {
+        // remove message from store and get updated list of leagues
+        that.props.dispatch(removeMessage(index));
+        that.props.dispatch(fetchMyFantasyLeagues());
 
-    // APIRequest.post({
-    //   api: "LeagueSpot",
-    //   apiExt: "/fantasy_leagues/join",
-    //   data: {
-    //     fleague_id: fleagueId
-    //   }
-    // }).then((resp) => {
-    //   if (resp.success) {
-    //     if(that.state.messages.length === that.state.selectedIndex + 1) {
-    //       let newIndex = that.state.selectedIndex - 1;
-    //       if(newIndex < 0) newIndex = 0;
-    //       that.setState({
-    //         selectedIndex: newIndex
-    //       });
-    //     }
-    //     // remove message from loaded list
-    //   }
-    //   else {
-    //     // TODO: handle better
-    //     console.log("Response", resp);
-    //     alert("Bad Response");
-    //   }
-    // }).catch((error) => {
-    //   // TODO: handle better
-    //   console.log("Error", error);
-    //   alert("Error", error);
-    // });
+        // update active index
+        if (index === numMessages - 1 && index > 0) {
+          index--;
+        }
+
+        that.setState({
+          activeMessageIndex: index
+        });
+
+        that.handleOpenToast('success', 'Congrats! Find the new league under your Fantasy Leagues');
+      } else {
+        that.handleOpenToast('error', 'Failed to accept invitation, try again later');
+        console.error('Failed to accept invitation', resp.message);
+      }
+    })
+    .catch((error) => {
+      that.handleOpenToast('error', 'Error joining league');
+      console.error('Error joining invitation', error);
+    });
   }
 
   declineInvitedLeague(e) {
@@ -149,7 +152,7 @@ class Inbox extends React.Component {
       }
     })
     .catch((error) => {
-      that.handleOpenToast('error', 'Error updating user information');
+      that.handleOpenToast('error', 'Error declining invitation');
       console.error('Error declining invitation', error);
     });
 
