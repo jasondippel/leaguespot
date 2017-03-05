@@ -77,8 +77,10 @@ class Inbox extends React.Component {
 
   joinInvitedLeague(e) {
     let that = this;
-    let index = $(e.target.closest('[data-key]'));
-    let fleagueId;
+    let index = this.state.activeMessageIndex;
+    let message = this.state.messages.messages[index];
+    let numMessages = this.state.messages.messages.length;
+    let fleagueId = message.fleagueId;
 
     APIRequest.post({
       api: 'LeagueSpot',
@@ -255,6 +257,13 @@ class Inbox extends React.Component {
           {messagesList}
           {messageViewer}
         </div>
+
+        <Toast
+          open={this.state.toastOpen}
+          type={this.state.toastType}
+          message={this.state.toastMessage}
+          onClose={this.handleCloseToast}
+          />
       </div>
     );
   }
