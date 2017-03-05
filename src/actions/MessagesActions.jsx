@@ -19,6 +19,7 @@ function generateInviteMessages(invitedLeagues) {
     newMessage['type'] = 'fleagueInvite';
     newMessage['title'] = 'You\'ve been invited!';
     newMessage['body'] = 'Congrats! You\'ve been invited to join ' + league.fleague_name + '!';
+    newMessage['fleagueId'] = league.fleague_id;
     messages.push(newMessage);
   });
 
@@ -58,6 +59,17 @@ export function fetchInboxContents() {
           errorMessage: 'Error occurred while fetching inbox contents'
         }
       });
+    });
+  }
+}
+
+export function removeMessage(index) {
+  return function(dispatch) {
+    dispatch({
+      type: 'REMOVE_MESSAGE_FROM_INBOX',
+      payload: {
+        messageIndex: index
+      }
     });
   }
 }
