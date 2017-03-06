@@ -32,7 +32,7 @@ class Info extends React.Component {
   static contextTypes = {
     router: React.PropTypes.object.isRequired
   }
-  
+
   constructor() {
     super();
 
@@ -250,7 +250,31 @@ class Info extends React.Component {
   }
 
   deleteLeague() {
+    let fleagueId = this.state.fantasyLeague.fleague_id;
+    let that = this;
+    this.handleClosePopup();
 
+    APIRequest.post({
+      api: 'LeagueSpot',
+      apiExt: '/fantasy_leagues/delete',
+      data: {
+        fleague_id: fleagueId
+      }
+    })
+    .then((resp) => {
+      if (resp.success) {
+        that.props.dispatch(removeFromMyFantasyLeagues(fleagueId));
+        that.context.router.push('/fantasy-leagues');
+      }
+      else {
+        that.handleOpenToast('ERROR', 'Failed to delete league');
+        console.log('Failed to delete league', resp.message);
+      }
+    })
+    .catch((error) => {
+      that.handleOpenToast('ERROR', 'Error deleting league');
+      console.log('Error deleting league ', error);
+    });
   }
 
   inviteUsers() {
