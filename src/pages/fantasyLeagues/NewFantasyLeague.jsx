@@ -399,7 +399,10 @@ class NewFantasyLeague extends React.Component {
         league_size_limit     : 100,
         league_start_dateTime : fantasyLeague.cutOffDate,
         status                : 'in progress',             // TODO: should probably be set on the server side
-        settings              : { draft_mode : 'auto' },   // TODO: figure out what this is for
+        settings              : {
+          hometown: fantasyLeague.hometown,
+          max_roster_size: fantasyLeague.maxRosterSize
+        },
         social_rules          : fantasyLeague.socialRules
       }
     }).then((resp) => {
