@@ -103,6 +103,15 @@ export function addToMyFantasyLeagues(fantasyLeague) {
   }
 }
 
+export function removeFromMyFantasyLeagues(fleagueId) {
+  return {
+    type: 'REMOVE_FROM_MY_FANTASY_LEAGUES',
+    payload: {
+      fleagueId: fleagueId
+    }
+  }
+}
+
 export function addInvitedEmails(invitedEmails) {
   return {
     type: 'UPDATE_INVITED_ACTIVE_FANTASY_LEAGUE',
