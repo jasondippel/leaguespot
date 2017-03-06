@@ -13,18 +13,26 @@ import store from '../../store';
 import APIRequest from '../../../utils/APIRequest';
 import { Sanitize } from '../../../utils/Sanitize';
 import * as leagueInfo from '../../../utils/ProLeagues';
-import { fetchActiveFantasyLeague, addInvitedEmails } from '../../../actions/FantasyLeagueActions';
+import {
+  fetchActiveFantasyLeague,
+  addInvitedEmails,
+  removeFromMyFantasyLeagues } from '../../../actions/FantasyLeagueActions';
 import FlatButton from '../../../leaguespot-components/components/buttons/FlatButton';
 import RaisedButton from '../../../leaguespot-components/components/buttons/RaisedButton';
 import Section from '../../../leaguespot-components/components/containers/Section';
 import Chip from '../../../leaguespot-components/components/chips/Chip';
 import TextField from '../../../leaguespot-components/components/inputs/text/TextField';
 import Toast from '../../../leaguespot-components/components/toast/Toast';
+import Popup from '../../../leaguespot-components/components/popup/Popup';
 import InviteUsers from '../NewFantasyLeagueSteps/InviteUsers';
 import { validateEmail } from '../../../utils/Validate';
 
 
 class Info extends React.Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  }
+  
   constructor() {
     super();
 
@@ -36,7 +44,12 @@ class Info extends React.Component {
       inputError: '',
       toastOpen: false,
       toastMessage: '',
-      toastType: 'DEFAULT'
+      toastType: 'DEFAULT',
+      popupOpen: false,
+      popupTitle: '',
+      popupMessage: '',
+      popupButtons: [],
+      popupType: 'CONFIRM'
     }
 
     store.subscribe(() => {
@@ -54,6 +67,12 @@ class Info extends React.Component {
     this.inviteUsers = this.inviteUsers.bind(this);
     this.handleOpenToast = this.handleOpenToast.bind(this);
     this.handleCloseToast = this.handleCloseToast.bind(this);
+    this.handleOpenPopup = this.handleOpenPopup.bind(this);
+    this.handleClosePopup = this.handleClosePopup.bind(this);
+    this.handleLeaveLeague = this.handleLeaveLeague.bind(this);
+    this.handleDeleteLeague = this.handleDeleteLeague.bind(this);
+    this.leaveLeague = this.leaveLeague.bind(this);
+    this.deleteLeague = this.deleteLeague.bind(this);
   }
 
   componentWillMount() {
@@ -83,12 +102,66 @@ class Info extends React.Component {
     });
   }
 
-  handleDeleteLeague() {
+  handleOpenPopup(type, title, message, btns) {
+    this.setState({
+      popupOpen: true,
+      popupType: type,
+      popupTitle: title,
+      popupMessage: message,
+      popupButtons: btns
+    });
+  }
 
+  handleClosePopup() {
+    this.setState({
+      popupOpen: false
+    });
+  }
+
+  handleDeleteLeague() {
+    let type = 'CONFIRM';
+    let title = 'Confirm';
+    let message = 'Are you sure you want to delete this league? Once done, all information is lost.'
+    let buttons = [
+      (
+        <FlatButton
+          label='No'
+          onClick={this.handleClosePopup}
+          />
+      ),
+      (
+        <RaisedButton
+          label='Yes'
+          type='warning'
+          onClick={this.deleteLeague}
+          />
+      )
+    ];
+
+    this.handleOpenPopup(type, title, message, buttons);
   }
 
   handleLeaveLeague() {
+    let type = 'CONFIRM';
+    let title = 'Confirm';
+    let message = 'Are you sure you want to leave this league? Once done, all your information is lost.'
+    let buttons = [
+      (
+        <FlatButton
+          label='No'
+          onClick={this.handleClosePopup}
+          />
+      ),
+      (
+        <RaisedButton
+          label='Yes'
+          type='warning'
+          onClick={this.leaveLeague}
+          />
+      )
+    ];
 
+    this.handleOpenPopup(type, title, message, buttons);
   }
 
   handleKeyDown(e) {
@@ -110,8 +183,6 @@ class Info extends React.Component {
       });
       return;
     }
-
-    console.log('jaso test');
 
     if(Object.keys(this.state.fantasyLeague.invited_users).indexOf(this.state.currentEmail) >= 0) {
       this.setState({
@@ -148,6 +219,38 @@ class Info extends React.Component {
     this.setState({
       inviteEmails: inviteEmails
     });
+  }
+
+  leaveLeague() {
+    let fleagueId = this.state.fantasyLeague.fleague_id;
+    let that = this;
+    this.handleClosePopup();
+
+    APIRequest.post({
+      api: 'LeagueSpot',
+      apiExt: '/fantasy_leagues/leave',
+      data: {
+        fleague_id: fleagueId
+      }
+    })
+    .then((resp) => {
+      if (resp.success) {
+        that.props.dispatch(removeFromMyFantasyLeagues(fleagueId));
+        that.context.router.push('/fantasy-leagues');
+      }
+      else {
+        that.handleOpenToast('ERROR', 'Something went wrong, please try again later');
+        console.log('Failed to leave league', resp.message);
+      }
+    })
+    .catch((error) => {
+      that.handleOpenToast('ERROR', 'Error leaving league');
+      console.log('Error leaving league ', error);
+    });
+  }
+
+  deleteLeague() {
+
   }
 
   inviteUsers() {
@@ -204,12 +307,11 @@ class Info extends React.Component {
         });
       }
       else {
-        // show toast
+        this.handleOpenToast('Error', 'Failed to invite users');
         console.error('Failed to invite users', resp);
       }
     }).catch((error) => {
-      // show toast
-      alert('Error occurred inviting users');
+      this.handleOpenToast('Error', 'Error inviting users');
       console.error('Error occurred inviting users', error);
     });
   }
@@ -235,6 +337,7 @@ class Info extends React.Component {
             label='Delete League'
             type='warning'
             noPadding={true}
+            onClick={this.handleDeleteLeague}
             />
         </div>
       );
@@ -245,6 +348,7 @@ class Info extends React.Component {
             label='Leave League'
             type='warning'
             noPadding={true}
+            onClick={this.handleLeaveLeague}
             />
         </div>
       );
@@ -274,10 +378,15 @@ class Info extends React.Component {
     });
     let hometown = this.state.fantasyLeague.hometown ? this.state.fantasyLeague.hometown : 'n/a';
     let socialRules = this.state.fantasyLeague.social_rules ? this.state.fantasyLeague.social_rules : 'n/a';
+    let membersCount = Object.keys(this.state.fantasyLeague.users).length;
     let buttonStyle = {
       verticalAlign: 'bottom',
       paddingBottom: '0.5em'
     };
+
+    if (Object.keys(this.state.fantasyLeague.invited_users).length > 0) {
+      membersCount += ' (' +  Object.keys(this.state.fantasyLeague.invited_users).length + ' invited)'
+    }
 
     if (this.state.inputError) {
       buttonStyle['paddingBottom'] = '2.5em';
@@ -306,7 +415,7 @@ class Info extends React.Component {
             </div>
             <div className='column12'>
               <div className='labelTitle'>Members</div>
-              <div className='labelValue'>{Object.keys(this.state.fantasyLeague.users).length + ' (' +  Object.keys(this.state.fantasyLeague.invited_users).length + ' invited)'}</div>
+              <div className='labelValue'>{membersCount}</div>
             </div>
             {button}
           </Section>
@@ -380,6 +489,15 @@ class Info extends React.Component {
           type={this.state.toastType}
           message={this.state.toastMessage}
           onClose={this.handleCloseToast}
+          />
+
+        <Popup
+          open={this.state.popupOpen}
+          type={this.state.popupType}
+          title={this.state.popupTitle}
+          message={this.state.popupMessage}
+          onClose={this.handleClosePopup}
+          buttons={this.state.popupButtons}
           />
       </div>
     );

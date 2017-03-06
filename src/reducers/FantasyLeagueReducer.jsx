@@ -73,6 +73,17 @@ export default function reducer(state = initialState, action) {
           myFantasyLeagues: [...state.myFantasyLeagues, action.payload.myFantasyLeague]
         }
       }
+      case 'REMOVE_FROM_MY_FANTASY_LEAGUES': {
+        let index = state.myFantasyLeagues.map((league) => {
+          return league.fleague_id;
+        }).indexOf(action.payload.fleagueId);
+        let myFantasyLeagues = state.myFantasyLeagues.splice(index, 1);
+
+        return {
+          ...state,
+          myFantasyLeagues: myFantasyLeagues
+        }
+      }
       case 'JOIN_FANTASY_LEAGUE': {
         return {
           ...state,
