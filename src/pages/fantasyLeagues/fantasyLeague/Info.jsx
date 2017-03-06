@@ -400,8 +400,9 @@ class Info extends React.Component {
         leagueList += ', ' + leagueName;
       }
     });
-    let hometown = this.state.fantasyLeague.hometown ? this.state.fantasyLeague.hometown : 'n/a';
+    let hometown = this.state.fantasyLeague.settings.hometown ? this.state.fantasyLeague.settings.hometown : 'n/a';
     let socialRules = this.state.fantasyLeague.social_rules ? this.state.fantasyLeague.social_rules : 'n/a';
+    let maxRosterSize = this.state.fantasyLeague.settings.max_roster_size;
     let membersCount = Object.keys(this.state.fantasyLeague.users).length;
     let buttonStyle = {
       verticalAlign: 'bottom',
@@ -494,7 +495,7 @@ class Info extends React.Component {
             </div>
             <div className='column12'>
               <div className='labelTitle'>Max Roster Size</div>
-              <div className='labelValue'>TODO</div>
+              <div className='labelValue'>{maxRosterSize}</div>
             </div>
             <div className='column12'>
               <div className='labelTitle'>Active Roster Size</div>
