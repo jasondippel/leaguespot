@@ -4,11 +4,40 @@
  *
  */
 
-const sports = ['Basketball', 'Hockey'];
+const sports = ['Hockey'];
 
 const proLeaguesInSport = {
   Basketball: ['nba', 'wnba', 'ncaambd1'],
   Hockey: ['nhl', 'ohl', 'qmjhl', 'whl', 'nwhl', 'cwhl']
+}
+
+const statNames = {
+  goals: 'Goals',
+  assists: 'Assists',
+  plusminus: 'Plus/Minus',
+  pim: 'Penalty Minutes',
+  saves: 'Saves',
+  save_percentage: 'Save Percentage'
+}
+
+const statShortForm = {
+  goals: 'G',
+  assists: 'A',
+  plusminus: '+/-',
+  pim: 'PIM',
+  saves: 'Saves',
+  save_percentage: 'Save %'
+}
+
+const statMultipliersBySport = {
+  Hockey: {
+    goals: 5,
+    assists: 3,
+    plusminus: 1,
+    pim: -1,
+    saves: 2,
+    save_percentage: 3
+  }
 }
 
 const maxRosterSizeBySport = {
@@ -63,6 +92,33 @@ export function getLeaguesInSport(sport) {
 
   console.error('Error: cannot find sport \"' + sport + '\" in list of sports');
   return [];
+}
+
+export function getStatsForSport(sport) {
+  if (statMultipliersBySport[sport]) {
+    return Object.assign({}, statMultipliersBySport[sport]);
+  }
+
+  console.error('Error: cannot find multipliers for sport \"' + sport + '\"');
+  return {};
+}
+
+export function getNamesForStat(stat) {
+  if (statNames[stat]) {
+    return statNames[stat];
+  }
+
+  console.error('Error: cannot find name for stat \"' + stat + '\"');
+  return '';
+}
+
+export function getShortFormForStat(stat) {
+  if (statShortForm[stat]) {
+    return statShortForm[stat];
+  }
+
+  console.error('Error: cannot find short form for stat \"' + stat + '\"');
+  return '';
 }
 
 export function getLeagueName(leagueId) {

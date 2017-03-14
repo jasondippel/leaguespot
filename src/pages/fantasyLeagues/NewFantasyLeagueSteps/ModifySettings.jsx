@@ -13,6 +13,7 @@ import TextField from '../../../leaguespot-components/components/inputs/text/Tex
 import DatePicker from '../../../leaguespot-components/components/datePicker/DatePicker';
 import TimePicker from '../../../leaguespot-components/components/timePicker/TimePicker';
 import SmallBanner from '../../../components/banners/SmallBanner';
+import * as leagueInfo from '../../../utils/ProLeagues';
 
 
 export default class ModifySettings extends React.Component {
@@ -32,8 +33,8 @@ export default class ModifySettings extends React.Component {
         <Section>
           <div className='column12 dataSection'>
             <div className='dataDetails'>
-              <span className='title'>Cutoff date</span>
-              The final date users in the league will have to draft their roster. If a user has not drafted it by this point, the user is automatically removed from the league.
+              <span className='title'>Final Day to Draft Teams</span>
+              The final date users in the league will have to draft their roster. If a user has not drafted their team by 11:59pm EST on this date, the user is automatically removed from the league. Scoring will begin for all games after this date.
             </div>
             <div className='column6'>
               <DatePicker
@@ -43,14 +44,16 @@ export default class ModifySettings extends React.Component {
                 onChange={this.props.handleCutOffDateChange}
                 />
             </div>
-            <div className='column6'>
-              <TimePicker
-                floatingLabelFixed={true}
-                floatingLabelText='Cutoff time'
-                value={this.props.cutOffDate}
-                onChange={this.props.handleCutoffTimeChange}
-                />
-            </div>
+            {
+              // <div className='column6'>
+              //   <TimePicker
+              //     floatingLabelFixed={true}
+              //     floatingLabelText='Cutoff time'
+              //     value={this.props.cutOffDate}
+              //     onChange={this.props.handleCutoffTimeChange}
+              //     />
+              // </div>
+            }
           </div>
           <div className='column12 dataSection'>
             <div className='dataDetails'>
@@ -68,8 +71,32 @@ export default class ModifySettings extends React.Component {
           </div>
           <div className='column12 dataSection'>
             <div className='dataDetails'>
+              <span className='title'>Stat Weightings</span>
+              The weights below indicate how important that statistic is to you. Stats with a higher rating will count for more points when scores are calculated. Adjust the weights below to create your own custom scoring system.
+            </div>
+            {
+              Object.keys(this.props.statMultipliers).map((stat, key) => {
+                let weight = this.props.statMultipliers[stat];
+                return (
+                  <div className='column6' key={key}>
+                    <TextField
+                      floatingLabelFixed={true}
+                      floatingLabelText={leagueInfo.getNamesForStat(stat)}
+                      hintText='0'
+                      value={this.props.statMultipliers[stat]}
+                      onChange={(e, newValue) => {
+                        this.props.handleStatMultiplierChange(stat, newValue);
+                      }}
+                      />
+                  </div>
+                )
+              })
+            }
+          </div>
+          <div className='column12 dataSection'>
+            <div className='dataDetails'>
               <span className='title'>Hometown</span>
-              If one is selected, players from that city will earn bonus points in your fantasy league.
+              If one is selected, players from that city will earn <span className='lightBold'>double the points</span> in your fantasy league.
             </div>
             <GeoInput
               floatingLabelFixed={true}

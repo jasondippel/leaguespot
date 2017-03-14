@@ -36,6 +36,8 @@ export default class TextField extends React.Component {
   render() {
     var textFieldProps = _.pick(this.props, 'defaultValue', 'disabled', 'errorText', 'floatingLabelFixed', 'floatingLabelText', 'fullWidth', 'hintText', 'multiLine', 'onChange', 'onKeyDown', 'type', 'underlineShow', 'value');
 
+    textFieldProps['value'] = textFieldProps['value'] ? textFieldProps['value'].toString() : '';
+
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(LightTheme)}>
         <div className='rc-TextField'>

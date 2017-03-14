@@ -95,6 +95,8 @@ class Dashboard extends React.Component {
           </div>
         </div>
       );
+    } else {
+      // TODO: check to make sure user is member of this league 
     }
 
     return (

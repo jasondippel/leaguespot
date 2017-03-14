@@ -36,7 +36,7 @@ class NewFantasyLeague extends React.Component {
     super();
 
     // default start cutoff date
-    let cutOffDate = moment().add(1, 'days').hour(12).minute(30).second(0).toDate();
+    let cutOffDate = moment().add(1, 'days').hour(23).minute(59).second(59).toDate();
 
     this.state = {
       stepper: {
@@ -54,8 +54,10 @@ class NewFantasyLeague extends React.Component {
         cutOffDate: cutOffDate,
         maxRosterSize: 0,
         hometown: undefined,
+        hometown_multiplier: 2,
         userEmails: [],
-        socialRules: ''
+        socialRules: '',
+        statMultipliers: {}
       },
       errorMessage: '',
       toastOpen: false
@@ -83,6 +85,7 @@ class NewFantasyLeague extends React.Component {
     this.handleCutOffDateChange = this.handleCutOffDateChange.bind(this);
     this.handleCutoffTimeChange = this.handleCutoffTimeChange.bind(this);
     this.handleMaxRosterSizeChange = this.handleMaxRosterSizeChange.bind(this);
+    this.handleStatMultiplierChange = this.handleStatMultiplierChange.bind(this);
     this.handleHometownChange = this.handleHometownChange.bind(this);
     this.handleSocialRulesChange = this.handleSocialRulesChange.bind(this);
     this.addEmailAddress = this.addEmailAddress.bind(this);
@@ -111,11 +114,13 @@ class NewFantasyLeague extends React.Component {
           <ModifySettings
             cutOffDate={this.state.fantasyLeague.cutOffDate}
             maxRosterSize={this.state.fantasyLeague.maxRosterSize}
+            statMultipliers={this.state.fantasyLeague.statMultipliers}
             hometown={this.state.fantasyLeague.hometown}
             socialRules={this.state.fantasyLeague.socialRules}
             handleCutOffDateChange={this.handleCutOffDateChange}
             handleCutoffTimeChange={this.handleCutoffTimeChange}
             handleMaxRosterSizeChange={this.handleMaxRosterSizeChange}
+            handleStatMultiplierChange={this.handleStatMultiplierChange}
             handleHometownChange={this.handleHometownChange}
             handleSocialRulesChange={this.handleSocialRulesChange} />
         );
@@ -159,6 +164,7 @@ class NewFantasyLeague extends React.Component {
       case 1:
         if (!this.verifyCutOffDate() ||
             !this.verifyRosterSize() ||
+            !this.verifyStatMultipliers() ||
             !this.verifyHometown() ) {
           result = false;
         }
@@ -206,6 +212,31 @@ class NewFantasyLeague extends React.Component {
       });
       result = false;
     }
+
+    return result;
+  }
+
+  isNumber(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+  }
+
+  verifyStatMultipliers() {
+    let result = true;
+
+    Object.keys(this.state.fantasyLeague.statMultipliers).map((stat) => {
+      let value = this.state.fantasyLeague.statMultipliers[stat];
+      if (!value) {
+        value = 0;
+        this.state.fantasyLeague.statMultipliers[stat] = 0;
+      }
+
+      if (!this.isNumber(value)) {
+        result = false;
+        this.setState({
+          errorMessage: 'Stat multipliers must be numerical values'
+        });
+      }
+    });
 
     return result;
   }
@@ -283,13 +314,15 @@ class NewFantasyLeague extends React.Component {
     // default to all pro leagues selected, max roster size
     let proLeagues = leagueInfo.getLeaguesInSport(sport);
     let maxRosterSize = leagueInfo.getMaxRosterSize(sport);
+    let statMultipliers = leagueInfo.getStatsForSport(sport);
 
     this.setState({
       fantasyLeague: {
         ...this.state.fantasyLeague,
         sport: sport,
         proLeagues: proLeagues,
-        maxRosterSize: maxRosterSize
+        maxRosterSize: maxRosterSize,
+        statMultipliers: statMultipliers
       }
     });
   }
@@ -357,6 +390,18 @@ class NewFantasyLeague extends React.Component {
     });
   }
 
+  handleStatMultiplierChange(stat, newMultiplier) {
+    let newMultipliers = this.state.fantasyLeague.statMultipliers;
+    newMultipliers[stat] = newMultiplier;
+
+    this.setState({
+      fantasyLeague: {
+        ...this.state.fantasyLeague,
+        statMultipliers: newMultipliers
+      }
+    });
+  }
+
   handleHometownChange(location) {
     this.setState({
       fantasyLeague: {
@@ -399,9 +444,12 @@ class NewFantasyLeague extends React.Component {
         league_size_limit     : 100,
         league_start_dateTime : fantasyLeague.cutOffDate,
         status                : 'in progress',             // TODO: should probably be set on the server side
-        settings              : {
-          hometown: fantasyLeague.hometown,
-          max_roster_size: fantasyLeague.maxRosterSize
+        settings              :
+        {
+          hometown              : fantasyLeague.hometown,
+          hometown_multiplier   : fantasyLeague.hometown_multiplier,
+          max_roster_size       : fantasyLeague.maxRosterSize,
+          stat_multipliers      : fantasyLeague.statMultipliers
         },
         social_rules          : fantasyLeague.socialRules
       }

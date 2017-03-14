@@ -403,6 +403,7 @@ class Info extends React.Component {
     let hometown = this.state.fantasyLeague.settings.hometown ? this.state.fantasyLeague.settings.hometown : 'n/a';
     let socialRules = this.state.fantasyLeague.social_rules ? this.state.fantasyLeague.social_rules : 'n/a';
     let maxRosterSize = this.state.fantasyLeague.settings.max_roster_size;
+    let multipliersSection = '';
     let membersCount = Object.keys(this.state.fantasyLeague.users).length;
     let buttonStyle = {
       verticalAlign: 'bottom',
@@ -415,6 +416,18 @@ class Info extends React.Component {
 
     if (this.state.inputError) {
       buttonStyle['paddingBottom'] = '2.5em';
+    }
+
+    if (this.state.fantasyLeague.settings.stat_multipliers) {
+      multipliersSection = Object.keys(this.state.fantasyLeague.settings.stat_multipliers).map( (stat, key) => {
+        let multiplier = this.state.fantasyLeague.settings.stat_multipliers[stat];
+        return (
+          <div className='column4' key={key}>
+            <div className='sub labelTitle'>{leagueInfo.getNamesForStat(stat)}</div>
+            <div className='sub labelValue'>{multiplier}</div>
+          </div>
+        );
+      });
     }
 
     return (
@@ -500,6 +513,10 @@ class Info extends React.Component {
             <div className='column12'>
               <div className='labelTitle'>Active Roster Size</div>
               <div className='labelValue'>{leagueInfo.getActiveRosterSize(this.state.fantasyLeague.sport)}</div>
+            </div>
+            <div className='column12'>
+              <div className='labelTitle full'>Stat Multipliers</div>
+              {multipliersSection}
             </div>
             <div className='column12'>
               <div className='labelTitle full'>Social Rules</div>
