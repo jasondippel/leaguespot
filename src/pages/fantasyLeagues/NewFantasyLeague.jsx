@@ -57,18 +57,17 @@ class NewFantasyLeague extends React.Component {
         hometown_multiplier: 2,
         userEmails: [],
         socialRules: '',
-        statMultipliers: {}
+        statMultipliers: {},
+        adminEmail: ''
       },
       errorMessage: '',
-      toastOpen: false
+      toastOpen: false,
+      user: store.getState().user.user
     };
 
     store.subscribe(() => {
       this.setState({
-        fantasyLeague: {
-          ...this.state.fantasyLeague,
-          adminEmail: store.getState().user.user.email
-        }
+        user: store.getState().user.user
       });
     });
 
@@ -429,7 +428,7 @@ class NewFantasyLeague extends React.Component {
   submitNewFantasyLeague() {
     let fantasyLeague = this.state.fantasyLeague;
     let adminEmail = {};
-    adminEmail[fantasyLeague.adminEmail] = 'admin';
+    adminEmail[this.state.user.email] = 'admin';
 
     APIRequest.post({
       api: 'LeagueSpot',
@@ -447,9 +446,11 @@ class NewFantasyLeague extends React.Component {
         settings              :
         {
           hometown              : fantasyLeague.hometown,
-          hometown_multiplier   : fantasyLeague.hometown_multiplier,
+          scoring: {
+            hometown_multiplier   : fantasyLeague.hometown_multiplier,
+            stat_multipliers      : fantasyLeague.statMultipliers
+          },
           max_roster_size       : fantasyLeague.maxRosterSize,
-          stat_multipliers      : fantasyLeague.statMultipliers
         },
         social_rules          : fantasyLeague.socialRules
       }

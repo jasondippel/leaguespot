@@ -418,9 +418,9 @@ class Info extends React.Component {
       buttonStyle['paddingBottom'] = '2.5em';
     }
 
-    if (this.state.fantasyLeague.settings.stat_multipliers) {
-      multipliersSection = Object.keys(this.state.fantasyLeague.settings.stat_multipliers).map( (stat, key) => {
-        let multiplier = this.state.fantasyLeague.settings.stat_multipliers[stat];
+    if (this.state.fantasyLeague.settings.scoring) {
+      multipliersSection = Object.keys(this.state.fantasyLeague.settings.scoring.stat_multipliers).map( (stat, key) => {
+        let multiplier = this.state.fantasyLeague.settings.scoring.stat_multipliers[stat];
         return (
           <div className='column4' key={key}>
             <div className='sub labelTitle'>{leagueInfo.getNamesForStat(stat)}</div>
