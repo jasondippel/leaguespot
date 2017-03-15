@@ -25,7 +25,6 @@ export default class DatePicker extends React.Component {
   }
 
   handleChange(e, date) {
-    console.log('handle change');
     this.props.onChange(date);
   }
 

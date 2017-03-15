@@ -140,8 +140,6 @@ class Roster extends React.Component {
       });
     }
 
-    console.log('jason test');
-
     APIRequest.post({
       api: 'LeagueSpot',
       apiExt: '/fantasy_teams/create',
