@@ -111,6 +111,7 @@ class LogIn extends React.Component {
                 type='email'
                 fullWidth={true}
                 onChange={this.handleEmailChange}
+                value={this.state.email}
                 />
             </div>
             <div className='column12'>
@@ -123,6 +124,7 @@ class LogIn extends React.Component {
                 fullWidth={true}
                 onChange={this.handlePasswordChange}
                 onKeyDown={this.handleKeyDown}
+                value={this.state.password}
                 />
             </div>
 

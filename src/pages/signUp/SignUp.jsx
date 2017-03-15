@@ -166,6 +166,7 @@ class SignUp extends React.Component {
                 lightTheme={true}
                 fullWidth={true}
                 onChange={this.handleFirstNameChange}
+                value={this.state.firstName}
                 />
             </div>
             <div className='column6'>
@@ -176,6 +177,7 @@ class SignUp extends React.Component {
                 lightTheme={true}
                 fullWidth={true}
                 onChange={this.handleLastNameChange}
+                value={this.state.lastName}
                 />
             </div>
             <div className='column12'>
@@ -187,6 +189,7 @@ class SignUp extends React.Component {
                 type='email'
                 fullWidth={true}
                 onChange={this.handleEmailChange}
+                value={this.state.email}
                 />
             </div>
             <div className='column6'>
@@ -198,6 +201,7 @@ class SignUp extends React.Component {
                 type='password'
                 fullWidth={true}
                 onChange={this.handlePasswordChange}
+                value={this.state.password}
                 />
             </div>
             <div className='column6'>
@@ -209,6 +213,7 @@ class SignUp extends React.Component {
                 type='password'
                 fullWidth={true}
                 onChange={this.handleConfirmPasswordChange}
+                value={this.state.confirmPassword}
                 />
             </div>
 
