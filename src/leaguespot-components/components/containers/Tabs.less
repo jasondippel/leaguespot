@@ -9,6 +9,10 @@
     display: none
   }
 
+  button.tab {
+    font-size: 1.4em !important;
+  }
+
   .tab {
     text-transform: none;
     color: #f00;
@@ -17,5 +21,9 @@
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
     background-color: lighten(@lightBackgroundContainer, 4%);
+
+    &.colouredBackground {
+      background-color: @lightBackgroundContainer;
+    }
   }
 }

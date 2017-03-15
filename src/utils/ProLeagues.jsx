@@ -11,6 +11,11 @@ const proLeaguesInSport = {
   Hockey: ['nhl', 'ohl', 'qmjhl', 'whl', 'nwhl', 'cwhl']
 }
 
+const playerCostBySport = {
+  Hockey: 800,
+  Basketball: 800
+}
+
 const statNames = {
   goals: 'Goals',
   assists: 'Assists',
@@ -92,6 +97,15 @@ export function getLeaguesInSport(sport) {
 
   console.error('Error: cannot find sport \"' + sport + '\" in list of sports');
   return [];
+}
+
+export function getPlayerCostForSport(sport) {
+  if (playerCostBySport[sport]) {
+    return playerCostBySport[sport];
+  }
+
+  console.error('Error: cannot find average player cost for sport \"' + sport + '\"');
+  return 500;
 }
 
 export function getStatsForSport(sport) {

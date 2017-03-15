@@ -21,6 +21,8 @@ import RaisedButton from '../../../leaguespot-components/components/buttons/Rais
 import Popup from '../../../leaguespot-components/components/popup/Popup';
 import Toast from '../../../leaguespot-components/components/toast/Toast';
 import TextField from '../../../leaguespot-components/components/inputs/text/TextField';
+import Section from '../../../leaguespot-components/components/containers/Section';
+import Draft from './subSections/Draft';
 
 
 class Roster extends React.Component {
@@ -37,7 +39,9 @@ class Roster extends React.Component {
       toastOpen: false,
       toastMessage: '',
       toastType: 'DEFAULT',
-      newTeamName: ''
+      newTeamName: '',
+      isDrafting: false,
+      newRoster: undefined
     }
 
     this.findUserFantasyTeam = this.findUserFantasyTeam.bind(this);
@@ -59,8 +63,11 @@ class Roster extends React.Component {
     this.handleOpenToast = this.handleOpenToast.bind(this);
     this.handleCloseToast = this.handleCloseToast.bind(this);
     this.handleCreateTeamNameChange = this.handleCreateTeamNameChange.bind(this);
+    this.handleRosterSelectionChange = this.handleRosterSelectionChange.bind(this);
+    this.cancelDraftRoster = this.cancelDraftRoster.bind(this);
     this.displayCreateTeamPopup = this.displayCreateTeamPopup.bind(this);
     this.createFantasyTeam = this.createFantasyTeam.bind(this);
+    this.submitUpdatedRoster = this.submitUpdatedRoster.bind(this);
     this.renderCreateTeamPopupContent = this.renderCreateTeamPopupContent.bind(this);
   }
 
@@ -113,6 +120,18 @@ class Roster extends React.Component {
   handleCreateTeamNameChange(e, newValue) {
     this.setState({
       newTeamName: newValue
+    });
+  }
+
+  handleRosterSelectionChange(newRoster) {
+    this.setState({
+      newRoster: newRoster
+    });
+  }
+
+  cancelDraftRoster() {
+    this.setState({
+      isDrafting: false
     });
   }
 
@@ -172,6 +191,11 @@ class Roster extends React.Component {
       });
       console.error('Error occurred while creating fantasy team', error);
     });
+  }
+
+  submitUpdatedRoster() {
+    // TODO
+    alert('TODO: implement submitUpdatedRoster');
   }
 
   displayCreateTeamPopup() {
@@ -246,20 +270,78 @@ class Roster extends React.Component {
     );
   }
 
+  renderNoRosterComponent() {
+    let content;
+
+    if (this.state.isDrafting) {
+      // leagues, handleTeamChange, submitUpdatedRoster, cancelDraftRoster
+      content = (
+        <Draft
+          teamName={this.state.myFantasyTeam.team_name}
+          leagues={this.state.fantasyLeague.pro_leagues}
+          sport={this.state.fantasyLeague.sport}
+          maxRosterSize={Number(this.state.fantasyLeague.settings.max_roster_size)}
+          cancelDraftRoster={this.cancelDraftRoster}
+          handleRosterSelectionChange={this.handleRosterSelectionChange}
+          submitUpdatedRoster={this.submitUpdatedRoster}
+          />
+      );
+    } else {
+      content = (
+        <Section
+          showBackground={true}
+          >
+          <div>
+            <div className='sectionHeader'>
+              <div className='sectionTitle'>
+                {Sanitize(this.state.myFantasyTeam.team_name)}
+              </div>
+              <div className='sectionSubTitle'>My Fantasy Team</div>
+            </div>
+            <div className='noPlayers'>
+              <div className='box'>
+                <div className='mainText'>Your team doesn't have any players!</div>
+                  <RaisedButton
+                    label='Draft Your Team'
+                    type='primary'
+                    onClick={() => {
+                      this.setState({
+                        isDrafting: true
+                      });
+                    }}
+                    />
+              </div>
+            </div>
+          </div>
+        </Section>
+      );
+    }
+
+    return content;
+  }
+
+  renderMyRosterComponent() {
+    // TODO
+  }
+
   render() {
+    let content;
     if (!this.state.fantasyLeague || this.state.fantasyLeague.loading) {
       return (
         <div>
           Loading...
         </div>
       );
-    }
-
-    let content;
-
-    if (!this.state.myFantasyTeam) {
+    } else if (!this.state.myFantasyTeam) {
       content = this.renderCreateTeamComponent();
+    } else if (Object.keys(this.state.myFantasyTeam.roster).length === 0) {
+      content = this.renderNoRosterComponent();
+    } else {
+      content = this.renderMyRosterComponent();
     }
+
+    // TODO: remove logging; this is for debugging on dev only
+    console.log('My Fantasy Team', this.state.myFantasyTeam);
 
     let popupType = 'DEFAULT',
         popupTitle = '',

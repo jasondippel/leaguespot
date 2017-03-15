@@ -44,7 +44,7 @@ export default class Section extends React.Component {
       <div className={'rc-Section ' + classList}>
         <div className='padding'>
           {titleContainer}
-          <div className='content'>
+          <div className={ this.props.colouredBackground ? 'content colouredBackground' : 'content'} >
             {this.props.children}
           </div>
         </div>
@@ -60,6 +60,7 @@ const {bool, string} = React.PropTypes;
 Section.propTypes = {
   showBackground: bool,
   colouredHeader: bool,
+  colouredBackground: bool,
   title: string,
   subTitle: string,
   width: React.PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
@@ -68,6 +69,7 @@ Section.propTypes = {
 Section.defaultProps = {
   showbackground: false,
   colouredHeader: false,
+  colouredBackground: false,
   title: undefined,
   subTitle: undefined,
   width: 12

@@ -1,0 +1,39 @@
+@import '../../../../../node_modules/leaguespot-components/src/constants/colours';
+@import '../../../../../node_modules/leaguespot-components/src/constants/fonts';
+
+.rc-Draft {
+  .infoPanel,
+  .sectionHeader {
+    justify-content: space-between;
+    display: flex;
+  }
+
+  .infoPanel {
+    padding-left: 1.2em;
+    padding-right: 1.2em;
+
+    .pair {
+      display: inline-block;
+      padding: 0.2em;
+      padding-left: 0.6em;
+      padding-right: 0.6em;
+
+      .label {
+        text-transform: uppercase;
+        color: @darkTextSecondary;
+        font-weight: 400;
+        margin-right: 0.5em;
+        font-size: 0.85em;
+      }
+
+      .value {
+        font-size: 1.1em;
+      }
+    }
+  }
+
+  .emptyRoster {
+    text-align: center;
+    font-style: italic;
+  }
+}
