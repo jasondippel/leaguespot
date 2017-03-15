@@ -8,10 +8,12 @@ import { combineReducers } from 'redux';
 import UserReducer from './UserReducer';
 import FantasyLeagueReducer from './FantasyLeagueReducer';
 import MessagesReducer from './MessagesReducer';
+import PlayersReducer from './PlayersReducer';
 
 
 export default combineReducers({
   user: UserReducer,
   fantasyLeague: FantasyLeagueReducer,
-  messages: MessagesReducer
+  messages: MessagesReducer,
+  players: PlayersReducer
 });

@@ -438,6 +438,7 @@ class Info extends React.Component {
             title='General Info'
             width={4}
             showBackground={true}
+            padContent={true}
             >
             <div className='column12'>
               <div className='labelTitle'>League Name</div>
@@ -462,6 +463,7 @@ class Info extends React.Component {
             title='Invite Users'
             width={8}
             showBackground={true}
+            padContent={true}
             >
             <div>
               Enter the emails of users you would like to include in your league. If an email you entered does not currently have an account, we will send them an email.
@@ -501,6 +503,7 @@ class Info extends React.Component {
             title='Rules'
             width={12}
             showBackground={true}
+            padContent={true} 
             >
             <div className='column12'>
               <div className='labelTitle'>Hometown</div>

@@ -8,7 +8,7 @@ const sports = ['Hockey'];
 
 const proLeaguesInSport = {
   Basketball: ['nba', 'wnba', 'ncaambd1'],
-  Hockey: ['nhl', 'ohl', 'qmjhl', 'whl', 'nwhl', 'cwhl']
+  Hockey: ['nhl', 'ohl', 'lhjmq', 'whl', 'nwhl', 'cwhl']
 }
 
 const playerCostBySport = {
@@ -17,21 +17,52 @@ const playerCostBySport = {
 }
 
 const statNames = {
+  position: 'Position',
+  games_played: 'Games Played',
   goals: 'Goals',
   assists: 'Assists',
+  points: 'Points',
   plusminus: 'Plus/Minus',
   pim: 'Penalty Minutes',
   saves: 'Saves',
-  save_percentage: 'Save Percentage'
+  save_percentage: 'Save Percentage',
+  goals_against_average: 'Goals Against Average',
+  wins: 'Wins',
+  losses: 'Losses',
+  shutouts: 'Shutouts'
 }
 
 const statShortForm = {
+  position: 'Pos',
+  games_played: 'GP',
   goals: 'G',
   assists: 'A',
+  points: 'PTS',
   plusminus: '+/-',
   pim: 'PIM',
   saves: 'Saves',
-  save_percentage: 'Save %'
+  save_percentage: 'Save %',
+  goals_against_average: 'GAA',
+  wins: 'W',
+  losses: 'L',
+  shutouts: 'SO'
+}
+
+const displayStats = {
+  Hockey: [
+    'position',
+    'games_played',
+    'goals',
+    'assists',
+    'points',
+    'plusminus',
+    'pim',
+    'save_percentage',
+    'goals_against_average',
+    'wins',
+    'losses',
+    'shutouts'
+  ]
 }
 
 const statMultipliersBySport = {
@@ -66,7 +97,7 @@ const leagueNames = {
   ncaambd1: 'NCAA MB',
   nhl: 'NHL',
   ohl: 'OHL',
-  qmjhl: 'QMJHL',
+  lhjmq: 'QMJHL',
   whl: 'WHL',
   cwhl: 'CWHL',
   nwhl: 'NWHL'
@@ -78,7 +109,7 @@ const fullLeagueNames = {
   ncaambd1: 'NCAA Mens Basketball',
   nhl: 'National Hockey League',
   ohl: 'Ontario Hockey League',
-  qmjhl: 'Quebec Major Junior Hockey League',
+  lhjmq: 'Quebec Major Junior Hockey League',
   whl: 'Western Hockey League',
   nwhl: 'National Womens Hockey League',
   cwhl: 'Canadian Womens Hockey League'
@@ -115,6 +146,15 @@ export function getStatsForSport(sport) {
 
   console.error('Error: cannot find multipliers for sport \"' + sport + '\"');
   return {};
+}
+
+export function getGeneralDisplayStatsForSport(sport) {
+  if (displayStats[sport]) {
+    return displayStats[sport];
+  }
+
+  console.error('Error: cannot find general display stats for sport \"' + sport + '\"');
+  return [];
 }
 
 export function getNamesForStat(stat) {

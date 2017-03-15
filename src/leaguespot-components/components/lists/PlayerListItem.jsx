@@ -82,7 +82,7 @@ export default class PlayerListItem extends React.Component {
     return (
       <ListItem
         itemClass='rc-PlayerListItem'
-        mainText={this.props.playerName}
+        mainText={this.props.playerHeader}
         secondaryText={playerInfo}
         mediaLeft={profilePic}
         buttonsRight={buttons}
@@ -96,7 +96,7 @@ PlayerListItem.displayName = 'PlayerListItem';
 const {any, array, bool, func, number, object, string} = React.PropTypes;
 
 PlayerListItem.propTypes = {
-  playerName: string.isRequired,
+  playerHeader: React.PropTypes.oneOfType([object, string]).isRequired,
   playerStats: array,
   buttons: array,
   profilePic: string,   // location of image

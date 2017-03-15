@@ -21,6 +21,7 @@ export default class Section extends React.Component {
     if (this.props.showBackground) {
       classNames += ' backgroundColor';
     }
+    
     return 'columnSpacing column' + this.props.width + classNames;
   }
 
@@ -39,12 +40,20 @@ export default class Section extends React.Component {
   render() {
     let classList = this.determineClasses();
     let titleContainer = this.renderTitle();
+    let contentClassList = 'content';
+
+    if (this.props.showBackground) {
+      contentClassList += ' colouredBackground';
+    }
+    if (this.props.padContent) {
+      contentClassList += ' padContent';
+    }
 
     return (
       <div className={'rc-Section ' + classList}>
         <div className='padding'>
           {titleContainer}
-          <div className={ this.props.colouredBackground ? 'content colouredBackground' : 'content'} >
+          <div className={contentClassList} >
             {this.props.children}
           </div>
         </div>
@@ -59,8 +68,8 @@ const {bool, string} = React.PropTypes;
 
 Section.propTypes = {
   showBackground: bool,
+  padContent: bool,
   colouredHeader: bool,
-  colouredBackground: bool,
   title: string,
   subTitle: string,
   width: React.PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
@@ -68,8 +77,8 @@ Section.propTypes = {
 
 Section.defaultProps = {
   showbackground: false,
+  padContent: false,
   colouredHeader: false,
-  colouredBackground: false,
   title: undefined,
   subTitle: undefined,
   width: 12
