@@ -117,6 +117,28 @@ export default function reducer(state = initialState, action) {
           }
         }
       }
+      case 'ADD_FANTASY_TEAM_TO_LEAGUE': {
+        let fleagueId = action.payload.fleagueId;
+        let newTeam = action.payload.team;
+
+        // ensure fleagueId matches that of the active league
+        if (state.activeFantasyLeague.fleague_id !== fleagueId) {
+          console.error('Trying to add team to league that is not active fantasy league; Id: ' + fleagueId);
+          return state;
+        }
+
+        // add team to active fantasy league;
+        let teamsList = state.activeFantasyLeague.fantasy_teams.splice(0);
+        teamsList.push(newTeam);
+
+        return {
+          ...state,
+          activeFantasyLeague: {
+            ...state.activeFantasyLeague,
+            fantasy_teams: teamsList
+          }
+        }
+      }
     }
 
     return state

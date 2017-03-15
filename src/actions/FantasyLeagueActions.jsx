@@ -94,6 +94,16 @@ export function setActiveFantasyLeague(fantasyLeague) {
   }
 }
 
+export function addFantasyTeamToLeague(team, fleagueId) {
+  return {
+    type: 'ADD_FANTASY_TEAM_TO_LEAGUE',
+    payload: {
+      fleagueId: fleagueId,
+      team: team
+    }
+  }
+}
+
 export function addToMyFantasyLeagues(fantasyLeague) {
   return {
     type: 'ADD_TO_MY_FANTASY_LEAGUES',
