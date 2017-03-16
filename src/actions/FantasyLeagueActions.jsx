@@ -85,6 +85,54 @@ export function fetchActiveFantasyLeague(fantasyLeagueId) {
   }
 }
 
+export function updateFantasyTeamRoster(fteamId, newRoster) {
+  return function(dispatch, getState) {
+    dispatch({
+      type: 'UPDATING_FANTASY_TEAM_ROSTER'
+    });
+
+    let newRosterMapping = {};
+    Object.keys(newRoster).map((playerId) => {
+      newRosterMapping[playerId] = playerId;
+    });
+
+    APIRequest.post({
+      api: 'LeagueSpot',
+      apiExt: '/fantasy_teams/update',
+      data: {
+        fteam_id: fteamId,
+        roster: newRosterMapping
+      }
+    })
+    .then((resp) => {
+      if (resp.success) {
+        dispatch({
+          type: 'UPDATING_FANTASY_TEAM_ROSTER_FULFILLED',
+          payload: {
+            fteamId: fteamId,
+            newRoster: newRoster
+          }
+        });
+      } else {
+        dispatch({
+          type: 'UPDATING_FANTASY_TEAM_ROSTER_REJECTED',
+          payload: {
+            errorMessage: resp.message
+          }
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: 'UPDATING_FANTASY_TEAM_ROSTER_ERROR',
+        payload: {
+          errorMessage: 'Error occurred while updating fantasy team roster'
+        }
+      });
+    });
+  }
+}
+
 export function setActiveFantasyLeague(fantasyLeague) {
   return {
     type: 'SET_ACTIVE_FANTASY_LEAGUE',

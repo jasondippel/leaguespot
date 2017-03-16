@@ -21,7 +21,10 @@ export default class Section extends React.Component {
     if (this.props.showBackground) {
       classNames += ' backgroundColor';
     }
-    
+    if (this.props.noPadding) {
+      classNames += ' noPadding';
+    }
+
     return 'columnSpacing column' + this.props.width + classNames;
   }
 
@@ -69,6 +72,7 @@ const {bool, string} = React.PropTypes;
 Section.propTypes = {
   showBackground: bool,
   padContent: bool,
+  noPadding: bool,
   colouredHeader: bool,
   title: string,
   subTitle: string,
@@ -78,6 +82,7 @@ Section.propTypes = {
 Section.defaultProps = {
   showbackground: false,
   padContent: false,
+  noPadding: false,
   colouredHeader: false,
   title: undefined,
   subTitle: undefined,

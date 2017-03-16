@@ -12,7 +12,7 @@ const proLeaguesInSport = {
 }
 
 const playerCostBySport = {
-  Hockey: 800,
+  Hockey: 950,
   Basketball: 800
 }
 
@@ -62,6 +62,12 @@ const displayStats = {
     'wins',
     'losses',
     'shutouts'
+  ]
+}
+
+const shortDisplayStats = {
+  Hockey: [
+    'position'
   ]
 }
 
@@ -154,6 +160,15 @@ export function getGeneralDisplayStatsForSport(sport) {
   }
 
   console.error('Error: cannot find general display stats for sport \"' + sport + '\"');
+  return [];
+}
+
+export function getShortDisplayStatsForSport(sport) {
+  if (shortDisplayStats[sport]) {
+    return shortDisplayStats[sport];
+  }
+
+  console.error('Error: cannot find short display stats for sport \"' + sport + '\"');
   return [];
 }
 

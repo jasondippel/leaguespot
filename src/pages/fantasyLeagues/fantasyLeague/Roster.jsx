@@ -12,9 +12,11 @@ import { connect } from 'react-redux';
 import store from '../../store';
 import { Sanitize } from '../../../utils/Sanitize';
 import APIRequest from '../../../utils/APIRequest';
+import * as leagueInfo from '../../../utils/ProLeagues';
 import {
   fetchActiveFantasyLeague,
-  addFantasyTeamToLeague
+  addFantasyTeamToLeague,
+  updateFantasyTeamRoster
 } from '../../../actions/FantasyLeagueActions';
 import FlatButton from '../../../leaguespot-components/components/buttons/FlatButton';
 import RaisedButton from '../../../leaguespot-components/components/buttons/RaisedButton';
@@ -138,7 +140,8 @@ class Roster extends React.Component {
   findUserFantasyTeam(fantasy_teams, userId) {
     let myFantasyTeam = null;
 
-    fantasy_teams.map((team) => {
+    Object.keys(fantasy_teams).map((teamId) => {
+      let team = fantasy_teams[teamId];
       if(team.user_id === userId) {
         myFantasyTeam = team;
       }
@@ -193,9 +196,42 @@ class Roster extends React.Component {
     });
   }
 
+  verifyRoster() {
+    let acceptable = true;
+
+    // check cost
+    let rosterCost = 0;
+    let maxRosterCost = this.state.fantasyLeague.settings.max_roster_size * leagueInfo.getPlayerCostForSport(this.state.fantasyLeague.sport);
+    Object.keys(this.state.newRoster).map((playerId) => {
+      rosterCost += parseInt(this.state.newRoster[playerId]['cost']);
+    });
+
+    if (maxRosterCost < rosterCost) {
+      acceptable = false;
+      this.handleOpenToast('ERROR', 'Roster cost exceeds maximum of $' + maxRosterCost);
+    }
+
+    // check roster size
+    else if (this.state.fantasyLeague.settings.max_roster_size < Object.keys(this.state.newRoster).length) {
+      acceptable = false;
+      this.handleOpenToast('ERROR', 'Roster exceeds maximum size of ' + this.state.fantasyLeague.settings.max_roster_size);
+    }
+
+    else if (this.state.fantasyLeague.settings.max_roster_size > Object.keys(this.state.newRoster).length) {
+      acceptable = false;
+      this.handleOpenToast('ERROR', 'Roster still has empty spots! (' + (this.state.fantasyLeague.settings.max_roster_size - Object.keys(this.state.newRoster).length) + ')');
+    }
+
+    return acceptable;
+  }
+
   submitUpdatedRoster() {
-    // TODO
-    alert('TODO: implement submitUpdatedRoster');
+    if(!this.verifyRoster()) {
+      return;
+    }
+
+    this.props.dispatch(updateFantasyTeamRoster(this.state.myFantasyTeam.fteam_id, this.state.newRoster));
+
   }
 
   displayCreateTeamPopup() {
@@ -322,6 +358,25 @@ class Roster extends React.Component {
 
   renderMyRosterComponent() {
     // TODO
+    return (
+      <Section
+        showBackground={true}
+        >
+        <div>
+          <div className='sectionHeader'>
+            <div className='sectionTitle'>
+              {Sanitize(this.state.myFantasyTeam.team_name)}
+            </div>
+            <div className='sectionSubTitle'>My Fantasy Team</div>
+          </div>
+          <div className='noPlayers'>
+            <div className='box'>
+              <div className='mainText'>I haven't done this yet...</div>
+            </div>
+          </div>
+        </div>
+      </Section>
+    );
   }
 
   render() {
@@ -339,9 +394,6 @@ class Roster extends React.Component {
     } else {
       content = this.renderMyRosterComponent();
     }
-
-    // TODO: remove logging; this is for debugging on dev only
-    console.log('My Fantasy Team', this.state.myFantasyTeam);
 
     let popupType = 'DEFAULT',
         popupTitle = '',

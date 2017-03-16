@@ -34,6 +34,8 @@ class Draft extends React.Component {
     this.state = {
       fantasyTeam: undefined,
       roster: {},
+      rosterCost: 0,
+      maxRosterCost: props.maxRosterSize * leagueInfo.getPlayerCostForSport(props.sport),
       maxRosterSize: props.maxRosterSize,
       leagues: props.leagues,
       sport: props.sport,
@@ -66,6 +68,7 @@ class Draft extends React.Component {
     this.handleCloseToast = this.handleCloseToast.bind(this);
     this.handleTabChange = this.handleTabChange.bind(this);
     this.showHelpPopup = this.showHelpPopup.bind(this);
+    this.addPlayerToRoster = this.addPlayerToRoster.bind(this);
   }
 
   handleOpenToast(type, message) {
@@ -124,6 +127,87 @@ class Draft extends React.Component {
     this.handleOpenPopup(type, title, content, buttons);
   }
 
+  canAddPlayer(player) {
+    let acceptable = true;
+
+    // check cost
+    if (this.state.maxRosterCost < this.state.rosterCost + parseInt(player['cost'])) {
+      acceptable = false;
+      this.handleOpenToast('ERROR', 'Can\'t add player, cost exceeds budget');
+    }
+
+    // check roster size
+    if (this.state.maxRosterSize < Object.keys(this.state.roster).length + 1) {
+      acceptable = false;
+      this.handleOpenToast('ERROR', 'Can\'t add player, exceeds max roster size');
+    }
+
+    return acceptable;
+  }
+
+  addPlayerToRoster(playerIndex) {
+    if (!this.canAddPlayer(this.state.players[this.state.activeLeague][playerIndex])) {
+      return;
+    }
+
+    let newPlayersObj = this.state.players;
+    let newRosterObj = this.state.roster;
+    let addedPlayer = newPlayersObj[this.state.activeLeague].splice(playerIndex, 1)[0];
+
+    newRosterObj[addedPlayer.ls_id] = addedPlayer;
+
+    this.setState({
+      roster: newRosterObj,
+      players: newPlayersObj,
+      rosterCost: this.state.rosterCost + parseInt(addedPlayer['cost'])
+    });
+
+    this.props.handleRosterSelectionChange(newRosterObj);
+  }
+
+  removePlayerFromRoster(playerId) {
+    let newPlayersObj = this.state.players;
+    let newRosterObj = this.state.roster;
+
+    let removedPlayer = this.state.roster[playerId];
+    delete newRosterObj[playerId];
+    newPlayersObj[removedPlayer['league']].push(removedPlayer);
+
+    this.setState({
+      roster: newRosterObj,
+      players: newPlayersObj,
+      rosterCost: this.state.rosterCost - parseInt(removedPlayer['cost'])
+    });
+
+    this.props.handleRosterSelectionChange(newRosterObj);
+  }
+
+  formatRosterPlayerStats(player) {
+    let playerStats = [];
+    let statFields = leagueInfo.getShortDisplayStatsForSport(this.state.sport);
+
+    // filter to only include stats we want displayed
+    let i;
+    for(i=0; i < statFields.length; i++) {
+      if (player[statFields[i]] === null) {
+        continue;
+      }
+
+      let statObj = {
+        value: player[statFields[i]],
+        fieldName: leagueInfo.getShortFormForStat(statFields[i])
+      };
+      playerStats.push(statObj);
+    }
+
+    playerStats.push({
+      value: '$' + player['cost'],
+      filedName: 'Cost'
+    });
+
+    return playerStats;
+  }
+
   formatPlayerStats(player) {
     let playerStats = [];
     let statFields = leagueInfo.getGeneralDisplayStatsForSport(this.state.sport);
@@ -145,10 +229,42 @@ class Draft extends React.Component {
     return playerStats;
   }
 
-  renderPlayerListItem(player) {
+  renderRosterListItem(player) {
     let buttons = [
       (
-        <IconButton type='addCircle'/>
+        <IconButton
+          type='removeCircle'
+          hoverText='Remove from Roster'
+          onClick={() => {
+            this.removePlayerFromRoster(player['ls_id']);
+          }}/>
+      )];
+    let playerStats = this.formatRosterPlayerStats(player);
+    let playerHeader = (
+      <div className='rosterPlayerHeader'>
+        <div className='playerName'>{player['last_name'] + ', ' + player['first_name'].slice(0,1)}</div>
+      </div>
+    );
+
+    return (
+      <PlayerListItem
+        playerHeader={playerHeader}
+        playerStats={playerStats}
+        showProfilePic={true}
+        buttons={buttons}
+        />
+    );
+  }
+
+  renderPlayerListItem(player, playerIndex) {
+    let buttons = [
+      (
+        <IconButton
+          type='addCircle'
+          hoverText='Add to Roster'
+          onClick={() => {
+            this.addPlayerToRoster(playerIndex);
+          }}/>
       )];
     let playerStats = this.formatPlayerStats(player);
     let playerHeader = (
@@ -168,6 +284,24 @@ class Draft extends React.Component {
     );
   }
 
+  renderFullRosterList() {
+    let i = 0,
+        listItems = [],
+        rosterKeys = Object.keys(this.state.roster),
+        playerList;
+
+    for(i=0; i < rosterKeys.length; i++) {
+      let listItem = this.renderRosterListItem(this.state.roster[rosterKeys[i]]);
+      listItems.push(listItem);
+    }
+
+    return (
+      <div>
+        <List items={listItems} />
+      </div>
+    )
+  }
+
   renderFullPlayerList(league) {
     let i = 0,
         listItems = [],
@@ -176,11 +310,9 @@ class Draft extends React.Component {
     // TODO: add filtering/searching stuff here
 
     for(i=0; i < this.state.players[league].length; i++) {
-      let listItem = this.renderPlayerListItem(this.state.players[league][i]);
+      let listItem = this.renderPlayerListItem(this.state.players[league][i], i);
       listItems.push(listItem);
     }
-
-    console.log('listItems', listItems);
 
     return (
       <div>
@@ -235,11 +367,7 @@ class Draft extends React.Component {
       );
     }
 
-    return (
-      <div>
-        TODO: display selected roster
-      </div>
-    );
+    return this.renderFullRosterList();
   }
 
   render() {
@@ -265,10 +393,14 @@ class Draft extends React.Component {
                 <div className='right'>
                   <FlatButton
                     label='Help'
-                    onClick={this.showHelpPopup} />
-                  <FlatButton
-                    label='Back to My Roster'
-                    onClick={this.props.cancelDraftRoster} />
+                    onClick={this.showHelpPopup}
+                    />
+                    <RaisedButton
+                      label='Submit Roster'
+                      type={this.state.maxRosterSize === Object.keys(this.state.roster).length ? 'primary' : 'disabled'}
+                      disabled={this.state.maxRosterSize === Object.keys(this.state.roster).length}
+                      onClick={this.props.submitUpdatedRoster}
+                      />
                 </div>
               </div>
             </div>
@@ -278,11 +410,11 @@ class Draft extends React.Component {
               <div className='right'>
                 <div className='pair'>
                   <span className='label'>Remaining Budget</span>
-                  <span className='value'>${this.state.maxRosterSize * leagueInfo.getPlayerCostForSport(this.state.sport)}</span>
+                  <span className='value'>${this.state.maxRosterCost - this.state.rosterCost}</span>
                 </div>
                 <div className='pair'>
                   <span className='label'>Avg Player Cost</span>
-                  <span className='value'>$0</span>
+                  <span className='value'>${Object.keys(this.state.roster).length > 0 ? (this.state.rosterCost / Object.keys(this.state.roster).length).toFixed(2) : 0}</span>
                 </div>
               </div>
             </div>
@@ -297,9 +429,10 @@ class Draft extends React.Component {
 
             <div className='column4' style={{padding: '1em'}}>
               <Section
-                title='My Roster'
+                title={'My Roster (' + Object.keys(this.state.roster).length + '/' + this.state.maxRosterSize + ')'}
                 colouredHeader={true}
                 showBackground={true}
+                noPadding={true}
                 >
                 {myRosterList}
               </Section>
