@@ -9,6 +9,7 @@ import colours from '../../leaguespot-components/constants/colours';
 /* Script Dependencies */
 import React from 'react';
 import { Link } from 'react-router';
+import jwtDecode from 'jwt-decode';
 import Section from '../../leaguespot-components/components/containers/Section';
 import FlatButton from '../../leaguespot-components/components/buttons/FlatButton';
 import RaisedButton from '../../leaguespot-components/components/buttons/RaisedButton';
@@ -183,8 +184,9 @@ class MyAccount extends React.Component {
       .then((resp) => {
         if (resp.success) {
           let sessionId = resp.token;
-          that.props.dispatch(setUser(sessionId, that.state.modifiedUser));
-          
+          let modifiedUser = jwtDecode(resp.token);
+          that.props.dispatch(setUser(sessionId, modifiedUser));
+
           that.handleOpenToast('success', 'User information updated');
           that.handleCloseEditPopup();
         } else {
