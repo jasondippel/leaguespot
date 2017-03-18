@@ -468,6 +468,7 @@ const {any, array, bool, func, number, string} = React.PropTypes;
 
 Draft.propTypes = {
   teamName: string,
+  sport: string,
   leagues: array,
   maxRosterSize: number,
   cancelDraftRoster: func,

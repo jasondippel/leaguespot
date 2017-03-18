@@ -16,7 +16,8 @@ import * as leagueInfo from '../../../utils/ProLeagues';
 import {
   fetchActiveFantasyLeague,
   addFantasyTeamToLeague,
-  updateFantasyTeamRoster
+  updateFantasyTeamRoster,
+  updateFantasyTeamActiveRoster
 } from '../../../actions/FantasyLeagueActions';
 import FlatButton from '../../../leaguespot-components/components/buttons/FlatButton';
 import RaisedButton from '../../../leaguespot-components/components/buttons/RaisedButton';
@@ -25,6 +26,7 @@ import Toast from '../../../leaguespot-components/components/toast/Toast';
 import TextField from '../../../leaguespot-components/components/inputs/text/TextField';
 import Section from '../../../leaguespot-components/components/containers/Section';
 import Draft from './subSections/Draft';
+import RosterManagement from './subSections/RosterManagement';
 
 
 class Roster extends React.Component {
@@ -43,7 +45,8 @@ class Roster extends React.Component {
       toastType: 'DEFAULT',
       newTeamName: '',
       isDrafting: false,
-      newRoster: undefined
+      newRoster: {},
+      newActiveRoster: {}
     }
 
     this.findUserFantasyTeam = this.findUserFantasyTeam.bind(this);
@@ -126,6 +129,12 @@ class Roster extends React.Component {
   }
 
   handleRosterSelectionChange(newRoster) {
+    this.setState({
+      newRoster: newRoster
+    });
+  }
+
+  handleActiveRosterChange(newRoster) {
     this.setState({
       newRoster: newRoster
     });
@@ -231,7 +240,14 @@ class Roster extends React.Component {
     }
 
     this.props.dispatch(updateFantasyTeamRoster(this.state.myFantasyTeam.fteam_id, this.state.newRoster));
+  }
 
+  submitUpdatedActiveRoster() {
+    if(!this.verifyActiveRoster()) {
+      return;
+    }
+
+    this.props.dispatch(updateFantasyTeamActiveRoster(this.state.myFantasyTeam.fteam_id, this.state.newActiveRoster));
   }
 
   displayCreateTeamPopup() {
@@ -357,7 +373,6 @@ class Roster extends React.Component {
   }
 
   renderMyRosterComponent() {
-    // TODO
     return (
       <Section
         showBackground={true}
@@ -369,11 +384,12 @@ class Roster extends React.Component {
             </div>
             <div className='sectionSubTitle'>My Fantasy Team</div>
           </div>
-          <div className='noPlayers'>
-            <div className='box'>
-              <div className='mainText'>I haven't done this yet...</div>
-            </div>
-          </div>
+          <RosterManagement
+            fantasyTeam={this.state.myFantasyTeam}
+            sport={this.state.fantasyLeague.sport}
+            handleActiveRosterChange={this.handleActiveRosterChange}
+            submitUpdatedActiveRoster={this.submitUpdatedActiveRoster}
+            />
         </div>
       </Section>
     );

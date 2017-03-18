@@ -8,7 +8,7 @@ const sports = ['Hockey'];
 
 const proLeaguesInSport = {
   Basketball: ['nba', 'wnba', 'ncaambd1'],
-  Hockey: ['nhl', 'ohl', 'lhjmq', 'whl', 'nwhl', 'cwhl']
+  Hockey: ['nhl', 'ohl', 'lhjmq', 'whl', 'cwhl']
 }
 
 const playerCostBySport = {

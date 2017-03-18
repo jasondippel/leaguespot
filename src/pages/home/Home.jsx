@@ -46,7 +46,7 @@ class Home extends React.Component {
             LeagueSpot
           </div>
           <div className='subText'>
-            <div>Fantasy Sports for Real Social Change</div>
+            <div>Why choose one when you can have them all?</div>
 
           {
             this.state.loggedIn ? (
@@ -65,7 +65,7 @@ class Home extends React.Component {
         </div>
 
         <div className='infoBanner'>
-          We provide users with the power to setup a fantasy league that focuses on the sport. Users can create fantasy leagues containing multiple professional leagues from the same sport. This will both enrich the users experience while bringing attention to smaller sports leagues.
+          Why restrict people to choosing just one league? We believe that great things come when you open up the door to new possibilities, so we're letting you choose what leagues to include in your fantasy pool. No longer are you limited to just one. It's time to challenge you're abilities and expand you're comfort zone to new sports leagues.
         </div>
 
         <div className='content'>
@@ -76,7 +76,6 @@ class Home extends React.Component {
               <img className='leagueLogo' src='src/img/leagues/hockey/ohl.png' />
               <img className='leagueLogo' src='src/img/leagues/hockey/whl.png' />
               <img className='leagueLogo' src='src/img/leagues/hockey/qmjhl.png' />
-              <img className='leagueLogo' src='src/img/leagues/hockey/nwhl.png' />
             </div>
           </div>
         </div>

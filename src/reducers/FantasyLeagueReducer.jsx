@@ -148,8 +148,6 @@ export default function reducer(state = initialState, action) {
         let teamsList = state.activeFantasyLeague.fantasy_teams;
         let updatedRoster = action.payload.newRoster;
 
-        console.log('jason test');
-
         teamsList[action.payload.fteamId]['roster'] = updatedRoster;
         activeFantasyLeague['fantasy_teams'] = teamsList;
         return {
@@ -159,6 +157,36 @@ export default function reducer(state = initialState, action) {
         }
       }
       case 'UPDATING_FANTASY_TEAM_ROSTER_REJECTED': {
+        return {
+          ...state,
+          loadingTeam: false,
+          errorMessage: action.payload.errorMessage
+        }
+      }
+      case 'UPDATING_FANTASY_TEAM_ROSTER_ERROR': {
+        return {
+          ...state,
+          loadingTeam: false,
+          errorMessage: action.payload.errorMessage
+        }
+      }
+      case 'UPDATING_FANTASY_TEAM_ACTIVE_ROSTER': {
+        return {...state, loadingTeam: true}
+      }
+      case 'UPDATING_FANTASY_TEAM_ACTIVE_ROSTER_FULFILLED': {
+        let activeFantasyLeague = state.activeFantasyLeague;
+        let teamsList = state.activeFantasyLeague.fantasy_teams;
+        let updatedActiveRoster = action.payload.newActiveRoster;
+
+        teamsList[action.payload.fteamId]['active_roster'] = updatedActiveRoster;
+        activeFantasyLeague['fantasy_teams'] = teamsList;
+        return {
+          ...state,
+          loadingTeam: false,
+          activeFantasyLeague: activeFantasyLeague
+        }
+      }
+      case 'UPDATING_FANTASY_TEAM_ACTIVE_ROSTER_REJECTED': {
         return {
           ...state,
           loadingTeam: false,
