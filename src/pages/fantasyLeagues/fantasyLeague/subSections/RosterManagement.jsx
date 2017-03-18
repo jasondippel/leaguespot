@@ -104,11 +104,30 @@ class RosterManagement extends React.Component {
     this.props.handleActiveRosterChange(newActiveRosterObj);
   }
 
+  formatActivePlayerStats(player) {
+    let playerStats = [];
+    let statFields = leagueInfo.getShortDisplayStatsForSport(this.state.sport);
+
+    let i;
+    for(i=0; i < statFields.length; i++) {
+      if (player[statFields[i]] === null) {
+        continue;
+      }
+
+      let statObj = {
+        value: player[statFields[i]],
+        fieldName: leagueInfo.getShortFormForStat(statFields[i])
+      };
+      playerStats.push(statObj);
+    }
+
+    return playerStats;
+  }
+
   formatPlayerStats(player) {
     let playerStats = [];
     let statFields = leagueInfo.getGeneralDisplayStatsForSport(this.state.sport);
 
-    console.log('jason test');
     let i;
     for(i=0; i < statFields.length; i++) {
       if (player[statFields[i]] === null) {
@@ -132,10 +151,10 @@ class RosterManagement extends React.Component {
           type='removeCircle'
           hoverText='Remove from Active Roster'
           onClick={() => {
-            this.removePlayerFromActiveRoster(player['ls_id']);
+            this.removePlayerFromActiveRoster(player);
           }}/>
       )];
-    let playerStats = this.formatPlayerStats(player);
+    let playerStats = this.formatActivePlayerStats(player);
     let playerHeader = (
       <div className='rosterPlayerHeader'>
         <div className='playerName'>{player['last_name'] + ', ' + player['first_name'].slice(0,1)}</div>
@@ -159,9 +178,21 @@ class RosterManagement extends React.Component {
           type='addCircle'
           hoverText='Add to Roster'
           onClick={() => {
-            this.addPlayerToActiveRoster(playerIndex);
+            this.addPlayerToActiveRoster(player);
           }}/>
       )];
+
+    if (this.state.activeRoster[player.ls_id] !== undefined) {
+      buttons = [
+        (
+          <IconButton
+            type='removeCircle'
+            hoverText='Remove from Active Roster'
+            onClick={() => {
+              this.removePlayerFromActiveRoster(player);
+            }}/>
+        )];
+    }
     let playerStats = this.formatPlayerStats(player);
     let playerHeader = (
       <div className='rosterPlayerHeader'>
@@ -204,7 +235,7 @@ class RosterManagement extends React.Component {
         playerList;
 
     for(i=0; i < activeRosterKeys.length; i++) {
-      let listItem = this.renderActiveRosterListItem(this.state.activeRoster[rosterKeys[i]]);
+      let listItem = this.renderActiveRosterListItem(this.state.activeRoster[activeRosterKeys[i]]);
       listItems.push(listItem);
     }
 
@@ -237,7 +268,7 @@ class RosterManagement extends React.Component {
 
             <div className='column8' style={{padding: '1em'}}>
               <Section
-                title={'Full Roster'}
+                title={'Bench'}
                 colouredHeader={true}
                 showBackground={true}
                 noPadding={true}
@@ -248,7 +279,7 @@ class RosterManagement extends React.Component {
 
             <div className='column4' style={{padding: '1em'}}>
               <Section
-                title={'Active Roster'}
+                title={'Active'}
                 colouredHeader={true}
                 showBackground={true}
                 noPadding={true}

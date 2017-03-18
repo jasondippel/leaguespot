@@ -69,6 +69,7 @@ class Roster extends React.Component {
     this.handleCloseToast = this.handleCloseToast.bind(this);
     this.handleCreateTeamNameChange = this.handleCreateTeamNameChange.bind(this);
     this.handleRosterSelectionChange = this.handleRosterSelectionChange.bind(this);
+    this.handleActiveRosterChange = this.handleActiveRosterChange.bind(this);
     this.cancelDraftRoster = this.cancelDraftRoster.bind(this);
     this.displayCreateTeamPopup = this.displayCreateTeamPopup.bind(this);
     this.createFantasyTeam = this.createFantasyTeam.bind(this);
