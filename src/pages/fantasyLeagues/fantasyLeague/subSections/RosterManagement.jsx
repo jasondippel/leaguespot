@@ -28,10 +28,17 @@ class RosterManagement extends React.Component {
   constructor(props) {
     super(props);
 
+    // NOTE: bug in React-Virtual-List: doesn't trigger refresh if slight change to list item; only re-rendered if scrolled out of view port
+    // TODO: fix this bug (either contact component owner, find alternative, or build own)
+    let roster = props.fantasyTeam.roster;
+    Object.keys(props.fantasyTeam.active_roster).map((id) => {
+      roster[id]['onActiveRoster'] = true;
+    });
+
     this.state = {
       fantasyTeam: props.fantasyTeam,
       sport: props.sport,
-      roster: props.fantasyTeam.roster,
+      roster: roster,
       activeRoster: props.fantasyTeam.active_roster,
       loadingTeam: false,
       toastOpen: false,
@@ -84,9 +91,12 @@ class RosterManagement extends React.Component {
 
   addPlayerToActiveRoster(player) {
     let newActiveRosterObj = this.state.activeRoster;
+    let newRosterObj = this.state.roster;
     newActiveRosterObj[player.ls_id] = player;
+    newRosterObj[player.ls_id]['onActiveRoster'] = true;
 
     this.setState({
+      roster: newRosterObj,
       activeRoster: newActiveRosterObj
     });
 
@@ -95,9 +105,12 @@ class RosterManagement extends React.Component {
 
   removePlayerFromActiveRoster(player) {
     let newActiveRosterObj = this.state.activeRoster;
+    let newRosterObj = this.state.roster;
     delete newActiveRosterObj[player.ls_id];
+    newRosterObj[player.ls_id]['onActiveRoster'] = false;
 
     this.setState({
+      roster: newRosterObj,
       activeRoster: newActiveRosterObj
     });
 
@@ -172,17 +185,8 @@ class RosterManagement extends React.Component {
   }
 
   renderRosterListItem(player) {
-    let buttons = [
-      (
-        <IconButton
-          type='addCircle'
-          hoverText='Add to Roster'
-          onClick={() => {
-            this.addPlayerToActiveRoster(player);
-          }}/>
-      )];
-
-    if (this.state.activeRoster[player.ls_id] !== undefined) {
+    let buttons;
+    if (player['onActiveRoster']) {
       buttons = [
         (
           <IconButton
@@ -192,7 +196,18 @@ class RosterManagement extends React.Component {
               this.removePlayerFromActiveRoster(player);
             }}/>
         )];
+    } else {
+      buttons = [
+        (
+          <IconButton
+            type='addCircle'
+            hoverText='Add to Roster'
+            onClick={() => {
+              this.addPlayerToActiveRoster(player);
+            }}/>
+        )];
     }
+
     let playerStats = this.formatPlayerStats(player);
     let playerHeader = (
       <div className='rosterPlayerHeader'>
@@ -217,6 +232,9 @@ class RosterManagement extends React.Component {
         playerList;
 
     for(i=0; i < rosterKeys.length; i++) {
+      if (this.state.roster[rosterKeys[i]]['onActiveRoster']) {
+        continue;
+      }
       let listItem = this.renderRosterListItem(this.state.roster[rosterKeys[i]]);
       listItems.push(listItem);
     }
@@ -279,7 +297,7 @@ class RosterManagement extends React.Component {
 
             <div className='column4' style={{padding: '1em'}}>
               <Section
-                title={'Active'}
+                title={'Active (' + Object.keys(this.state.activeRoster).length + '/' + leagueInfo.getMinRosterSize(this.state.sport) + ')'}
                 colouredHeader={true}
                 showBackground={true}
                 noPadding={true}

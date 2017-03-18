@@ -74,6 +74,7 @@ class Roster extends React.Component {
     this.displayCreateTeamPopup = this.displayCreateTeamPopup.bind(this);
     this.createFantasyTeam = this.createFantasyTeam.bind(this);
     this.submitUpdatedRoster = this.submitUpdatedRoster.bind(this);
+    this.submitUpdatedActiveRoster = this.submitUpdatedActiveRoster.bind(this);
     this.renderCreateTeamPopupContent = this.renderCreateTeamPopupContent.bind(this);
   }
 
@@ -101,7 +102,6 @@ class Roster extends React.Component {
   }
 
   handleClosePopup() {
-    // NOTE: must reset all 'show popups' to false
     this.setState({
       showCreateTeamPopup: false,
       popupOpen: false,
@@ -135,9 +135,9 @@ class Roster extends React.Component {
     });
   }
 
-  handleActiveRosterChange(newRoster) {
+  handleActiveRosterChange(newActiveRoster) {
     this.setState({
-      newRoster: newRoster
+      newActiveRoster: newActiveRoster
     });
   }
 
@@ -230,6 +230,18 @@ class Roster extends React.Component {
     else if (this.state.fantasyLeague.settings.max_roster_size > Object.keys(this.state.newRoster).length) {
       acceptable = false;
       this.handleOpenToast('ERROR', 'Roster still has empty spots! (' + (this.state.fantasyLeague.settings.max_roster_size - Object.keys(this.state.newRoster).length) + ')');
+    }
+
+    return acceptable;
+  }
+
+  verifyActiveRoster() {
+    let acceptable = true;
+
+    // check roster size
+    if (leagueInfo.getMinRosterSize(this.state.fantasyLeague.sport) !== Object.keys(this.state.newActiveRoster).length) {
+      acceptable = false;
+      this.handleOpenToast('ERROR', 'Active roster must have ' + leagueInfo.getMinRosterSize(this.state.fantasyLeague.sport) + ' players');
     }
 
     return acceptable;
@@ -374,16 +386,28 @@ class Roster extends React.Component {
   }
 
   renderMyRosterComponent() {
+    let enableUpdateBtn = Object.keys(this.state.myFantasyTeam.active_roster).toString() !== Object.keys(this.state.newActiveRoster).toString();
     return (
       <Section
         showBackground={true}
         >
         <div>
           <div className='sectionHeader'>
-            <div className='sectionTitle'>
-              {Sanitize(this.state.myFantasyTeam.team_name)}
+            <div className='left'>
+              <div className='sectionTitle'>
+                {Sanitize(this.state.myFantasyTeam.team_name)}
+              </div>
+              <div className='sectionSubTitle'>My Fantasy Team</div>
             </div>
-            <div className='sectionSubTitle'>My Fantasy Team</div>
+
+            <div className='right'>
+              <RaisedButton
+                label='Update'
+                type={enableUpdateBtn ? 'secondary' : 'disabled'}
+                disabled={enableUpdateBtn}
+                onClick={this.submitUpdatedActiveRoster}
+                />
+            </div>
           </div>
           <RosterManagement
             fantasyTeam={this.state.myFantasyTeam}
