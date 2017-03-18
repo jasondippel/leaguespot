@@ -57,9 +57,9 @@ export default class List extends React.Component {
                 <VirtualList
                   height={height}
                   rowCount={that.props.items.length}
-                  rowHeight={58}
+                  rowHeight={56}
                   rowRenderer={that.renderItem}
-                  overscanRowCount={100}
+                  overscanRowCount={20}
                   width={width}
                 />
               )}

@@ -50,8 +50,6 @@ export function loggedIn() {
     return true;
   }
   else {
-    // TODO: add check for token expiry date
-
     // If we have the token and it's still valid, we're logged in still. The
     // decoded JWT has all the user info in it, so can just pass that to the
     // store.

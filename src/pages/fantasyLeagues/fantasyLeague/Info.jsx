@@ -240,12 +240,12 @@ class Info extends React.Component {
       }
       else {
         that.handleOpenToast('ERROR', 'Something went wrong, please try again later');
-        console.log('Failed to leave league', resp.message);
+        console.error('Failed to leave league', resp.message);
       }
     })
     .catch((error) => {
       that.handleOpenToast('ERROR', 'Error leaving league');
-      console.log('Error leaving league ', error);
+      console.error('Error leaving league ', error);
     });
   }
 
@@ -268,12 +268,12 @@ class Info extends React.Component {
       }
       else {
         that.handleOpenToast('ERROR', 'Failed to delete league');
-        console.log('Failed to delete league', resp.message);
+        console.error('Failed to delete league', resp.message);
       }
     })
     .catch((error) => {
       that.handleOpenToast('ERROR', 'Error deleting league');
-      console.log('Error deleting league ', error);
+      console.error('Error deleting league ', error);
     });
   }
 
@@ -438,6 +438,7 @@ class Info extends React.Component {
             title='General Info'
             width={4}
             showBackground={true}
+            padContent={true}
             >
             <div className='column12'>
               <div className='labelTitle'>League Name</div>
@@ -462,6 +463,7 @@ class Info extends React.Component {
             title='Invite Users'
             width={8}
             showBackground={true}
+            padContent={true}
             >
             <div>
               Enter the emails of users you would like to include in your league. If an email you entered does not currently have an account, we will send them an email.
@@ -501,6 +503,7 @@ class Info extends React.Component {
             title='Rules'
             width={12}
             showBackground={true}
+            padContent={true} 
             >
             <div className='column12'>
               <div className='labelTitle'>Hometown</div>

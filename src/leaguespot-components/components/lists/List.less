@@ -105,9 +105,8 @@
 
 .rc-List {
   border-radius: 2px;
-  margin: 5px;
   box-sizing: border-box;
-  // NOTE: bug when rendering with scrollbar, causes width to be wider than actually is; Need this to fix it
+  margin: 0px;
   overflow-x: hidden;
 
   .header {
@@ -131,11 +130,14 @@
 
   .content {
     min-height: 100px;
-    height: 60vh;
+    max-height: 70vh;
     border-bottom-right-radius: 2px;
     border-bottom-left-radius: 2px;
     border: 0px !important;
-    background-color: darken(@lightBackgroundContainer, 8%);
+    padding: 0px !important;
+    padding-bottom: 3px !important;
+    margin: 0px !important;
+    background-color: @lightBackgroundContainer;
   }
 
 }

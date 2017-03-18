@@ -30,7 +30,7 @@ export default class ModifySettings extends React.Component {
   render() {
     return (
       <div className='stepContent'>
-        <Section>
+        <Section padContent={true} >
           <div className='column12 dataSection'>
             <div className='dataDetails'>
               <span className='title'>Final Day to Draft Teams</span>

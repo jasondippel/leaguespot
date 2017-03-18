@@ -84,7 +84,7 @@ export default class InviteUsers extends React.Component {
 
     return (
       <div className='stepContent'>
-        <Section>
+        <Section padContent={true} >
           <p>Enter the emails of users you would like to include in your league. If an email you entered does not currently have an account, we will send them an email.</p>
           <div className='existingEmails'>
             {this.props.userEmails.map(this.renderChip, this)}

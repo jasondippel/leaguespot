@@ -2,5 +2,56 @@
 @import '../../../../node_modules/leaguespot-components/src/constants/fonts';
 
 .rc-Roster {
+  .noFantasyTeam,
+  .noPlayers {
+    text-align: center;
+    margin-top: 3em;
 
+    .box {
+      border-radius: 2px;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+      background-color: #FFF;
+      padding: 1.5em;
+
+      .mainText {
+        font-size: 1.25em;
+        padding-bottom: 0.5em;
+      }
+    }
+  }
+
+  .noPlayers {
+    margin-top: 1em;
+  }
+
+  .sectionHeader {
+    padding: 1em;
+
+    .sectionTitle {
+      font-size: 2em;
+      font-weight: 400;
+      display: inline-block;
+      margin-right: 0.5em;
+    }
+
+    .sectionSubTitle {
+      font-size: 1.25em;
+      color: @darkTextSecondary;
+      display: inline-block;
+    }
+  }
+}
+.sectionHeader {
+  justify-content: space-between;
+  display: flex;
+}
+
+.rosterPopupContent {
+  .errorMessage {
+    padding-top: 1em;
+    color: @danger;
+    font-size: 0.9em;
+  }
 }

@@ -30,10 +30,11 @@ export default class Tabs extends React.Component {
       color: colours.lightTextPrimary
     };
 
+    let that = this;
     let tabs = this.props.tabs.map(function(tabObj, key) {
       return (
-        <Tab label={tabObj.title} key={key} className='tab' style={tabTitleStyle}>
-          <div className='content'>{tabObj.content}</div>
+        <Tab label={tabObj.title} key={key} value={tabObj.value} className='tab' style={tabTitleStyle}>
+          <div className={that.props.colouredBackground ? 'content colouredBackground' : 'content'}>{tabObj.content}</div>
         </Tab>
       );
     });
@@ -47,6 +48,7 @@ export default class Tabs extends React.Component {
         <div className='rc-Tabs'>
           <MuiTabs
             tabItemContainerStyle={{'borderTopLeftRadius': '2px', 'borderTopRightRadius': '2px'}}
+            onChange={this.props.onChange}
             >
             {this.renderTabs()}
           </MuiTabs>
@@ -58,12 +60,14 @@ export default class Tabs extends React.Component {
 
 Tabs.displayName = 'Tabs';
 
-const {array} = React.PropTypes;
+const {array, func} = React.PropTypes;
 
 Tabs.propTypes = {
-  tabs: array
+  tabs: array,
+  onChange: func
 };
 
 Tabs.defaultProps = {
-  tabs: [] // list of objects with 'title' and 'content' keys used to populate tabs
+  tabs: [], // list of objects with 'title' and 'content' keys used to populate tabs
+  onChange: () => {}
 };

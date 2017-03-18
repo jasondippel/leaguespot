@@ -68,7 +68,7 @@ export default class SetupBasics extends React.Component {
 
     return (
       <div className='stepContent'>
-        <Section>
+        <Section padContent={true} >
           <div className='column6'>
             <TextField
               floatingLabelFixed={true}
