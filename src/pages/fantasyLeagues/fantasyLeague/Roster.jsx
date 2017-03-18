@@ -252,7 +252,7 @@ class Roster extends React.Component {
       return;
     }
 
-    this.props.dispatch(updateFantasyTeamRoster(this.state.myFantasyTeam.fteam_id, this.state.newRoster));
+    this.props.dispatch(updateFantasyTeamRoster(this.state.myFantasyTeam.fteam_id, Object.assign({}, this.state.newRoster)));
   }
 
   submitUpdatedActiveRoster() {
@@ -260,7 +260,7 @@ class Roster extends React.Component {
       return;
     }
 
-    this.props.dispatch(updateFantasyTeamActiveRoster(this.state.myFantasyTeam.fteam_id, this.state.newActiveRoster));
+    this.props.dispatch(updateFantasyTeamActiveRoster(this.state.myFantasyTeam.fteam_id, Object.assign({}, this.state.newActiveRoster)));
   }
 
   displayCreateTeamPopup() {
