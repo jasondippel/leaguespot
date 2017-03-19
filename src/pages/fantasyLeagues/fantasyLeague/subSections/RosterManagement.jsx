@@ -39,7 +39,7 @@ class RosterManagement extends React.Component {
       fantasyTeam: props.fantasyTeam,
       sport: props.sport,
       roster: roster,
-      activeRoster: props.fantasyTeam.active_roster,
+      activeRoster: props.activeRoster,
       loadingTeam: false,
       toastOpen: false,
       toastMessage: '',

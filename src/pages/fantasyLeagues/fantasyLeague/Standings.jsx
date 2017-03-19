@@ -123,7 +123,7 @@ class Standings extends React.Component {
   renderTeamListItem(team, position) {
     return (
       <TeamListItem
-        teamName={team['team_name']}
+        teamName={Sanitize(team['team_name'])}
         points={team['points']}
         position={position}
         />
