@@ -3,4 +3,32 @@
 
 .rc-Standings {
 
+  .sectionHeader {
+    padding: 1em;
+    justify-content: space-between;
+    display: flex;
+
+    .sectionTitle {
+      font-size: 2em;
+      font-weight: 400;
+      display: inline-block;
+      margin-right: 0.5em;
+    }
+
+    .sectionSubTitle {
+      font-size: 1.25em;
+      color: @darkTextSecondary;
+      display: inline-block;
+    }
+  }
+
+  .emptyActiveTeam {
+    padding: 1em;
+    background-color: @lightBackgroundContainer;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    text-align: center;
+    font-style: italic;
+  }
+
 }

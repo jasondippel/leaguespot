@@ -59,6 +59,8 @@ class Roster extends React.Component {
       this.setState({
         fantasyLeague: fantasyLeague,
         myFantasyTeam: myFantasyTeam,
+        newRoster: myFantasyTeam ? myFantasyTeam.roster : {},
+        newActiveRoster: myFantasyTeam? myFantasyTeam.active_roster : {},
         user: user
       });
     });
@@ -131,13 +133,13 @@ class Roster extends React.Component {
 
   handleRosterSelectionChange(newRoster) {
     this.setState({
-      newRoster: newRoster
+      newRoster: Object.assign({}, newRoster)
     });
   }
 
   handleActiveRosterChange(newActiveRoster) {
     this.setState({
-      newActiveRoster: newActiveRoster
+      newActiveRoster: Object.assign({}, newActiveRoster)
     });
   }
 
@@ -410,7 +412,8 @@ class Roster extends React.Component {
             </div>
           </div>
           <RosterManagement
-            fantasyTeam={this.state.myFantasyTeam}
+            fantasyTeam={Object.assign({}, this.state.myFantasyTeam)}
+            activeRoster={Object.assign({}, this.state.newActiveRoster)}
             sport={this.state.fantasyLeague.sport}
             handleActiveRosterChange={this.handleActiveRosterChange}
             submitUpdatedActiveRoster={this.submitUpdatedActiveRoster}

@@ -24,74 +24,36 @@ export default class TeamListItem extends React.Component {
   }
 
   renderTeamTitle() {
-    let title = (
-      <span className='teamName'>{this.props.teamName}</span>
-    );
+    let position = this.props.position ? this.props.position : '';
+    let points = this.props.points ? this.props.points : '';
 
-    if (this.props.fleagueName) {
-      title = (
-        <span>
-          <span className='teamName'>{this.props.teamName}</span>
-          <span className='fleagueName'>{this.props.fleagueName}</span>
-        </span>
-      );
-    }
+    let title = (
+      <div className='teamListTitle'>
+        <div className='left'>
+          <div className='teamName'>{this.props.teamName}</div>
+          <div className='position'>{position}</div>
+        </div>
+
+        <div className='right'>
+          <div className='ptsLabel'>PTS</div>
+          <div className='ptsValue'>{points}</div>
+        </div>
+      </div>
+    );
 
     return title;
   }
 
-  renderTeamStats() {
-    if(!this.props.teamStats) {
-      return;
-    }
-
-    let stats = [];
-    _.each(this.props.teamStats, (stat, key) => {
-      stats.push((
-        <div className='stat' key={key}>
-            <span className='value'>{stat.value}</span>
-            <span className='fieldName'>{stat.fieldName}</span>
-        </div>
-      ));
-    });
-
-    return (
-      <div>
-        {stats}
-      </div>
-    );
-  }
-
-  renderButtons() {
-    let buttons = [];
-
-    // ensure each button has a key value assigned for React rendering
-    _.each(this.props.buttons, (button, key) => {
-        buttons.push((
-          <span key={key}>
-            {button}
-          </span>
-        ));
-    });
-
-    return (
-      <div>
-        {buttons}
-      </div>
-    );
-  }
-
   render() {
-    let teamTitle = this.renderTeamTitle(),
-        teamInfo = this.renderTeamStats(),
-        buttons = this.renderButtons();
+    let teamTitle = this.renderTeamTitle();
 
     return (
       <ListItem
         itemClass='rc-TeamListItem'
         mainText={teamTitle}
-        secondaryText={teamInfo}
-        buttonsRight={buttons}
+        selectable={this.props.selectable}
+        active={this.props.active}
+        onSelect={this.props.onSelect}
         />
     );
   }
@@ -102,11 +64,18 @@ TeamListItem.displayName = 'TeamListItem';
 const {any, array, bool, func, number, object, string} = React.PropTypes;
 
 TeamListItem.propTypes = {
+  active: bool,
+  selectable: bool,
   teamName: string.isRequired,
-  fleagueName: string,
-  teamStats: array,
-  buttons: array
+  onSelect: func,
+  position: string,
+  points: React.PropTypes.oneOfType([
+    string,
+    number])
 };
 
 TeamListItem.defaultProps = {
+  active: false,
+  selectable: false,
+  onSelect: () => {}
 };
