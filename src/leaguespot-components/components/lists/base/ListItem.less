@@ -20,8 +20,18 @@
   &:first-of-type {
     margin-top: 0px;
   }
-  &:hover {
-    background-color: lighten(@lightBackgroundContainer, 6%);
+
+  &.selectable:hover {
+    background-color: @lightBackgroundContainer;
+    cursor: pointer;
+  }
+
+  &.active {
+    .body {
+      .main {
+        color: @leaguespotGreenPrimary;
+      }
+    }
   }
 
   .mediaLeft {

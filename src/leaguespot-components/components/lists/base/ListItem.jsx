@@ -19,6 +19,13 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 export default class ListItem extends React.Component {
   constructor(props) {
     super(props);
+
+    this.handleItemClick = this.handleItemClick.bind(this);
+  }
+
+  handleItemClick(e) {
+    this.props.onSelect();
+    e.stopPropagation();
   }
 
   renderMediaLeft() {
@@ -57,7 +64,8 @@ export default class ListItem extends React.Component {
   render() {
     let mediaLeft,
         body = this.renderBody(),
-        buttonsRight;
+        buttonsRight,
+        classList = this.props.itemClass;
 
     if (this.props.mediaLeft) {
       mediaLeft = this.renderMediaLeft();
@@ -65,10 +73,16 @@ export default class ListItem extends React.Component {
     if (this.props.buttonsRight) {
       buttonsRight = this.renderButtonsRight();
     }
+    if (this.props.selectable) {
+      classList += ' selectable';
+    }
+    if (this.props.active) {
+      classList += ' active';
+    }
 
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(LightTheme)}>
-        <div className={'rc-ListItem ' + this.props.itemClass}>
+        <div className={'rc-ListItem ' + classList} onClick={this.handleItemClick}>
           {mediaLeft}
           {body}
           {buttonsRight}

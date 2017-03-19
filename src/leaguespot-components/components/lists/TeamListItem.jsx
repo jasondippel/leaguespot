@@ -51,6 +51,9 @@ export default class TeamListItem extends React.Component {
       <ListItem
         itemClass='rc-TeamListItem'
         mainText={teamTitle}
+        selectable={this.props.selectable}
+        active={this.props.active}
+        onSelect={this.props.onSelect}
         />
     );
   }
@@ -61,10 +64,18 @@ TeamListItem.displayName = 'TeamListItem';
 const {any, array, bool, func, number, object, string} = React.PropTypes;
 
 TeamListItem.propTypes = {
+  active: bool,
+  selectable: bool,
   teamName: string.isRequired,
+  onSelect: func,
   position: string,
-  points: number
+  points: React.PropTypes.oneOfType([
+    string,
+    number])
 };
 
 TeamListItem.defaultProps = {
+  active: false,
+  selectable: false,
+  onSelect: () => {}
 };

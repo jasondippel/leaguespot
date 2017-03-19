@@ -51,7 +51,7 @@ class Standings extends React.Component {
 
     this.handleOpenPopup = this.handleOpenPopup.bind(this);
     this.handleClosePopup = this.handleClosePopup.bind(this);
-
+    this.handleTeamSelectionChange = this.handleTeamSelectionChange.bind(this);
   }
 
   componentWillMount() {
@@ -80,6 +80,12 @@ class Standings extends React.Component {
   handleClosePopup() {
     this.setState({
       popupOpen: false
+    });
+  }
+
+  handleTeamSelectionChange(newSelectedTeamId) {
+    this.setState({
+      selectedTeamId: newSelectedTeamId
     });
   }
 
@@ -112,21 +118,30 @@ class Standings extends React.Component {
     );
 
     return (
-      <PlayerListItem
-        playerHeader={playerHeader}
-        playerStats={playerStats}
-        showProfilePic={true}
-        />
+      <div key={player.ls_id}>
+        <PlayerListItem
+          playerHeader={playerHeader}
+          playerStats={playerStats}
+          showProfilePic={true}
+          />
+      </div>
     );
   }
 
   renderTeamListItem(team, position) {
     return (
-      <TeamListItem
-        teamName={Sanitize(team['team_name'])}
-        points={team['points']}
-        position={position}
-        />
+      <div key={team.fteam_id}>
+        <TeamListItem
+          teamName={Sanitize(team['team_name'])}
+          points={team['points']}
+          position={position}
+          selectable={true}
+          active={team['fteam_id'] === this.state.selectedTeamId}
+          onSelect={() => {
+            this.handleTeamSelectionChange(team.fteam_id);
+          }}
+          />
+      </div>
     );
   }
 
@@ -137,16 +152,26 @@ class Standings extends React.Component {
         activeRoster = this.state.fantasyLeague.fantasy_teams[this.state.selectedTeamId].active_roster,
         playerList;
 
+    if (activeRosterKeys.length === 0) {
+      return (
+        <div className='emptyActiveTeam'>
+          No Active Roster
+        </div>
+      );
+    }
+
     for(i=0; i < activeRosterKeys.length; i++) {
       let listItem = this.renderActiveRosterListItem(activeRoster[activeRosterKeys[i]]);
       listItems.push(listItem);
     }
 
+    // NOTE: can't render proper list due to bug in component (3rd party component bug)
+    // TODO: update to render proper list once bug fixed
     return (
       <div>
-        <List items={listItems} />
+        {listItems}
       </div>
-    )
+    );
   }
 
   renderTeamList() {
@@ -181,9 +206,11 @@ class Standings extends React.Component {
       listItems.push(listItem);
     }
 
+    // NOTE: can't render proper list due to bug in component (3rd party component bug)
+    // TODO: update to render proper list once bug fixed
     return (
       <div>
-        <List items={listItems} />
+        {listItems}
       </div>
     )
   }
@@ -202,12 +229,14 @@ class Standings extends React.Component {
     }
 
     let teamList = this.renderTeamList();
+    let selectedTeamName = '';
     let selectedTeamActiveRoster = (
       <Spinner />
     );
 
     if (this.state.selectedTeamId) {
       selectedTeamActiveRoster = this.renderSelectedTeamActiveRosterList();
+      selectedTeamName = Sanitize(this.state.fantasyLeague.fantasy_teams[this.state.selectedTeamId].team_name);
     }
 
     return (
@@ -225,7 +254,7 @@ class Standings extends React.Component {
               </div>
             </div>
 
-            <div className='column6' style={{padding: '1em'}}>
+            <div className='column5' style={{padding: '1em'}}>
               <Section
                 title={'Standings'}
                 colouredHeader={true}
@@ -236,10 +265,10 @@ class Standings extends React.Component {
               </Section>
             </div>
 
-            <div className='column6' style={{padding: '1em'}}>
+            <div className='column7' style={{padding: '1em'}}>
               <Section
-                title={'Selected Team Name'}
-                subTitle={'Active Roster'}
+                title={selectedTeamName}
+                subTitle={selectedTeamName ? 'Active Roster' : ''}
                 colouredHeader={true}
                 showBackground={true}
                 noPadding={true}
