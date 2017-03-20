@@ -7,8 +7,8 @@
 
 export default {
   // LEAGUESPOT COLOURS
-  leaguespotGreenPrimary: '#49b64d',
-  leaguespotGreenSecondary: '#2E7D32',
+  leaguespotGreenPrimary: '#329939',
+  leaguespotGreenSecondary: '#2C7730',
 
   // BACKGROUND COLOURS
   darkBackgroundPrimary: '#1c1c1f',

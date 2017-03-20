@@ -23,13 +23,17 @@ const statNames = {
   assists: 'Assists',
   points: 'Points',
   plusminus: 'Plus/Minus',
+  ppg: 'Power Play Goals',
+  shg: 'Short Handed Goals',
+  shots: 'Shots',
   pim: 'Penalty Minutes',
   saves: 'Saves',
   save_percentage: 'Save Percentage',
   goals_against_average: 'Goals Against Average',
   wins: 'Wins',
   losses: 'Losses',
-  shutouts: 'Shutouts'
+  shutouts: 'Shutouts',
+  min: 'Minutes'
 }
 
 const statShortForm = {
@@ -40,12 +44,16 @@ const statShortForm = {
   points: 'PTS',
   plusminus: '+/-',
   pim: 'PIM',
+  ppg: 'PPG',
+  shg: 'SHG',
+  shots: 'Shots',
   saves: 'Saves',
   save_percentage: 'Save %',
   goals_against_average: 'GAA',
   wins: 'W',
   losses: 'L',
-  shutouts: 'SO'
+  shutouts: 'SO',
+  min: 'Min'
 }
 
 const displayStats = {
@@ -69,6 +77,47 @@ const shortDisplayStats = {
   Hockey: [
     'position'
   ]
+}
+
+const personalInfoStats = {
+  Hockey: [
+    'league',
+    'position',
+    'cost',
+    'handiness',
+    'height',
+    'weight'
+  ]
+}
+
+const playerStats = {
+  Hockey: [
+    'games_played',
+    'goals',
+    'assists',
+    'points',
+    'plusminus',
+    'pim',
+    'ppg',
+    'shg',
+    'shots',
+    'wins',
+    'losses',
+    'save_percentage',
+    'goals_against_average',
+    'shutouts',
+    'shots',
+    'min'
+  ]
+}
+
+const personalInfoStatsNames = {
+  'league': 'League',
+  'position': 'Position',
+  'height': 'Height (ft)',
+  'weight': 'Weight (lbs)',
+  'handiness': 'Handedness',
+  'cost': 'Cost'
 }
 
 const statMultipliersBySport = {
@@ -154,6 +203,24 @@ export function getStatsForSport(sport) {
   return {};
 }
 
+export function getPersonalInfoStats(sport) {
+  if (personalInfoStats[sport]) {
+    return personalInfoStats[sport];
+  }
+
+  console.error('Error: cannot find personal info stats for sport \"' + sport + '\"');
+  return [];
+}
+
+export function getAllPlayerStats(sport) {
+  if (playerStats[sport]) {
+    return playerStats[sport];
+  }
+
+  console.error('Error: cannot find player stats for sport \"' + sport + '\"');
+  return [];
+}
+
 export function getGeneralDisplayStatsForSport(sport) {
   if (displayStats[sport]) {
     return displayStats[sport];
@@ -178,6 +245,15 @@ export function getNamesForStat(stat) {
   }
 
   console.error('Error: cannot find name for stat \"' + stat + '\"');
+  return '';
+}
+
+export function getNameForPersonalInfoStat(stat) {
+  if (personalInfoStatsNames[stat]) {
+    return personalInfoStatsNames[stat];
+  }
+
+  console.error('Error: cannot find name for personal info stat \"' + stat + '\"');
   return '';
 }
 

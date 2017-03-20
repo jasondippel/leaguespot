@@ -21,6 +21,7 @@ import PlayerListItem from '../../../leaguespot-components/components/lists/Play
 import Section from '../../../leaguespot-components/components/containers/Section';
 import Popup from '../../../leaguespot-components/components/popup/Popup';
 import Spinner from '../../../components/loaders/Spinner';
+import PlayerInfo from './subSections/PlayerInfo';
 
 
 class Standings extends React.Component {
@@ -51,6 +52,7 @@ class Standings extends React.Component {
 
     this.handleOpenPopup = this.handleOpenPopup.bind(this);
     this.handleClosePopup = this.handleClosePopup.bind(this);
+    this.handlePlayerSelection = this.handlePlayerSelection.bind(this);
     this.handleTeamSelectionChange = this.handleTeamSelectionChange.bind(this);
   }
 
@@ -81,6 +83,33 @@ class Standings extends React.Component {
     this.setState({
       popupOpen: false
     });
+  }
+
+  handlePlayerSelection(player) {
+    let type = 'DEFAULT';
+    let title = (
+      <div className='playerTitle'>
+        <div className='playerName'>
+          <span className='name'>{player.last_name}, {player.first_name}</span>
+          <span className='number'>#{player.jersey_number}</span>
+        </div>
+      </div>
+    );
+
+    let buttons = [(
+      <RaisedButton
+        label='Close'
+        onClick={this.handleClosePopup}
+        />
+    )];
+    let content = (
+      <PlayerInfo
+        player={player}
+        sport={this.state.fantasyLeague.sport}
+        />
+    );
+
+    this.handleOpenPopup(type, title, content, buttons);
   }
 
   handleTeamSelectionChange(newSelectedTeamId) {
@@ -123,6 +152,10 @@ class Standings extends React.Component {
           playerHeader={playerHeader}
           playerStats={playerStats}
           showProfilePic={true}
+          selectable={true}
+          onSelect={() => {
+            this.handlePlayerSelection(player);
+          }}
           />
       </div>
     );

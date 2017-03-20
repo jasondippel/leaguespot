@@ -137,7 +137,7 @@ const {any, array, bool, func, number, string} = React.PropTypes;
 Popup.propTypes = {
   open: bool.isRequired,
   message: any.isRequired,
-  title: string,
+  title: any,
   buttons: array,
   type: React.PropTypes.oneOf(['SUCCESS', 'ERROR', 'CONFIRM', 'DEFAULT']),
   // icon: React.PropTypes.oneOf(['SUCCESS', 'ERROR', 'INFO', 'NONE']), // TODO: add ability to display Icon

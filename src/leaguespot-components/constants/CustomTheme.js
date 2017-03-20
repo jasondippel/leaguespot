@@ -14,8 +14,8 @@ export default {
   spacing: spacing,
   fontFamily: 'Lato, sans-serif',
   palette: {
-    primary1Color: '#49b64d',
-    primary2Color: '#49b64d',
+    primary1Color: '#329939',
+    primary2Color: '#2C7730',
     primary3Color: grey600,
     accent1Color: grey200,
     accent2Color: grey400,
@@ -25,7 +25,7 @@ export default {
     canvasColor: '#222326',
     borderColor: fade(fullWhite, 0.3),
     disabledColor: fade(fullWhite, 0.3),
-    pickerHeaderColor: '#49b64d',
+    pickerHeaderColor: '#329939',
     clockCircleColor: fade(fullWhite, 0.12),
   },
 };

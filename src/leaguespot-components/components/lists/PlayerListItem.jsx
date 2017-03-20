@@ -86,6 +86,9 @@ export default class PlayerListItem extends React.Component {
         secondaryText={playerInfo}
         mediaLeft={profilePic}
         buttonsRight={buttons}
+        selectable={this.props.selectable}
+        active={this.props.active}
+        onSelect={this.props.onSelect}
         />
     );
   }
@@ -96,13 +99,19 @@ PlayerListItem.displayName = 'PlayerListItem';
 const {any, array, bool, func, number, object, string} = React.PropTypes;
 
 PlayerListItem.propTypes = {
+  active: bool,
+  selectable: bool,
   playerHeader: React.PropTypes.oneOfType([object, string]).isRequired,
   playerStats: array,
   buttons: array,
   profilePic: string,   // location of image
+  onSelect: func,
   showProfilePic: bool
 };
 
 PlayerListItem.defaultProps = {
-  showProfilePic: false
+  active: false,
+  selectable: false,
+  showProfilePic: false,
+  onSelect: () => {}
 };
