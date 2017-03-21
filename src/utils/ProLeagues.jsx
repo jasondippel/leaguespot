@@ -18,6 +18,7 @@ const playerCostBySport = {
 
 const statNames = {
   position: 'Position',
+  league: 'League',
   games_played: 'Games Played',
   goals: 'Goals',
   assists: 'Assists',
@@ -38,6 +39,7 @@ const statNames = {
 
 const statShortForm = {
   position: 'Pos',
+  league: 'Leag',
   games_played: 'GP',
   goals: 'G',
   assists: 'A',
@@ -59,6 +61,7 @@ const statShortForm = {
 const displayStats = {
   Hockey: [
     'position',
+    'league',
     'games_played',
     'goals',
     'assists',
@@ -106,7 +109,6 @@ const playerStats = {
     'save_percentage',
     'goals_against_average',
     'shutouts',
-    'shots',
     'min'
   ]
 }

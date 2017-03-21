@@ -34,11 +34,11 @@ export default class PlayerInfo extends React.Component {
 
       if (value) {
         return (
-          <div className='stat' key={stat}>
+          <div className='stat' key={this.state.player.ls_id + '.' + stat}>
             <div className='label'>{leagueInfo.getShortFormForStat(stat)}</div>
             <div className='value'>{value}</div>
           </div>
-        );  
+        );
       }
     });
 
@@ -80,7 +80,7 @@ export default class PlayerInfo extends React.Component {
       }
 
       return (
-        <div className='column6 stat' key={stat}>
+        <div className='column6 stat' key={this.state.player.ls_id + '.' + stat}>
           <div className='label'>{leagueInfo.getNameForPersonalInfoStat(stat)}</div>
           <div className='value'>{value}</div>
         </div>
@@ -118,6 +118,7 @@ export default class PlayerInfo extends React.Component {
         </div>
 
         <div className='playerStats'>
+          <div className='title'>Player Stats</div>
           {playerStats}
         </div>
       </div>

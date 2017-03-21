@@ -124,12 +124,16 @@ class Standings extends React.Component {
 
     let i;
     for(i=0; i < statFields.length; i++) {
+      let value = player[statFields[i]];
+
       if (player[statFields[i]] === null) {
         continue;
+      } else if (statFields[i] === 'league') {
+        value = leagueInfo.getLeagueName(value);
       }
 
       let statObj = {
-        value: player[statFields[i]],
+        value: value,
         fieldName: leagueInfo.getShortFormForStat(statFields[i])
       };
       playerStats.push(statObj);
@@ -261,13 +265,20 @@ class Standings extends React.Component {
       );
     }
 
-    let teamList = this.renderTeamList();
-    let selectedTeamName = '';
+    let teamList = (
+      <div className='emptyActiveTeam'>
+        No Teams
+      </div>
+    );;
+    let selectedTeamName = 'No Team Selected';
     let selectedTeamActiveRoster = (
-      <Spinner />
+      <div className='emptyActiveTeam'>
+        No Active Roster
+      </div>
     );
 
     if (this.state.selectedTeamId) {
+      teamList = this.renderTeamList();
       selectedTeamActiveRoster = this.renderSelectedTeamActiveRosterList();
       selectedTeamName = Sanitize(this.state.fantasyLeague.fantasy_teams[this.state.selectedTeamId].team_name);
     }

@@ -143,12 +143,16 @@ class RosterManagement extends React.Component {
 
     let i;
     for(i=0; i < statFields.length; i++) {
+      let value = player[statFields[i]];
+
       if (player[statFields[i]] === null) {
         continue;
+      } else if (statFields[i] === 'league') {
+        value = leagueInfo.getLeagueName(value);
       }
 
       let statObj = {
-        value: player[statFields[i]],
+        value: value,
         fieldName: leagueInfo.getShortFormForStat(statFields[i])
       };
       playerStats.push(statObj);

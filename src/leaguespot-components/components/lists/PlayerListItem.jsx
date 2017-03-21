@@ -38,8 +38,8 @@ export default class PlayerListItem extends React.Component {
     _.each(this.props.playerStats, (stat, key) => {
       stats.push((
         <div className='stat' key={key}>
-            <span className='value'>{stat.value}</span>
             <span className='fieldName'>{stat.fieldName}</span>
+            <span className='value'>{stat.value}</span>
         </div>
       ));
     });
