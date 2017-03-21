@@ -19,6 +19,18 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 export default class Tabs extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      activeTabIndex: 0
+    }
+
+    this.handleActiveTabChange = this.handleActiveTabChange.bind(this);
+  }
+
+  handleActiveTabChange(tab, temp) {
+    this.setState({
+      activeTabIndex: tab.props.index
+    });
   }
 
   renderTabs() {
@@ -32,8 +44,21 @@ export default class Tabs extends React.Component {
 
     let that = this;
     let tabs = this.props.tabs.map(function(tabObj, key) {
+      let title = tabObj.title;
+      if (key === that.state.activeTabIndex) {
+        title = (
+          <span style={{fontWeight: 400}}>{title}</span>
+        );
+      }
       return (
-        <Tab label={tabObj.title} key={key} value={tabObj.value} className='tab' style={tabTitleStyle}>
+        <Tab
+          label={title}
+          key={key}
+          value={tabObj.value}
+          className='tab'
+          style={tabTitleStyle}
+          onActive={that.handleActiveTabChange}
+          >
           <div className={that.props.colouredBackground ? 'content colouredBackground' : 'content'}>{tabObj.content}</div>
         </Tab>
       );
@@ -47,7 +72,13 @@ export default class Tabs extends React.Component {
       <MuiThemeProvider muiTheme={getMuiTheme(LightTheme)}>
         <div className='rc-Tabs'>
           <MuiTabs
-            tabItemContainerStyle={{'borderTopLeftRadius': '2px', 'borderTopRightRadius': '2px'}}
+            tabItemContainerStyle={{
+              borderTopLeftRadius: '2px',
+              borderTopRightRadius: '2px'
+            }}
+            inkBarStyle={{
+              background: colours.darkTextPrimary
+            }}
             onChange={this.props.onChange}
             >
             {this.renderTabs()}
