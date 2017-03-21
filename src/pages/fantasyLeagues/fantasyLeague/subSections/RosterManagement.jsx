@@ -334,12 +334,12 @@ class RosterManagement extends React.Component {
     return (
       <div className='rc-RosterManagement'>
 
-        <div className='content'>
+        <div className='content' style={{padding: '0px'}}>
           <Section
             showBackground={false}
             >
 
-            <div className='column7' style={{padding: '1em'}}>
+            <div className='column7' style={{padding: '1em', paddingLeft: '0px'}}>
               <Section
                 title={'Bench'}
                 colouredHeader={true}

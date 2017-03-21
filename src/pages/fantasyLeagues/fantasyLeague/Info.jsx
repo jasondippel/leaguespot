@@ -440,23 +440,25 @@ class Info extends React.Component {
             showBackground={true}
             padContent={true}
             >
-            <div className='column12'>
-              <div className='labelTitle'>League Name</div>
-              <div className='labelValue'>{Sanitize(this.state.fantasyLeague.fleague_name)}</div>
+            <div style={{paddingLeft: '0.5em', paddingRight: '0.5em', paddingBottom: '0.5em'}}>
+              <div className='column12'>
+                <div className='labelTitle'>League Name</div>
+                <div className='labelValue'>{Sanitize(this.state.fantasyLeague.fleague_name)}</div>
+              </div>
+              <div className='column12'>
+                <div className='labelTitle'>Sport</div>
+                <div className='labelValue'>{Sanitize(this.state.fantasyLeague.sport)}</div>
+              </div>
+              <div className='column12'>
+                <div className='labelTitle'>Leagues</div>
+                <div className='labelValue multiline'>{Sanitize(leagueList)}</div>
+              </div>
+              <div className='column12'>
+                <div className='labelTitle'>Members</div>
+                <div className='labelValue'>{membersCount}</div>
+              </div>
+              {button}
             </div>
-            <div className='column12'>
-              <div className='labelTitle'>Sport</div>
-              <div className='labelValue'>{Sanitize(this.state.fantasyLeague.sport)}</div>
-            </div>
-            <div className='column12'>
-              <div className='labelTitle'>Leagues</div>
-              <div className='labelValue multiline'>{Sanitize(leagueList)}</div>
-            </div>
-            <div className='column12'>
-              <div className='labelTitle'>Members</div>
-              <div className='labelValue'>{membersCount}</div>
-            </div>
-            {button}
           </Section>
 
           <Section
@@ -465,65 +467,68 @@ class Info extends React.Component {
             showBackground={true}
             padContent={true}
             >
-            <div>
-              Enter the emails of users you would like to include in your league. If an email you entered does not currently have an account, we will send them an email.
-            </div>
+            <div style={{paddingLeft: '0.5em', paddingRight: '0.5em', paddingBottom: '0.5em'}}>
+              <div>
+                Enter the emails of users you would like to include in your league. If an email you entered does not currently have an account, we will send them an email.
+              </div>
 
-            <div className='existingEmails'>
-              {this.state.inviteEmails.map(this.renderChip, this)}
-            </div>
+              <div className='existingEmails'>
+                {this.state.inviteEmails.map(this.renderChip, this)}
+              </div>
 
-            <div className='column5'>
-              <TextField
-                floatingLabelFixed={true}
-                floatingLabelText='User email'
-                hintText='user@email.com'
-                onChange={this.updateEnteredEmail}
-                onKeyDown={this.handleKeyDown}
-                errorText={this.state.inputError}
-                value={this.state.currentEmail}
-                />
+              <div className='column5'>
+                <TextField
+                  floatingLabelFixed={true}
+                  floatingLabelText='User email'
+                  hintText='user@email.com'
+                  onChange={this.updateEnteredEmail}
+                  onKeyDown={this.handleKeyDown}
+                  errorText={this.state.inputError}
+                  value={this.state.currentEmail}
+                  />
+              </div>
+              <div className='column7' style={buttonStyle}>
+                <RaisedButton
+                  label='Add'
+                  onClick={this.submitEmailAddress}
+                  />
+                <RaisedButton
+                  label='Invite'
+                  type={this.state.inviteEmails.length > 0 ? 'primary' : 'disabled'}
+                  disabled={this.state.inviteEmails.length === 0}
+                  onClick={this.inviteUsers}
+                  />
+              </div>
             </div>
-            <div className='column7' style={buttonStyle}>
-              <RaisedButton
-                label='Add'
-                onClick={this.submitEmailAddress}
-                />
-              <RaisedButton
-                label='Invite'
-                type={this.state.inviteEmails.length > 0 ? 'primary' : 'disabled'}
-                disabled={this.state.inviteEmails.length === 0}
-                onClick={this.inviteUsers}
-                />
-            </div>
-
           </Section>
 
           <Section className='section'
             title='Rules'
             width={12}
             showBackground={true}
-            padContent={true} 
+            padContent={true}
             >
-            <div className='column12'>
-              <div className='labelTitle'>Hometown</div>
-              <div className='labelValue'>{Sanitize(hometown)}</div>
-            </div>
-            <div className='column12'>
-              <div className='labelTitle'>Max Roster Size</div>
-              <div className='labelValue'>{maxRosterSize}</div>
-            </div>
-            <div className='column12'>
-              <div className='labelTitle'>Active Roster Size</div>
-              <div className='labelValue'>{leagueInfo.getActiveRosterSize(this.state.fantasyLeague.sport)}</div>
-            </div>
-            <div className='column12'>
-              <div className='labelTitle full'>Stat Multipliers</div>
-              {multipliersSection}
-            </div>
-            <div className='column12'>
-              <div className='labelTitle full'>Social Rules</div>
-              <div className='labelValue full multiline'>{Sanitize(socialRules)}</div>
+            <div style={{paddingLeft: '0.5em', paddingRight: '0.5em', paddingBottom: '0.5em'}}>
+              <div className='column12'>
+                <div className='labelTitle'>Hometown</div>
+                <div className='labelValue'>{Sanitize(hometown)}</div>
+              </div>
+              <div className='column12'>
+                <div className='labelTitle'>Max Roster Size</div>
+                <div className='labelValue'>{maxRosterSize}</div>
+              </div>
+              <div className='column12'>
+                <div className='labelTitle'>Active Roster Size</div>
+                <div className='labelValue'>{leagueInfo.getActiveRosterSize(this.state.fantasyLeague.sport)}</div>
+              </div>
+              <div className='column12'>
+                <div className='labelTitle full'>Stat Multipliers</div>
+                {multipliersSection}
+              </div>
+              <div className='column12'>
+                <div className='labelTitle full'>Social Rules</div>
+                <div className='labelValue full multiline'>{Sanitize(socialRules)}</div>
+              </div>
             </div>
           </Section>
 
