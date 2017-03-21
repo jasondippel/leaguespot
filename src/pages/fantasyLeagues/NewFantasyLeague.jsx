@@ -52,6 +52,7 @@ class NewFantasyLeague extends React.Component {
         sport: '',
         proLeagues: [],
         cutOffDate: cutOffDate,
+        endDate: undefined,
         maxRosterSize: 0,
         hometown: undefined,
         hometown_multiplier: 2,
@@ -314,6 +315,7 @@ class NewFantasyLeague extends React.Component {
     let proLeagues = leagueInfo.getLeaguesInSport(sport);
     let maxRosterSize = leagueInfo.getMaxRosterSize(sport);
     let statMultipliers = leagueInfo.getStatsForSport(sport);
+    let sportEndDate = new Date(leagueInfo.getSportEndDate(sport));
 
     this.setState({
       fantasyLeague: {
@@ -321,7 +323,8 @@ class NewFantasyLeague extends React.Component {
         sport: sport,
         proLeagues: proLeagues,
         maxRosterSize: maxRosterSize,
-        statMultipliers: statMultipliers
+        statMultipliers: statMultipliers,
+        endDate: sportEndDate
       }
     });
   }
@@ -442,9 +445,10 @@ class NewFantasyLeague extends React.Component {
         privacy_mode          : 'private',
         league_size_limit     : 100,
         league_start_dateTime : fantasyLeague.cutOffDate,
-        status                : 'in progress',             // TODO: should probably be set on the server side
         settings              :
         {
+          start_date            : fantasyLeague.cutOffDate.toJSON(),
+          end_date              : fantasyLeague.endDate.toJSON(),
           hometown              : fantasyLeague.hometown,
           scoring: {
             hometown_multiplier   : fantasyLeague.hometown_multiplier,

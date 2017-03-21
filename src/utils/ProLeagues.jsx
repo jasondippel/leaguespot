@@ -11,6 +11,10 @@ const proLeaguesInSport = {
   Hockey: ['nhl', 'ohl', 'lhjmq', 'whl', 'cwhl']
 }
 
+const sportEndDates = {
+  Hockey: new Date('2017-04-30T23:59:59')
+}
+
 const playerCostBySport = {
   Hockey: 950,
   Basketball: 800
@@ -187,6 +191,22 @@ export function getLeaguesInSport(sport) {
 
   console.error('Error: cannot find sport \"' + sport + '\" in list of sports');
   return [];
+}
+
+export function getSportEndDate(sport) {
+  if (sportEndDates[sport]) {
+    let today = new Date();
+    let endDate = sportEndDates[sport].setFullYear(today.getFullYear());
+
+    if (endDate < today) {
+      endDate.setFullYear(today.getFullYear() + 1);
+    }
+
+    return endDate;
+  }
+
+  console.error('Error: cannot find endDate for sport \"' + sport + '\" in list of end dates');
+  return;
 }
 
 export function getPlayerCostForSport(sport) {
