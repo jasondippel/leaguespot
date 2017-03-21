@@ -22,6 +22,7 @@ import Toast from '../../../../leaguespot-components/components/toast/Toast';
 import List from '../../../../leaguespot-components/components/lists/List';
 import PlayerListItem from '../../../../leaguespot-components/components/lists/PlayerListItem';
 import Spinner from '../../../../components/loaders/Spinner';
+import PlayerInfo from './PlayerInfo';
 
 
 class RosterManagement extends React.Component {
@@ -55,6 +56,7 @@ class RosterManagement extends React.Component {
     this.handleOpenToast = this.handleOpenToast.bind(this);
     this.handleClosePopup = this.handleClosePopup.bind(this);
     this.handleCloseToast = this.handleCloseToast.bind(this);
+    this.handlePlayerSelection = this.handlePlayerSelection.bind(this);
     this.addPlayerToActiveRoster = this.addPlayerToActiveRoster.bind(this);
     this.removePlayerFromActiveRoster = this.removePlayerFromActiveRoster.bind(this);
   }
@@ -87,6 +89,33 @@ class RosterManagement extends React.Component {
     this.setState({
       popupOpen: false
     });
+  }
+
+  handlePlayerSelection(player) {
+    let type = 'DEFAULT';
+    let title = (
+      <div className='playerTitle'>
+        <div className='playerName'>
+          <span className='name'>{player.last_name}, {player.first_name}</span>
+          <span className='number'>#{player.jersey_number}</span>
+        </div>
+      </div>
+    );
+
+    let buttons = [(
+      <RaisedButton
+        label='Close'
+        onClick={this.handleClosePopup}
+        />
+    )];
+    let content = (
+      <PlayerInfo
+        player={player}
+        sport={this.state.sport}
+        />
+    );
+
+    this.handleOpenPopup(type, title, content, buttons);
   }
 
   addPlayerToActiveRoster(player) {
@@ -123,12 +152,16 @@ class RosterManagement extends React.Component {
 
     let i;
     for(i=0; i < statFields.length; i++) {
+      let value = player[statFields[i]];
+
       if (player[statFields[i]] === null) {
         continue;
+      } else if (statFields[i] === 'league') {
+        value = leagueInfo.getLeagueName(value);
       }
 
       let statObj = {
-        value: player[statFields[i]],
+        value: value,
         fieldName: leagueInfo.getShortFormForStat(statFields[i])
       };
       playerStats.push(statObj);
@@ -146,6 +179,8 @@ class RosterManagement extends React.Component {
       let value = player[statFields[i]];
 
       if (player[statFields[i]] === null) {
+        continue;
+      } else if (statFields[i] === 'position') {
         continue;
       } else if (statFields[i] === 'league') {
         value = leagueInfo.getLeagueName(value);
@@ -167,14 +202,18 @@ class RosterManagement extends React.Component {
         <IconButton
           type='removeCircle'
           hoverText='Remove from Active Roster'
-          onClick={() => {
+          onClick={(e) => {
             this.removePlayerFromActiveRoster(player);
+            e.stopPropagation();
           }}/>
       )];
     let playerStats = this.formatActivePlayerStats(player);
     let playerHeader = (
       <div className='rosterPlayerHeader'>
-        <div className='playerName'>{player['last_name'] + ', ' + player['first_name'].slice(0,1)}</div>
+        <div className='playerName'>
+          <span className='name'>{player['last_name'] + ', ' + player['first_name'].slice(0,1)}</span>
+          <span className='position'>{player['position']}</span>
+        </div>
       </div>
     );
 
@@ -184,6 +223,10 @@ class RosterManagement extends React.Component {
         playerStats={playerStats}
         showProfilePic={true}
         buttons={buttons}
+        selectable={true}
+        onSelect={() => {
+          this.handlePlayerSelection(player);
+        }}
         />
     );
   }
@@ -206,8 +249,9 @@ class RosterManagement extends React.Component {
           <IconButton
             type='addCircle'
             hoverText='Add to Roster'
-            onClick={() => {
+            onClick={(e) => {
               this.addPlayerToActiveRoster(player);
+              e.stopPropagation();
             }}/>
         )];
     }
@@ -215,7 +259,10 @@ class RosterManagement extends React.Component {
     let playerStats = this.formatPlayerStats(player);
     let playerHeader = (
       <div className='rosterPlayerHeader'>
-        <div className='playerName'>{player['last_name'] + ', ' + player['first_name'].slice(0,1)}</div>
+        <div className='playerName'>
+          <span className='name'>{player['last_name'] + ', ' + player['first_name'].slice(0,1)}</span>
+          <span className='position'>{player['position']}</span>
+        </div>
       </div>
     );
 
@@ -225,6 +272,10 @@ class RosterManagement extends React.Component {
         playerStats={playerStats}
         showProfilePic={true}
         buttons={buttons}
+        selectable={true}
+        onSelect={() => {
+          this.handlePlayerSelection(player);
+        }}
         />
     );
   }
@@ -288,7 +339,7 @@ class RosterManagement extends React.Component {
             showBackground={false}
             >
 
-            <div className='column8' style={{padding: '1em'}}>
+            <div className='column7' style={{padding: '1em'}}>
               <Section
                 title={'Bench'}
                 colouredHeader={true}
@@ -299,7 +350,7 @@ class RosterManagement extends React.Component {
               </Section>
             </div>
 
-            <div className='column4' style={{padding: '1em'}}>
+            <div className='column5' style={{padding: '1em'}}>
               <Section
                 title={'Active (' + Object.keys(this.state.activeRoster).length + '/' + leagueInfo.getMinRosterSize(this.state.sport) + ')'}
                 colouredHeader={true}

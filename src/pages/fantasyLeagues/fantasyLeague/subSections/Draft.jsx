@@ -25,6 +25,7 @@ import Toast from '../../../../leaguespot-components/components/toast/Toast';
 import List from '../../../../leaguespot-components/components/lists/List';
 import PlayerListItem from '../../../../leaguespot-components/components/lists/PlayerListItem';
 import Spinner from '../../../../components/loaders/Spinner';
+import PlayerInfo from './PlayerInfo';
 
 
 class Draft extends React.Component {
@@ -67,6 +68,7 @@ class Draft extends React.Component {
     this.handleClosePopup = this.handleClosePopup.bind(this);
     this.handleCloseToast = this.handleCloseToast.bind(this);
     this.handleTabChange = this.handleTabChange.bind(this);
+    this.handlePlayerSelection = this.handlePlayerSelection.bind(this);
     this.showHelpPopup = this.showHelpPopup.bind(this);
     this.addPlayerToRoster = this.addPlayerToRoster.bind(this);
   }
@@ -105,6 +107,33 @@ class Draft extends React.Component {
     this.setState({
       activeLeague: activeTabValue
     });
+  }
+
+  handlePlayerSelection(player) {
+    let type = 'DEFAULT';
+    let title = (
+      <div className='playerTitle'>
+        <div className='playerName'>
+          <span className='name'>{player.last_name}, {player.first_name}</span>
+          <span className='number'>#{player.jersey_number}</span>
+        </div>
+      </div>
+    );
+
+    let buttons = [(
+      <RaisedButton
+        label='Close'
+        onClick={this.handleClosePopup}
+        />
+    )];
+    let content = (
+      <PlayerInfo
+        player={player}
+        sport={this.state.sport}
+        />
+    );
+
+    this.handleOpenPopup(type, title, content, buttons);
   }
 
   showHelpPopup() {
@@ -189,12 +218,17 @@ class Draft extends React.Component {
     // filter to only include stats we want displayed
     let i;
     for(i=0; i < statFields.length; i++) {
+      let value = player[statFields[i]];
       if (player[statFields[i]] === null) {
         continue;
+      } else if (statFields[i] === 'position') {
+        continue;
+      } else if (statFields[i] === 'league') {
+        value = leagueInfo.getLeagueName(value);
       }
 
       let statObj = {
-        value: player[statFields[i]],
+        value: value,
         fieldName: leagueInfo.getShortFormForStat(statFields[i])
       };
       playerStats.push(statObj);
@@ -202,7 +236,7 @@ class Draft extends React.Component {
 
     playerStats.push({
       value: '$' + player['cost'],
-      filedName: 'Cost'
+      filedName: 'cost'
     });
 
     return playerStats;
@@ -218,6 +252,8 @@ class Draft extends React.Component {
       let value = player[statFields[i]];
 
       if (player[statFields[i]] === null) {
+        continue;
+      } else if (statFields[i] === 'position') {
         continue;
       } else if (statFields[i] === 'league') {
         value = leagueInfo.getLeagueName(value);
@@ -239,14 +275,18 @@ class Draft extends React.Component {
         <IconButton
           type='removeCircle'
           hoverText='Remove from Roster'
-          onClick={() => {
+          onClick={(e) => {
             this.removePlayerFromRoster(player['ls_id']);
+            e.stopPropagation();
           }}/>
       )];
     let playerStats = this.formatRosterPlayerStats(player);
     let playerHeader = (
       <div className='rosterPlayerHeader'>
-        <div className='playerName'>{player['last_name'] + ', ' + player['first_name'].slice(0,1)}</div>
+        <div className='playerName'>
+          <span className='name'>{player['last_name'] + ', ' + player['first_name'].slice(0,1)}</span>
+          <span className='position'>{player['position']}</span>
+        </div>
       </div>
     );
 
@@ -256,6 +296,10 @@ class Draft extends React.Component {
         playerStats={playerStats}
         showProfilePic={true}
         buttons={buttons}
+        selectable={true}
+        onSelect={() => {
+          this.handlePlayerSelection(player);
+        }}
         />
     );
   }
@@ -266,14 +310,18 @@ class Draft extends React.Component {
         <IconButton
           type='addCircle'
           hoverText='Add to Roster'
-          onClick={() => {
+          onClick={(e) => {
             this.addPlayerToRoster(playerIndex);
+            e.stopPropagation();
           }}/>
       )];
     let playerStats = this.formatPlayerStats(player);
     let playerHeader = (
       <div className='draftPlayerHeader'>
-        <div className='playerName'>{player['last_name'] + ', ' + player['first_name'].slice(0,1)}</div>
+        <div className='playerName'>
+          <span className='name'>{player['last_name'] + ', ' + player['first_name'].slice(0,1)}</span>
+          <span className='position'>{player['position']}</span>
+        </div>
         <div className='playerCost'>${player['cost']}</div>
       </div>
     );
@@ -284,6 +332,10 @@ class Draft extends React.Component {
         playerStats={playerStats}
         showProfilePic={true}
         buttons={buttons}
+        selectable={true}
+        onSelect={() => {
+          this.handlePlayerSelection(player);
+        }}
         />
     );
   }

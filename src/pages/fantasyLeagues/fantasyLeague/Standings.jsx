@@ -128,6 +128,8 @@ class Standings extends React.Component {
 
       if (player[statFields[i]] === null) {
         continue;
+      } else if (statFields[i] === 'position') {
+        continue;
       } else if (statFields[i] === 'league') {
         value = leagueInfo.getLeagueName(value);
       }
@@ -146,7 +148,10 @@ class Standings extends React.Component {
     let playerStats = this.formatActivePlayerStats(player);
     let playerHeader = (
       <div className='rosterPlayerHeader'>
-        <div className='playerName'>{player['last_name'] + ', ' + player['first_name'].slice(0,1)}</div>
+        <div className='playerName'>
+          <span className='name'>{player['last_name'] + ', ' + player['first_name'].slice(0,1)}</span>
+          <span className='position'>{player['position']}</span>
+        </div>
       </div>
     );
 

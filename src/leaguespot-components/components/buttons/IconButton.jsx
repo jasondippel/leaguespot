@@ -24,8 +24,8 @@ export default class IconButton extends React.Component {
     this.handleOnClick = this.handleOnClick.bind(this);
   }
 
-  handleOnClick() {
-    this.props.onClick();
+  handleOnClick(e) {
+    this.props.onClick(e);
   }
 
   renderIcon() {

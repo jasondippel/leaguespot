@@ -360,10 +360,12 @@ class Roster extends React.Component {
           >
           <div>
             <div className='sectionHeader'>
-              <div className='sectionTitle'>
-                {Sanitize(this.state.myFantasyTeam.team_name)}
+              <div className='left'>
+                <div className='sectionTitle'>
+                  {Sanitize(this.state.myFantasyTeam.team_name)}
+                </div>
+                <div className='sectionSubTitle'>My Fantasy Team</div>
               </div>
-              <div className='sectionSubTitle'>My Fantasy Team</div>
             </div>
             <div className='noPlayers'>
               <div className='box'>

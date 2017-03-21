@@ -40,6 +40,7 @@ const statNames = {
 const statShortForm = {
   position: 'Pos',
   league: 'Leag',
+  cost: 'Cost',
   games_played: 'GP',
   goals: 'G',
   assists: 'A',
@@ -50,7 +51,7 @@ const statShortForm = {
   shg: 'SHG',
   shots: 'Shots',
   saves: 'Saves',
-  save_percentage: 'Save %',
+  save_percentage: 'SV%',
   goals_against_average: 'GAA',
   wins: 'W',
   losses: 'L',
@@ -78,7 +79,10 @@ const displayStats = {
 
 const shortDisplayStats = {
   Hockey: [
-    'position'
+    'league',
+    'position',
+    'points',
+    'save_percentage'
   ]
 }
 
@@ -103,13 +107,11 @@ const playerStats = {
     'pim',
     'ppg',
     'shg',
-    'shots',
     'wins',
     'losses',
     'save_percentage',
     'goals_against_average',
-    'shutouts',
-    'min'
+    'shutouts'
   ]
 }
 
