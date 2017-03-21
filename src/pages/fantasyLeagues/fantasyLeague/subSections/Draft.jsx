@@ -4,6 +4,7 @@
 
 /* Style Dependencies */
 import './Draft.less';
+import colours from '../../../../leaguespot-components/constants/colours';
 
 /* Script Dependencies */
 import _ from 'underscore';
@@ -149,7 +150,9 @@ class Draft extends React.Component {
     ];
     let content = (
       <div className='popupContent'>
-        This is the help popup. I need to populate this with info once drafting process is created.
+        <p>The draft is where you are able to select your fantasy team. To do so, you've been given a budget to work with. Your team must not go over budget. Beside the amount of money you have left (your <span style={{color: colours.darkTextPrimary}}>'Remaining Budget'</span>), you can see the <span style={{color: colours.darkTextPrimary}}>average cost of each player</span> on your team.</p>
+        <p>You can add players from any of the leagues shown on the left-hand side by clicking the <span style={{color: colours.leaguespotGreenPrimary}}>green plus arrow</span>. If you no longer wish to have this player on your roster, you can click the <span style={{color: colours.danger}}>red minus arrow</span> to remove them.</p>
+        <p>Once you have selected a roster, click the <span style={{color: colours.darkTextPrimary}}>'Submit Roster'</span> button in the top right corner of the page.</p>
       </div>
     );
 
