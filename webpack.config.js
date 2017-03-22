@@ -40,8 +40,8 @@ module.exports = {
     ]
   },
   output: {
-    path: __dirname + '/dev/',
-    publicPath: '/dev/',
+    path: __dirname + '/dev',
+    publicPath: __dirname + '/dev',
     filename: 'app.min.js'
   },
   plugins: debug ? [] : [
