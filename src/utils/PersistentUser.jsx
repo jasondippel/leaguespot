@@ -3,7 +3,7 @@
  * in localStorage. Used primarily for user sessions.
  */
 
-import store from '../pages/store';
+import store from '../pages/Store';
 import jwtDecode from 'jwt-decode';
 import APIRequest from './APIRequest';
 let LeagueSpotSessionIdKey = 'LeagueSpot-active-user-session-id';

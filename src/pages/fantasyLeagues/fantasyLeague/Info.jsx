@@ -9,7 +9,7 @@ import './Info.less';
 import React from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import store from '../../store';
+import store from '../../Store';
 import APIRequest from '../../../utils/APIRequest';
 import { Sanitize } from '../../../utils/Sanitize';
 import * as leagueInfo from '../../../utils/ProLeagues';

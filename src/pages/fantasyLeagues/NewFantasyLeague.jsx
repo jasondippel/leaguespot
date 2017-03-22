@@ -10,7 +10,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import store from '../store';
+import store from '../Store';
 import { setActiveFantasyLeague, addToMyFantasyLeagues } from '../../actions/FantasyLeagueActions';
 import FlatButton from '../../leaguespot-components/components/buttons/FlatButton';
 import RaisedButton from '../../leaguespot-components/components/buttons/RaisedButton';

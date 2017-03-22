@@ -9,7 +9,7 @@ import './Standings.less';
 import React from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import store from '../../store';
+import store from '../../Store';
 import { Sanitize } from '../../../utils/Sanitize';
 import * as leagueInfo from '../../../utils/ProLeagues';
 import { fetchActiveFantasyLeague } from '../../../actions/FantasyLeagueActions';

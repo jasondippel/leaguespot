@@ -10,7 +10,7 @@ import _ from 'underscore';
 import React from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import store from '../../../store';
+import store from '../../../Store';
 import { Sanitize } from '../../../../utils/Sanitize';
 import * as leagueInfo from '../../../../utils/ProLeagues';
 import FlatButton from '../../../../leaguespot-components/components/buttons/FlatButton';

@@ -11,7 +11,7 @@ import { Link } from 'react-router';
 import FlatButton from '../../leaguespot-components/components/buttons/FlatButton';
 import RaisedButton from '../../leaguespot-components/components/buttons/RaisedButton';
 import { connect } from 'react-redux';
-import store from '../store';
+import store from '../Store';
 
 
 class Header extends React.Component {

@@ -7,7 +7,7 @@
 import React from 'react';
 import { Router, Route, hashHistory, IndexRoute, Redirect } from 'react-router';
 import * as auth from '../utils/PersistentUser';
-import store from './store';
+import store from './Store';
 import { Provider } from 'react-redux';
 
 // Pages

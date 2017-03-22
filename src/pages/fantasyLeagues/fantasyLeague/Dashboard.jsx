@@ -12,7 +12,7 @@ import './Dashboard.less';
 import React from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import store from '../../store';
+import store from '../../Store';
 import { Sanitize } from '../../../utils/Sanitize';
 import { fetchActiveFantasyLeague } from '../../../actions/FantasyLeagueActions';
 import FlatButton from '../../../leaguespot-components/components/buttons/FlatButton';

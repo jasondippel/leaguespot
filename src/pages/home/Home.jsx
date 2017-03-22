@@ -10,7 +10,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import RaisedButton from '../../leaguespot-components/components/buttons/RaisedButton';
 import { connect } from 'react-redux';
-import store from '../store';
+import store from '../Store';
 
 class Home extends React.Component {
   constructor() {

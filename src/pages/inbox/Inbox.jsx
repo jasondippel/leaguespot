@@ -10,7 +10,7 @@ import React from 'react';
 import $ from 'jquery';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import store from '../store';
+import store from '../Store';
 import { fetchMyFantasyLeagues } from '../../actions/FantasyLeagueActions';
 import { fetchInboxContents, removeMessage } from '../../actions/MessagesActions';
 import FlatButton from '../../leaguespot-components/components/buttons/FlatButton';

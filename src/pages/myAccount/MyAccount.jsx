@@ -19,7 +19,7 @@ import Popup from '../../leaguespot-components/components/popup/Popup';
 import Toast from '../../leaguespot-components/components/toast/Toast';
 import SmallBanner from '../../components/banners/SmallBanner';
 import { connect } from 'react-redux';
-import store from '../store';
+import store from '../Store';
 import { setUser } from '../../actions/UserActions';
 import { Sanitize } from '../../utils/Sanitize';
 import { validateEmail } from '../../utils/Validate';
