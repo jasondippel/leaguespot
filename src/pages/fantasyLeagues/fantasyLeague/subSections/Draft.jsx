@@ -203,7 +203,10 @@ class Draft extends React.Component {
 
     let removedPlayer = this.state.roster[playerId];
     delete newRosterObj[playerId];
-    newPlayersObj[removedPlayer['league']].push(removedPlayer);
+
+    // find correct index to insert player;
+    newPlayersObj = this.insertPlayerToList(newPlayersObj[removedPlayer.league], removedPlayer);
+    // newPlayersObj[removedPlayer['league']].push(removedPlayer);
 
     this.setState({
       roster: newRosterObj,
@@ -212,6 +215,18 @@ class Draft extends React.Component {
     });
 
     this.props.handleRosterSelectionChange(newRosterObj);
+  }
+
+  insertPlayerToList(playersList, newPlayer) {
+    let i = 0;
+    for(i=0; i < playersList.length; i++) {
+      // TODO: update once more advanced sorting is in place
+      if (playersList[i].cost < newPlayer.cost) {
+        break;
+      }
+    }
+
+    return playersList.splice(i, 0, newPlayer);
   }
 
   formatRosterPlayerStats(player) {
@@ -478,7 +493,7 @@ class Draft extends React.Component {
               </div>
             </div>
 
-            <div className='column8' style={{padding: '1em'}}>
+            <div className='column8' style={{padding: '1em', height: '70vh'}}>
               <Tabs
                 tabs={tabs}
                 onChange={this.handleTabChange}
@@ -486,7 +501,7 @@ class Draft extends React.Component {
                 />
             </div>
 
-            <div className='column4' style={{padding: '1em'}}>
+            <div className='column4' style={{padding: '1em', height: '70vh'}}>
               <Section
                 title={'My Roster (' + Object.keys(this.state.roster).length + '/' + this.state.maxRosterSize + ')'}
                 colouredHeader={true}
