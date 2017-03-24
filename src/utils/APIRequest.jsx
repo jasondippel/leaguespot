@@ -12,7 +12,7 @@ class APIRequest {
     this.sportRadarAPI = 'Sports Radar API';
     this.sportRadarKey = '1234abc';
     // this.leagueSpotAPI = 'http://localhost:3000';
-    this.leagueSpotAPI = 'http://www.leaguespot.ca:3000/';
+    this.leagueSpotAPI = 'http://www.leaguespot.ca:3000';
   }
 
 
