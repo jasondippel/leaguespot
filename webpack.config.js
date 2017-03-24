@@ -6,6 +6,7 @@
 var debug = true;
 var webpack = require('webpack');
 var path = require('path');
+var BabiliPlugin = require('babili-webpack-plugin');
 
 module.exports = {
   context: path.join(__dirname, '.'),
@@ -47,6 +48,7 @@ module.exports = {
   plugins: debug ? [] : [
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
+    new webpack.optimize.UglifyJsPlugin({ mangle: true, minimize: true }),
+    new BabiliPlugin()
   ],
 };
