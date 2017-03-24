@@ -71,7 +71,7 @@
     "webpack-dev-server": "1.14.1"
   },
   "scripts": {
-    "build": "rm -rf ./dev && mkdir dev && npm run build-css & npm run build-js",
+    "build": "sudo rm -rf ./dev && sudo mkdir dev && npm run build-css & npm run build-js",
     "build-prod": "npm run build && npm run minify-js",
     "build-css": "echo \"Building CSS...\" && find src -name '*.less' -exec lessc {} \\; > dev/styles.css",
     "build-js": "echo \"Building JS...\" && webpack",
