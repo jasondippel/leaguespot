@@ -65,7 +65,7 @@ class Home extends React.Component {
         </div>
 
         <div className='infoBanner'>
-          Why restrict people to choosing just one league? We believe that great things come when you open up the door to new possibilities, so we're letting you choose what leagues to include in your fantasy pool. No longer are you limited to just one. It's time to challenge you're abilities and expand you're comfort zone to new sports leagues.
+          Why restrict people to choosing just one league? We believe that great things come when you open up the door to new possibilities, so we're letting you choose what leagues to include in your fantasy pool. No longer are you limited to just one. It's time to challenge your abilities and expand your comfort zone to new sports leagues.
         </div>
 
         <div className='content'>
