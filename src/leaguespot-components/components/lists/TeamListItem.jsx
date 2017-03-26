@@ -25,7 +25,7 @@ export default class TeamListItem extends React.Component {
 
   renderTeamTitle() {
     let position = this.props.position ? this.props.position : '';
-    let points = this.props.points ? this.props.points : '';
+    let points = this.props.points;
 
     let title = (
       <div className='teamListTitle'>
