@@ -171,6 +171,7 @@ class Standings extends React.Component {
   }
 
   renderTeamListItem(team, position) {
+    console.log('jason test');
     return (
       <div key={team.fteam_id}>
         <TeamListItem
