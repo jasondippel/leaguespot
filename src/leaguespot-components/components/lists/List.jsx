@@ -12,7 +12,6 @@ import { AutoSizer, List as WrappedList } from 'react-virtualized';
 
 class VirtualList extends React.Component {
   componentDidUpdate(prevProps) {
-    console.log('jason tset23');
     if (this.list && prevProps.renderData !== this.props.renderData) this.list.forceUpdateGrid()
   }
 
@@ -39,7 +38,6 @@ export default class List extends React.Component {
     let test1 = this.list;
     let test2 = this.List;
     let test3 = this.VirtualList;
-    console.log('jason test');
     if (this.list && prevProps.items !== this.props.items) {
       this.list.forceUpdateGrid();
     }
