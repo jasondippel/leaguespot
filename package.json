@@ -71,10 +71,11 @@
     "webpack-dev-server": "1.14.1"
   },
   "scripts": {
-    "build": "sudo rm -rf ./dev && sudo mkdir dev && npm run build-css & npm run build-js",
-    "build-prod": "npm run build && npm run minify-js",
+    "build": "rm -rf ./dev && mkdir dev && npm run build-css & npm run build-js",
+    "build-prod": "rm -rf ./dev && mkdir dev && npm run build-css & npm run build-js-production && npm run minify-js",
     "build-css": "echo \"Building CSS...\" && find src -name '*.less' -exec lessc {} \\; > dev/styles.css",
-    "build-js": "echo \"Building JS...\" && webpack",
+    "build-js": "echo \"Building JS...\" && NODE_ENV=\"development\" webpack --progress",
+    "build-js-production": "echo \"Building JS...\" && NODE_ENV=\"production\" webpack --progress",
     "minify-js": "echo \"Minifying JS...\" && babili dev/app.min.js -d ./ && ls -l dev",
     "dev": "webpack-dev-server --content-base . --inline --hot",
     "lint": "echo \"Running linter...\" && eslint --ext .js,.jsx .",
