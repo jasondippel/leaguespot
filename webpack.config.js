@@ -3,7 +3,7 @@
  * Borrowed from https://github.com/learncodeacademy/react-js-tutorials/tree/master/2-react-router
  */
 
-var debug = true;
+var debug = process.env.NODE_ENV === 'development';
 var webpack = require('webpack');
 var path = require('path');
 
@@ -47,6 +47,9 @@ module.exports = {
   plugins: debug ? [] : [
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
+    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+    }),
   ],
 };

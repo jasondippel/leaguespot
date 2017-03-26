@@ -33,7 +33,6 @@
     "babel-preset-react": "6.3.13",
     "babel-preset-stage-0": "6.3.13",
     "babelify": "7.2.0",
-    "babili": "0.0.12",
     "babili-webpack-plugin": "0.0.11",
     "browserify": "13.0.0",
     "chai": "3.5.0",
@@ -71,11 +70,11 @@
     "webpack-dev-server": "1.14.1"
   },
   "scripts": {
-    "build": "sudo rm -rf ./dev && sudo mkdir dev && npm run build-css & npm run build-js",
-    "build-prod": "npm run build && npm run minify-js",
+    "build": "rm -rf ./dev && mkdir dev && npm run build-css & npm run build-js",
+    "build-prod": "rm -rf ./dev && mkdir dev && npm run build-css & npm run build-js-production ",
     "build-css": "echo \"Building CSS...\" && find src -name '*.less' -exec lessc {} \\; > dev/styles.css",
-    "build-js": "echo \"Building JS...\" && webpack",
-    "minify-js": "echo \"Minifying JS...\" && babili dev/app.min.js -d ./ && ls -l dev",
+    "build-js": "echo \"Building JS...\" && NODE_ENV=\"development\" webpack --progress",
+    "build-js-production": "echo \"Building and Minifying JS...\" && NODE_ENV=\"production\" webpack --progress",
     "dev": "webpack-dev-server --content-base . --inline --hot",
     "lint": "echo \"Running linter...\" && eslint --ext .js,.jsx .",
     "test": "echo \"Running tests...\" && echo \"WARNING: no tests specified\""
