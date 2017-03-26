@@ -12,11 +12,11 @@ class APIRequest {
     this.sportRadarAPI = 'Sports Radar API';
     this.sportRadarKey = '1234abc';
 
-    // if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === 'production') {
       this.leagueSpotAPI = 'http://ec2-52-25-225-99.us-west-2.compute.amazonaws.com:3000';
-    // } else {
-      // this.leagueSpotAPI = 'http://localhost:3000';
-    // }
+    } else {
+      this.leagueSpotAPI = 'http://localhost:3000';
+    }
   }
 
 
