@@ -15,6 +15,16 @@ const sportEndDates = {
   Hockey: new Date('2017-04-30T23:59:59')
 }
 
+const positionsInSport = {
+  Hockey: [
+    'RW',
+    'C',
+    'LW',
+    'D',
+    'G'
+  ]
+}
+
 const playerCostBySport = {
   Hockey: 950,
   Basketball: 800
@@ -190,6 +200,16 @@ export function getLeaguesInSport(sport) {
   }
 
   console.error('Error: cannot find sport \"' + sport + '\" in list of sports');
+  return [];
+}
+
+export function getPositionsInSport(sport) {
+  if (positionsInSport[sport]) {
+    // return SHALLOW COPY of array
+    return positionsInSport[sport].slice(0);
+  }
+
+  console.error('Error: cannot find positions for sport \"' + sport + '\"');
   return [];
 }
 
