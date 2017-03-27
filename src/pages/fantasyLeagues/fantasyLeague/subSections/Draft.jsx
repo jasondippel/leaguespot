@@ -25,6 +25,7 @@ import Popup from '../../../../leaguespot-components/components/popup/Popup';
 import Toast from '../../../../leaguespot-components/components/toast/Toast';
 import List from '../../../../leaguespot-components/components/lists/List';
 import PlayerListItem from '../../../../leaguespot-components/components/lists/PlayerListItem';
+import CheckBox from '../../../../leaguespot-components/components/inputs/switches/CheckBox';
 import Spinner from '../../../../components/loaders/Spinner';
 import PlayerInfo from './PlayerInfo';
 
@@ -43,6 +44,7 @@ class Draft extends React.Component {
       sport: props.sport,
       activeLeague: props.leagues[0],
       players: {},
+      filterPositions: leagueInfo.getPositionsInSport(props.sport),
       loadingPlayers: false,
       toastOpen: false,
       toastMessage: '',
@@ -70,6 +72,7 @@ class Draft extends React.Component {
     this.handleCloseToast = this.handleCloseToast.bind(this);
     this.handleTabChange = this.handleTabChange.bind(this);
     this.handlePlayerSelection = this.handlePlayerSelection.bind(this);
+    this.handleFilterPositionsChange = this.handleFilterPositionsChange.bind(this);
     this.showHelpPopup = this.showHelpPopup.bind(this);
     this.addPlayerToRoster = this.addPlayerToRoster.bind(this);
   }
@@ -135,6 +138,23 @@ class Draft extends React.Component {
     );
 
     this.handleOpenPopup(type, title, content, buttons);
+  }
+
+  handleFilterPositionsChange(e, checked) {
+    let filterPositions = this.state.filterPositions;
+    let value = e.target.value;
+
+    if (checked) {
+      // add to list
+      filterPositions.push(value);
+    } else {
+      // remove from list
+      filterPositions.splice(filterPositions.indexOf(value), 1);
+    }
+
+    this.setState({
+      filterPositions: filterPositions
+    });
   }
 
   showHelpPopup() {
@@ -379,20 +399,44 @@ class Draft extends React.Component {
   renderFullPlayerList(league) {
     let i = 0,
         listItems = [],
-        playerList;
-
-    // TODO: add filtering/searching stuff here
+        playerList,
+        content;
 
     for(i=0; i < this.state.players[league].length; i++) {
-      let listItem = this.renderPlayerListItem(this.state.players[league][i], i);
-      listItems.push(listItem);
+      let playerPosition = this.state.players[league][i]['position'];
+      if (this.state.filterPositions.indexOf(playerPosition) >= 0) {
+        let listItem = this.renderPlayerListItem(this.state.players[league][i], i);
+        listItems.push(listItem);
+      }
+
+      // TODO: fix this
+      // NOTE: this is a hack to handle the bad data we get from the CWHL (only has F, not RW,LW,C)
+      else if ( playerPosition === 'F' &&
+                ( this.state.filterPositions.indexOf('RW') >= 0 ||
+                  this.state.filterPositions.indexOf('LW') >= 0 ||
+                  this.state.filterPositions.indexOf('C') >= 0 )
+              ) {
+        let listItem = this.renderPlayerListItem(this.state.players[league][i], i);
+        listItems.push(listItem);
+      }
+
     }
 
-    return (
-      <div>
-        <List items={listItems} />
-      </div>
-    )
+    if (listItems.length === 0) {
+      content = (
+        <div className='emptyRoster'>
+          No players found matching filters
+        </div>
+      );
+    } else {
+      content = (
+        <div>
+          <List items={listItems} />
+        </div>
+      );
+    }
+
+    return content;
   }
 
   renderTabContent(league) {
@@ -444,9 +488,29 @@ class Draft extends React.Component {
     return this.renderFullRosterList();
   }
 
+  renderFilterPositions() {
+    let positions = leagueInfo.getPositionsInSport(this.state.sport);
+
+    let renderedPositions = positions.map((position, key) => {
+      let isChecked = this.state.filterPositions.indexOf(position) >= 0;
+      return (
+        <CheckBox
+          key={key}
+          label={position}
+          value={position}
+          checked={isChecked}
+          onChange={this.handleFilterPositionsChange}
+          />
+      );
+    });
+
+    return renderedPositions;
+  }
+
   render() {
     let tabs = this.renderTabs();
     let myRosterList = this.renderMyRoster();
+    let filterPositions = this.renderFilterPositions();
 
     return (
       <div className='rc-Draft'>
@@ -480,7 +544,12 @@ class Draft extends React.Component {
             </div>
 
             <div className='infoPanel'>
-              <div className='left'></div>
+              <div className='left'>
+                <div className='pair'>
+                  <div className='label'>Filter By Position</div>
+                  <div className='value'>{filterPositions}</div>
+                </div>
+              </div>
               <div className='right'>
                 <div className='pair'>
                   <span className='label'>Remaining Budget</span>
