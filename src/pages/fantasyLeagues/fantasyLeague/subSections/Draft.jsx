@@ -44,7 +44,7 @@ class Draft extends React.Component {
       sport: props.sport,
       activeLeague: props.leagues[0],
       players: {},
-      filterPositions: leagueInfo.getPositionsInSport(props.sport),
+      filterPositions: [],
       loadingPlayers: false,
       toastOpen: false,
       toastMessage: '',
@@ -404,14 +404,19 @@ class Draft extends React.Component {
 
     for(i=0; i < this.state.players[league].length; i++) {
       let playerPosition = this.state.players[league][i]['position'];
-      if (this.state.filterPositions.indexOf(playerPosition) >= 0) {
+
+      if (this.state.filterPositions.length === 0) {
+        let listItem = this.renderPlayerListItem(this.state.players[league][i], i);
+        listItems.push(listItem);
+
+      } else if (this.state.filterPositions.indexOf(playerPosition) >= 0) {
         let listItem = this.renderPlayerListItem(this.state.players[league][i], i);
         listItems.push(listItem);
       }
 
       // TODO: fix this
       // NOTE: this is a hack to handle the bad data we get from the CWHL (only has F, not RW,LW,C)
-      else if ( playerPosition === 'F' &&
+      else if (playerPosition === 'F' &&
                 ( this.state.filterPositions.indexOf('RW') >= 0 ||
                   this.state.filterPositions.indexOf('LW') >= 0 ||
                   this.state.filterPositions.indexOf('C') >= 0 )
