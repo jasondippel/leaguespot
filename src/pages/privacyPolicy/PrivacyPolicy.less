@@ -1,0 +1,49 @@
+@import '../../../node_modules/leaguespot-components/src/constants/colours';
+@import '../../../node_modules/leaguespot-components/src/constants/fonts';
+
+.rc-PrivacyPolicy {
+  margin: 0px;
+  color: @darkTextPrimary;
+  font-size: 1.25em;
+
+  .banner {
+    color: @lightTextPrimary;
+    padding-top: 5em;
+    padding-bottom: 3em;
+    background-image: url("https://www.leaguespot.ca/src/img/stadium_lights.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    .title {
+      font-family: 'Lobster', sans-serif;
+      color: @lightTextPrimary;
+      text-decoration: none;
+      font-size: 4.55em;
+      text-shadow: 2px 0px 3px #000;
+      text-align: center;
+    }
+
+    .subText {
+      text-align: center;
+      font-size: 2em;
+      line-height: 2.5em;
+      // color: @lightTextSecondary;
+    }
+  }
+
+  .content {
+    padding: 2em;
+
+    a {
+      color: @leaguespotGreenPrimary;
+      -webkit-transition: color 0.2s; /* For Safari 3.1 to 6.0 */
+      transition: color 0.2s;
+      text-decoration: none;
+
+      &:hover {
+        color: @leaguespotGreenSecondary;
+      }
+    }
+    
+  }
+}

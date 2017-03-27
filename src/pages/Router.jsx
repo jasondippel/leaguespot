@@ -14,6 +14,7 @@ import { Provider } from 'react-redux';
 import Layout from './layout/Layout';
 import AppLayout from './layout/AppLayout';
 import Home from './home/Home';
+import PrivacyPolicy from './privacyPolicy/PrivacyPolicy';
 import SignUp from './signUp/SignUp';
 import LogIn from './logIn/LogIn';
 // import Dashboard from './dashboard/Dashboard'; // TODO: once more info collected, this may be useful
@@ -56,6 +57,7 @@ export default (
         <Route component={Layout}>
           <Route path='/'>
             <IndexRoute component={Home} />
+            <Route path='privacy-policy' component={PrivacyPolicy} />
 
             <Route onEnter={requireNotAuth}>
               <Route path='sign-up' component={SignUp} />

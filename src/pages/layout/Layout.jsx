@@ -24,6 +24,10 @@ export default class Layout extends React.Component {
         <div className='container'>
           {this.props.children}
         </div>
+
+        <div className='footer'>
+          <Link to='/privacy-policy'>Privacy Policy</Link>
+        </div>
       </div>
     );
   }

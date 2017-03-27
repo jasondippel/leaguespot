@@ -1,13 +1,30 @@
 @import '../../../node_modules/leaguespot-components/src/constants/colours';
 
 .rc-Layout {
-  
+
   .container {
     padding: 0;
     margin: 0;
 
     &:only-child {
       min-height: calc(~'100vh - 64px');
+    }
+  }
+
+  .footer {
+    text-align: center;
+    font-size: 0.8em;
+    margin-bottom: 1em;
+
+    a {
+      color: @leaguespotGreenPrimary;
+      -webkit-transition: color 0.2s; /* For Safari 3.1 to 6.0 */
+      transition: color 0.2s;
+      text-decoration: none;
+
+      &:hover {
+        color: @leaguespotGreenSecondary;
+      }
     }
   }
 }
