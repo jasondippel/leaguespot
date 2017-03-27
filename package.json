@@ -75,7 +75,7 @@
     "build-css": "echo \"Building CSS...\" && find src -name '*.less' -exec lessc {} \\; > dev/styles.css",
     "build-js": "echo \"Building JS...\" && NODE_ENV=\"development\" webpack --progress",
     "build-js-production": "echo \"Building and Minifying JS...\" && NODE_ENV=\"production\" webpack --progress",
-    "dev": "webpack-dev-server --content-base . --inline --hot",
+    "dev": "NODE_ENV=\"development\" webpack-dev-server --content-base . --inline --hot",
     "lint": "echo \"Running linter...\" && eslint --ext .js,.jsx .",
     "test": "echo \"Running tests...\" && echo \"WARNING: no tests specified\""
   },
