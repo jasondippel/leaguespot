@@ -52,6 +52,24 @@ class FantasyLeagues extends React.Component {
     }
   }
 
+  renderStatus(status) {
+    let value = '';
+
+    switch (status) {
+      case 'open':
+        value = 'Open'
+        break;
+      case 'in_progress':
+        value = 'In Progress'
+        break;
+      case 'closed':
+        value = 'Closed'
+        break;
+    }
+
+    return value;
+  }
+
   renderFantasyLeagueCard(fantasyLeague, key) {
     let imageLink = this.getBackgroundImageLink(fantasyLeague.sport);
 
@@ -72,10 +90,10 @@ class FantasyLeagues extends React.Component {
 
             <div className='content'>
               <div className='column6'>
-                <span className='title'>Sport: </span>{fantasyLeague.sport}
+                <span className='title'>Sport: </span><span className='sport'>{fantasyLeague.sport}</span>
               </div>
               <div className='column6'>
-                <span className='title'>Status: </span><span className={fantasyLeague.status + ' status'}>{fantasyLeague.status}</span>
+                <span className='title'>Status: </span><span className={fantasyLeague.status + ' status'}>{this.renderStatus(fantasyLeague.status)}</span>
               </div>
             </div>
 
