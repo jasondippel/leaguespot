@@ -39,7 +39,7 @@ let requireAuth = (nextState, replace) => {
 
 let requireNotAuth = (nextState, replace) => {
   if (auth.loggedIn()) {
-    replace('/dashboard');
+    replace('/fantasy-leagues');
   }
 };
 
